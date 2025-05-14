@@ -1,0 +1,47 @@
+{
+	"originalcapturelocation": [
+		833,
+		987,
+		68,
+		29
+	],
+	"lastmodifieddate": 1746562796.7150002,
+	"createddate": 1746562796.7150002,
+	"name": "Icons/Drinks/DrPepperLarge",
+	"lastfounddate": 1746638976.9400001,
+	"ocrcapturestring": "I",
+	"lastfoundlocation": [
+		833,
+		987,
+		68,
+		29
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 5500,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[34,14]",
+					"Tolerance": "_45",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/Drinks/DrPepperLarge.png",
+				"connectionname": "127.0.0.1",
+				"type": 1,
+				"capturerect": [
+					833,
+					987,
+					68,
+					29
+				],
+				"connectionserverid": "127.0.0.1",
+				"capturedocrtext": "I"
+			}
+	]
+}

@@ -1,0 +1,191 @@
+﻿// Oracle Test Case 1: Butterfly Shrimp & Tender Combo
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Oracle"
+Common.setTestCaseName "Butterfly Shrimp & Tender Combo"
+Common.launchOraclePOS
+"DAIWrappers/POSNCR".loginToOraclePOS
+
+"DAIWrappers/POSNCR".selectDiningOption
+"DAIWrappers/POSNCR".selectMainCourse
+"DAIWrappers/POSNCR".selectMealAndOption
+"DAIWrappers/POSNCR".selectFlavors
+"DAIWrappers/POSNCR".selectSides 
+"DAIWrappers/POSNCR".selectDrink
+"DAIWrappers/POSNCR".proceedToTender
+"DAIWrappers/POSNCR".exactPayment
+Common.disconnectFromNCRPOS
+
+//KDS
+"DAIWrappers/KDS".connectToNCRKDS
+"DAIWrappers/KDS".bumpOrderIDOnNCRKDS
+"DAIWrappers/KDS".disconnectFromNCRKDS
+
+(*=================================*)
+
+
+
+
+
+// NCR Test Case 1: Butterfly Shrimp & Tender Combo
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "NCR"
+Common.setTestCaseName "Butterfly Shrimp & Tender Combo"
+Common.launchNCRPOS
+"DAIWrappers/POSNCR".loginToNCRPOS
+"DAIWrappers/POSNCR".selectDiningOption
+"DAIWrappers/POSNCR".selectMainCourse
+"DAIWrappers/POSNCR".selectMealAndOption
+"DAIWrappers/POSNCR".selectFlavors
+"DAIWrappers/POSNCR".selectSides 
+"DAIWrappers/POSNCR".selectDrink
+"DAIWrappers/POSNCR".proceedToTender
+"DAIWrappers/POSNCR".exactPayment
+Common.disconnectFromNCRPOS
+
+//KDS
+"DAIWrappers/KDS".connectToNCRKDS
+"DAIWrappers/KDS".bumpOrderIDOnNCRKDS
+"DAIWrappers/KDS".disconnectFromNCRKDS
+
+
+// NCR Test Case 2: Classic Chicken Sandwich Combo
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "NCR"
+Common.setTestCaseName "Classic Chicken Sandwich Combo"
+Common.launchNCRPOS
+"DAIWrappers/POSNCR".loginToNCRPOS
+"DAIWrappers/POSNCR".selectDiningOption
+"DAIWrappers/POSNCR".selectMainCourse
+"DAIWrappers/POSNCR".selectMealAndOption
+"DAIWrappers/POSNCR".selectFlavors
+"DAIWrappers/POSNCR".selectSides 
+"DAIWrappers/POSNCR".selectDrink
+"DAIWrappers/POSNCR".proceedToTender
+"DAIWrappers/POSNCR".exactPayment
+Common.disconnectFromNCRPOS
+
+//KDS
+"DAIWrappers/KDS".connectToNCRKDS
+"DAIWrappers/KDS".bumpOrderIDOnNCRKDS
+"DAIWrappers/KDS".disconnectFromNCRKDS
+
+
+
+// NCR Test Case 3: 12 PC Wings Dinner"
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "NCR"
+Common.setTestCaseName "12 PC Wings Dinner"
+Common.launchNCRPOS
+"DAIWrappers/POSNCR".loginToNCRPOS
+"DAIWrappers/POSNCR".selectDiningOption
+"DAIWrappers/POSNCR".selectMainCourse
+"DAIWrappers/POSNCR".selectMealAndOption
+"DAIWrappers/POSNCR".selectFlavors
+"DAIWrappers/POSNCR".selectSides 
+"DAIWrappers/POSNCR".selectDrink
+"DAIWrappers/POSNCR".proceedToTender
+"DAIWrappers/POSNCR".exactPayment
+Common.disconnectFromNCRPOS
+
+//KDS
+"DAIWrappers/KDS".connectToNCRKDS
+"DAIWrappers/KDS".bumpOrderIDOnNCRKDS
+"DAIWrappers/KDS".disconnectFromNCRKDS
+
+
+
+
+
+// NCR Test Case 4: 4 PC BIC Combo
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "NCR"
+Common.setTestCaseName "4 PC BIC Combo"
+Common.launchNCRPOS
+"DAIWrappers/POSNCR".loginToNCRPOS
+"DAIWrappers/POSNCR".selectDiningOption
+"DAIWrappers/POSNCR".selectMainCourse
+"DAIWrappers/POSNCR".selectMealAndOption
+"DAIWrappers/POSNCR".selectFlavors
+"DAIWrappers/POSNCR".selectSides 
+"DAIWrappers/POSNCR".selectDrink
+"DAIWrappers/POSNCR".proceedToTender
+"DAIWrappers/POSNCR".exactPayment
+Common.disconnectFromNCRPOS
+
+//KDS
+"DAIWrappers/KDS".connectToNCRKDS
+"DAIWrappers/KDS".bumpOrderIDOnNCRKDS
+"DAIWrappers/KDS".disconnectFromNCRKDS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Cheese cake dessert not picking right value
+// 6 P wings dinner display name not correct
+
+
+Common.setTestCaseName "Butterfly Shrimp & Tender Combo"
+Common.setTestCaseName  "Chicken Tender 3 PC"
+Common.setTestCaseName "Kids Mac & Cheese"
+Common.setTestCaseName "Strawberry Cheesecake Cup"
+Common.setTestCaseName "6 PC Wings Dinner"
+
+
+
+// Code to keep SUTs active, if required
+switchSUTs
+
+to switchSUTs
+	Connect DataFile().SUTNames.NCRLocal
+	
+	// If Command Center window is already opened from previous session, close it
+	if ImageFound(text:"Command Center", waitFor:2, searchRectangle: Config().SearchRectangles.(TopHalf))
+		//Click Command Center window.
+		click FoundImageLocation()
+		wait 1
+	end if
+	Connect {serverID: "127.0.0.1", portNum:5500, Visible: "Yes"} 
+end switchSUTs
+
+
+

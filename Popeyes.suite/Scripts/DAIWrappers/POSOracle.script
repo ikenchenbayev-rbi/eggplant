@@ -1,0 +1,28 @@
+﻿(** 
+ScriptName: POSOracle
+Version 1.0
+Author: Sajeendra Das
+CreatedOn: 5/09/25
+PeerReviewedBy:
+PeerReviewedOn:
+EditedBy: 
+EditedOn: 
+Description:  Handlers specific to the POS Operations on the Oracle POS platform.
+**)
+
+(**
+"This software is copyright Keysight Technologies, Inc. and licensed under the terms of Keysight’s End User License Agreement. Terms of Keysight’s EULA may be found here: www.keysight.com/find/sweula By using this Software, you agree to the terms of the Keysight EULA."
+**) 
+
+(**  
+loginToOraclePOS - Handler to login to the Oracle POS SUT.
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to loginToOraclePOS 
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end loginToOraclePOS

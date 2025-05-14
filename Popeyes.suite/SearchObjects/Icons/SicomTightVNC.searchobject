@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		1748,
+		89,
+		29,
+		21
+	],
+	"lastmodifieddate": 1747169957.0380001,
+	"createddate": 1747169957.0380001,
+	"name": "Icons/SicomTightVNC",
+	"lastfounddate": 1747170454.2090001,
+	"ocrcapturestring": "Vnc",
+	"lastfoundlocation": [
+		1748,
+		89,
+		29,
+		21
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 54820,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[14,10]",
+					"Tolerance": "_73",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/SicomTightVNC.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					1748,
+					89,
+					29,
+					21
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "Vnc"
+			}
+	]
+}

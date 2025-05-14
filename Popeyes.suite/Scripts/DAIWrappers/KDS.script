@@ -1,0 +1,85 @@
+﻿(** 
+ScriptName: KDS
+Version 1.0
+Author: Sajeendra Das
+CreatedOn: 4/22/25
+PeerReviewedBy:
+PeerReviewedOn:
+EditedBy: 
+EditedOn: 
+Description:  Handlers specific to the KDS Operations on the POS platform.
+**)
+
+(**
+"This software is copyright Keysight Technologies, Inc. and licensed under the terms of Keysight’s End User License Agreement. Terms of Keysight’s EULA may be found here: www.keysight.com/find/sweula By using this Software, you agree to the terms of the Keysight EULA."
+**) 
+
+(**  
+connectToNCRKDS - Handler to login to the NCR KDS SUT
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to connectToNCRKDS
+	Connect DataFile().SUTNames.NCRLocal, Visible: "Yes"
+	
+	// If Command Center window is already open   ed from previous session, close it
+	if ImageFound(text:"Command Center", waitFor:2, searchRectangle: Config().SearchRectangles.(TopHalf))
+		//Click Command Center window.
+		click FoundImageLocation()
+		wait 1
+	end if
+	
+	wait 1
+	
+	// Use Handler to open VNC connection for  FC EXPO
+	Common.launchNCRVNC "FCExpo"
+	
+	// Bring SUT into focus
+	Connect {serverID: "127.0.0.1", portNum:5500, Visible: "Yes"} 
+
+end connectToNCRKDS
+
+(**  
+bumpOrderIDOnNCRKDS - Handler to Bump the order ID on the NCR KDS SUT
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to bumpOrderIDOnNCRKDS
+	// Look for the Order ID on the KDS screen
+	repeat until ImageFound(text: global orderID, waitFor:Config().Waits.(minWait), contrast: on, DPI: 144)
+		click image: "Icons/KDSNext",  SearchRectangle: Config().SearchRectangles.(BottomHalf)
+	end repeat
+	
+	// Pick the first instance of order ID on screen and create a search rectangle
+	put EveryImageRectangle(text:global orderID, waitFor:Config().Waits.(minWait), contrast: on, DPI: 144) into orderList
+
+	put the first item of orderList into orderRect
+	put orderRect +[-200,-200,600,600] into displayRect
+
+	// Ensure meal display name is shown on the KDS for the order ID
+	put DataFile().ColumnMapping.(global posPlatformName).MealDisplayName into excelColumnNumber
+	put Common.readDataFromExcel (excelColumnNumber) into mealDisplayName
+	
+	//assert that ImageFound(text:mealDisplayName, waitFor:Config().Waits.(minWait),SearchRectangle: displayRect)
+	assert that common.extendedFindText(mealDisplayName,Config().Waits.(minWait), displayRect) is true with error "Meal Present in KDS"
+	
+	// Click the Order ID and select Bump Order option
+	click the center of orderRect
+	WaitFor Config().Waits.(minWait), text:"Bump Order", SearchRectangle:displayRect
+	click FoundImageLocation()
+	wait 2
+	
+	// Validate that the order is bumped and is not showing on the KDS anymore
+	assert that not imageFound(text:global orderID, waitFor:Config().Waits.(minWait))
+	
+end bumpOrderIDOnNCRKDS
+
+
+(**  
+disconnectFromNCRKDS - Handler to Disconnect from the NCR KDS SUT
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to disconnectFromNCRKDS
+	Disconnect {serverID: "127.0.0.1", portNum:5500, Visible: "Yes"}
+end disconnectFromNCRKDS

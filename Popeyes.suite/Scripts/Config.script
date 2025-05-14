@@ -1,0 +1,54 @@
+﻿(** 
+ScriptName: Config
+Version 1.0
+Author: Sajeendra Das
+CreatedOn: 4/22/25
+PeerReviewedBy:
+PeerReviewedOn:
+EditedBy: 
+EditedOn: 
+Description:  Config scripts that maintains all the configuration items required for POS testing.
+**)
+
+(**
+"This software is copyright Keysight Technologies, Inc. and licensed under the terms of Keysight’s End User License Agreement. Terms of Keysight’s EULA may be found here: www.keysight.com/find/sweula By using this Software, you agree to the terms of the Keysight EULA."
+
+**) 
+
+
+return { 
+	Waits:{
+	(*Wait Values to be used within POS for testing*)
+		minWait:10,
+		midWait: 30,
+		maxWait: 60,
+	},
+	SearchRectangles: {
+	(* SearchRectangles to be used inside the POS SUT. Screens are divided into sections to make it easy for the OCR engine to work*)
+		RightHalf: [RemoteScreenSize().x*0.5, 0, RemoteScreenSize().x, RemoteScreenSize().y],
+		TopHalf: [0,0,RemoteScreenSize().x,RemoteScreenSize().y*0.5],
+		LeftHalf:[0, 0, RemoteScreenSize().x*0.5, RemoteScreenSize().y],
+		BottomHalf: [0, RemoteScreenSize().y*0.5, RemoteScreenSize().x, RemoteScreenSize().y],
+
+		UserList:[0,814,266,1080],
+		CommandCenterLogin: [765,223,1148,791],
+		CommandCenterSecurityCode: [826,630,1120,758],
+		GoogleAuthenticator: [1441,23,1824,591],
+		GoogleAuthCode: [1468,157,1632,212],
+		VNCPopup: [716,321,1241,860],
+		RemotePCLoginArea: [711,312,1194,639],
+
+		NCRSoftKeypadLogin: [671,240,1247,799],
+		NCRItemSelectionArea: [536,98,1920,1041],
+		NCROrdersArea: [0,100,533,1040],
+		NCRMainCourseSelectionArea: [0,0,1916,93],
+		NCROrdersAreaOptions: [4,772,534,1036],
+		NCROrderID: [48,200,121,232],
+
+	},
+	TextOffsets:{
+	(* TextOffsets used in the POS system to enable typetext commands*)
+		CommandCenterTextbox:[55,0],
+		RemotePCLoginTextbox: [0,20]
+	},
+}

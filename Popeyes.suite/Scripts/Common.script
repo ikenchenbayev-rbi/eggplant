@@ -1,0 +1,542 @@
+﻿(** 
+ScriptName: Common
+Version 1.0
+Author: Sajeendra Das
+CreatedOn: 4/22/25
+PeerReviewedBy:
+PeerReviewedOn:
+EditedBy: 
+EditedOn: 
+Description:  Common handlers that are used across POS for automation.
+**)
+
+(**
+"This software is copyright Keysight Technologies, Inc. and licensed under the terms of Keysight’s End User License Agreement. Terms of Keysight’s EULA may be found here: www.keysight.com/find/sweula By using this Software, you agree to the terms of the Keysight EULA."
+**) 
+
+
+(**
+Common Functions used for all Platforms
+**)
+
+(**  
+setPlatformName - Handler to set the Global Variable for platformName which will be used to decide the workflow in EPF
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+@Parameters: platformName - Platform Name for the test case;POS, Kiosk etc
+**)
+to setPlatformName platformName
+	Log "Setting Global Platform name to:"&&platformName
+	put platformName into global platformName
+	return global platformName
+end setPlatformName
+
+
+(**  
+setPOSPlatformName - Handler to set the Global Variable for posPlatformName which will be used to decide the workflow in EPF for POS test cases
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+@Parameters: posPlatformName - POS Platform Name for the test case;NCR,Oracle, Sicom etc
+**)
+to setPOSPlatformName posPlatformName
+	Log "Setting Global POS Platform name to:"&&posPlatformName
+	put posPlatformName into global posPlatformName
+	return global posPlatformName
+end setPOSPlatformName
+
+(**  
+setTestCaseName - Handler to set the Global Variable for testCaseName which will be used to decide the workflow in EPF for POS test cases
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+@Parameters: testCaseName - Test Case Name for the test case, which should be a row in the data excel
+**)
+to setTestCaseName testCaseName
+	Log "Setting Global Test Case name to:"&&testCaseName
+	put testCaseName into global testCaseName
+	return global testCaseName
+end setTestCaseName
+
+(**
+readDataFromExcel - Read Data from Excel for input data for the specified test case
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+@Parameters: excelColumn - The specific column of the excel data file that will be read and passed to the calling handler
+@ Returns: dataValue - The data value in the excel for the corresponding test case and column that needs to be interacted with
+**)
+to readDataFromExcel excelColumn
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	Log "Reading data for test case:"&& global testCaseName
+	
+	// read in spreadsheet to memory
+	put global posPlatformName&".xlsx" into fileName
+	
+	set Spreadsheet to Workbook(ResourcePath(fileName))
+	// read in tab to memory
+	set entryData to Spreadsheet.Worksheet(1)
+	
+	put 2 into count
+	
+	// When we get to the end of the spreadsheet, then exit the repeat
+	repeat until eof_flag is "true"
+		if entryData.Cell("A"&(count)) is empty
+			put "True" into eof_flag
+		else
+			// If the global test case name matches excel test case name, read corresponding row and column value
+			put entryData.Cell("B"&(count)) into excelTestCaseName
+			
+			if excelTestCaseName is equal to global testCaseName ignoring case
+				put entryData.Cell(excelColumn&(count)) into dataValue
+				exit repeat
+			end if
+			add 1 to count
+		end if
+		
+	end repeat
+	
+	log "Returning Data value"
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	return dataValue
+	
+end readDataFromExcel
+
+
+(**
+extendedFindText - Find Text on screen using additional parameters
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+@Parameters: textToFind - Text to find on the screen
+@Parameters: waitTime - Initial Wait time to use
+@Parameters: SR - Search Rectangle to restrict the search in
+**)
+to extendedFindText textToFind, waitValue, SR
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Try Text search using basic OCR parameters
+	if imageFound(text: textToFind, waitFor: waitValue, SearchRectangle: SR, ignoreSpaces: Yes, ignoreNewLines: Yes)
+		return true
+	end if
+	
+	// else add valid words and valid characters
+	if imageFound(text: textToFind, waitFor: 1, SearchRectangle: SR, validCharacters: textToFind, validWords: textToFind, ignoreSpaces: Yes, ignoreNewLines: Yes)
+		return true
+	end if
+	
+	// else add DPI parameter
+	if imageFound(text: textToFind, waitFor: 1, SearchRectangle: SR, validCharacters: textToFind, validWords: textToFind, ignoreSpaces: Yes, ignoreNewLines: Yes, DPI: 144)
+		return true
+	end if
+	
+	// else add Contrast parameter
+	if imageFound(text: textToFind, waitFor: 1, SearchRectangle: SR, validCharacters: textToFind, validWords: textToFind, ignoreSpaces: Yes, ignoreNewLines: Yes, DPI: 144, contrast: on)
+		return true
+	end if
+	
+	// If nothing works, return false
+	return false
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	
+end extendedFindText
+
+(**
+End Common Functions used for all Platforms
+**)
+
+(**====================================**)
+
+(**
+Common Functions used for NCR POS
+**)
+
+(**  
+launchNCRPOS - Handler to launch the NCR POS SUT. User should be able to remote into the POS Register as a SUT to run the tests
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to launchNCRPOS 
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Validate if NCR POS is already connected. If yes, do not run the launch steps for Command Center
+	put AllConnectionInfo() into connectionList
+	put "" into connectionStatus
+	repeat for each item of connectionList
+		if it's Name is "127.0.0.1" and  it's Status is "Connected"
+			put it's status into connectionStatus
+			exit repeat
+		end if
+	end repeat
+	wait 1
+	
+	if connectionStatus is "Connected"
+		// IF NCR POS is already connected, bring it to focus and make it active
+		log "NCR POS is already connected. Bringing it into focus"
+		Connect {serverID: "127.0.0.1", portNum:5500, Visible: "Yes"} 
+
+		// Click to wake up the system, incase it is showing the screen saver
+		click [1900,500]
+	else
+		// Connect to the Local PC as Single-SUT to launch Command Center application of NCR
+		log "Performing steps to launch Command Center and NCR POS"
+		Connect DataFile().SUTNames.NCRLocal
+		
+		// If Command Center window is already opened from previous session, close it
+		if ImageFound(text:"Command Center", waitFor:2, searchRectangle: Config().SearchRectangles.(TopHalf)) and if ImageFound(text:"FC One", waitFor:2, SearchRectangle:Config().SearchRectangles.(LeftHalf))
+			// Command Center is open and at the right screen. Click to Open VPN
+			// Use Handler to open VNC connection
+			launchNCRVNC "FC One"
+		else 
+			//If Single-SUT is already connected, do not perform login steps. Else click on the Tester login and enter password
+			if ImageFound(imageName: "Icons/ChromeIcon", waitFor:2, searchRectangle:Config().SearchRectangles.(TopHalf))
+				log "Single System SUT already connected. Opening Command Center"
+			else if ImageFound(text:"Tester", waitFor:Config().Waits.(midWait), SearchRectangle: Config().SearchRectangles.(UserList))
+				click FoundImageLocation()
+				Click text:"assword", waitFor:Config().Waits.(minWait), SearchRectangle:[717,502,1178,788]
+				TypeText DataFile().Logins.Windows.password
+				TypeText returnKey
+			end if
+			
+			// Call Internal handler to launch Command Center for NCR
+			launchCommandCenter
+			
+			// Use Command Center to connect to NCR POS
+			// Click in FIND
+			WaitFor Config().Waits.(maxWait), text:"Find", SearchRectangle:Config().SearchRectangles.(BottomHalf)
+			click FoundImageLocation()+Config().TextOffsets.(CommandCenterTextbox)
+			
+			// Type in Lab number
+			TypeText "999968"
+			TypeText returnKey
+			wait 1
+			
+			// Use Handler to open VNC connection
+			launchNCRVNC "FC One"
+		end if
+	end if
+	
+	Connect {serverID: "127.0.0.1", portNum:5500, Visible: "Yes"} 
+
+	// Click to wake up the system, incase it is showing the screen saver
+	click [1900,500]
+
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end launchNCRPOS
+
+
+(**  
+launchChrome - Internal Handler to launch Chrome Window
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to launchChrome
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	Typetext windowsKey,"r"
+	TypeText "Chrome", ReturnKey -- Maxmize Doesn't always work
+	WaitFor Config().Waits.(midWait), text:"Search Google"
+	TypeText windowskey, upArrow -- Maximize Any Window
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end launchChrome
+
+(**  
+launchCommandCenter - Handler to launch the Command Center application and enter the Google auth code
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to launchCommandCenter
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Open Run window and open Command Center application
+	TypeText windowsKey, "r"
+	TypeText "C:\Program Files (x86)\NCR\Command Center\NUA01-SEC\RDFClient.exe", ReturnKey
+	WaitFor Config().Waits.(midWait), text:"Password", SearchRectangle: Config().SearchRectangles.(CommandCenterLogin)
+	TypeText DataFile().Logins.CommandCenter.password
+	
+	// Call internal handler to open Google Authenticator and get the code
+	getGoogleAuthCode
+	
+	Click (ImageLocation(text:"Security Code", SearchRectangle:Config().SearchRectangles.(CommandCenterSecurityCode)) +  Config().TextOffsets.(CommandCenterTextbox)) -- counts from the center of found text
+	TypeText global myCode
+	TypeText enterKey
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end launchCommandCenter
+
+(**  
+getGoogleAuthCode - Internal Handler to launch Get the Google Authenticator code
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to getGoogleAuthCode
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Launch Chrome
+	launchChrome
+	
+	// Click the Authenticator Icon and read the code
+	Click {Image:"Icons/authenticator", WaitFor:Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(GoogleAuthenticator)}
+	put ReadText(Config().SearchRectangles.(GoogleAuthCode)) into global myCode
+	TypeText controlKey, "w"
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end getGoogleAuthCode
+
+(**  
+getGoogleAuthCode - Handler to disonnect from the NCR POS SUT
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to disconnectFromNCRPOS
+	Disconnect {serverID: "127.0.0.1", portNum:5500, Visible: "Yes"} 
+end disconnectFromNCRPOS
+
+(**  
+launchNCRVNC - Handler to launch a particular VNC connection from the NCR command Center
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+@Parameters: vncLink - VNC Link to click
+**)
+to launchNCRVNC vncLink
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Click VNC text which opens the VNC connection to the SUT
+	Click text:vncLink, waitFor:Config().Waits.(maxWait), SearchRectangle:Config().SearchRectangles.(LeftHalf)
+	Click {Image:"Icons/VNC", WaitFor:Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf)}
+
+	if ImageFound(text:"Do you want", waitFor:Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(VNCPopup))
+		Click text:"assword", waitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(VNCPopup)
+		
+		TypeText DataFile().Logins.CommandCenter.popupPassword
+		TypeText returnKey
+	end if
+	
+	// Wait for the NCR KDS SUT to be connected from Command Center and bring it in focus
+	repeat for 2 minutes
+		put AllConnectionInfo() into connectionList
+		log connectionList
+		put "" into connectionStatus
+		repeat for each item of connectionList
+			if it's Name is "127.0.0.1" and  it's Status is "Connected"
+				put it's status into connectionStatus
+				Log "NCR SUT is connected. Exiting Repeat"
+				exit repeat
+			end if
+		end repeat
+		wait 2
+		if connectionStatus is "Connected" then exit repeat
+	end repeat
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end launchNCRVNC
+(**
+End Common Functions used for NCR POS
+**)
+
+(**====================================**)
+
+(**
+Common Functions used for Oracle POS
+**)
+
+(**  
+launchOraclePOS - Handler to launch the Oracle POS SUT. User should be able to remote into the POS Register as a SUT to run the tests
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to launchOraclePOS 
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Connect to Oracle POS SUT
+	log "Performing steps to launch Oracle POS SUT"
+	Connect DataFile().SUTNames.OraclePOS
+	
+	// Wait for SUT To be connected
+	repeat 2 minutes
+		if not connected of ConnectionInfo() then
+			Log "SUT is not connected yet. Trying again in 10 seconds"
+			wait 10
+		else
+			log "SUT Connected!"
+			exit repeat
+		end if
+	end repeat
+	
+	// Click to wake up the system, incase it is showing the screen saver
+	click [1900,500]
+
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end launchOraclePOS
+
+
+(**
+End Common Functions used for Oracle POS
+**)
+
+(**====================================**)
+
+(**
+Common Functions used for Sicom POS
+**)
+
+(**  
+launchSicomPOS - Handler to launch the Sicom POS SUT. User should be able to remote into the POS Register as a SUT to run the tests
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to launchSicomPOS 
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Connect to the Local PC as Single-SUT to launch Remote PC to connect to Sicom
+	log "Performing steps to launch Remote PC and Sicom POS"
+	Connect DataFile().SUTNames.SicomLocal
+	
+	// Open Chrome
+	launchChrome
+	
+	// Open Remote PC URL and login
+	openRemotePC
+	
+	// Open the Sicom remotePC Connection for FC
+	openSicomFC
+	
+	// If POS window is already open, do nothing
+	// Else Open Putty and perform steps to connect to the POS via VNC
+	
+	if ImageFound(text:"SICOM POS OR SOMETHING LIKE THAT", waitFor:2, searchRectangle: Config().SearchRectangles.(TopHalf))
+		
+	else 
+		
+	end if
+	
+	
+	
+	// Click to wake up the system, incase it is showing the screen saver
+	click [1900,500]
+
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end launchSicomPOS
+
+
+(**  
+openRemotePC - Internal Handler to launch RemotePC in Chrome
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to openRemotePC
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0),
+	
+	// Wait for the page to load and open remotePC URL
+	waitFor Config().Waits.(minWait), {Image:"Icons/ChromeRefreshIcon", SearchRectangle: Config().SearchRectangles.(TopHalf)}
+	click FoundImageLocation()+[55,0]
+	typetext "login.remotepc.com", ReturnKey
+	
+	// Wait for the page to finish loading
+	waitFor Config().Waits.(minWait), {Image:"Icons/ChromeRefreshIcon", SearchRectangle: Config().SearchRectangles.(TopHalf)}
+
+	// Click the Login Button
+	waitFor Config().Waits.(minWait), {Text:"Login", SearchRectangle: Config().SearchRectangles.(RightHalf)}
+	click FoundImageLocation()
+	waitfor Config().Waits.(minWait), {Text:"Login to RemotePC", SearchRectangle: Config().SearchRectangles.(TopHalf)}
+	
+	// Enter Credentials for RemotePC
+	Click (ImageLocation(text:"Email", SearchRectangle:Config().SearchRectangles.(RemotePCLoginArea)) +  Config().TextOffsets.(RemotePCLoginTextbox))
+	typetext controlKey, "a"
+	TypeText DataFile().Logins.SicomRemotePC.username
+	
+	Click (ImageLocation(text:"Password", SearchRectangle:Config().SearchRectangles.(RemotePCLoginArea)) +  Config().TextOffsets.(RemotePCLoginTextbox))
+	typetext controlKey, "a"
+	TypeText DataFile().Logins.SicomRemotePC.password
+	
+	// Click Login Again
+	waitFor Config().Waits.(minWait), {Text:"Login", SearchRectangle: Config().SearchRectangles.(RemotePCLoginArea)}
+	click FoundImageLocation()
+	
+	// Wait for RemotePC list to show up
+	waitFor Config().Waits.(minWait), {Text:"Computer Name"}
+
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end openRemotePC
+
+(**  
+openSicomFC - Internal Handler to launch the Sicom FC in RemotePC
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to openSicomFC
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0),
+	
+	// Connect to Sicom FC SUT
+	log "Performing steps to launch Sicom FC through remotePC"
+	put DataFile().SUTNames.SicomPOS into sicomFCName
+	
+	// Look for the name of the Sicom FC in the list of Remote PC connections
+	waitFor Config().Waits.(minWait), {Text:sicomFCName}
+	put FoundImageinfo().imagerectangle +[0,-15, 1000,15] into fcRect
+	
+	// Look for the connect button in the FC row
+	waitFor Config().Waits.(minWait), {Text:"Connect", SearchRectangle: fcRect}
+	click FoundImageLocation()
+	
+	wait 5
+	// Wait for the Personal Key screen and enter the Personal Key
+	waitFor Config().Waits.(minWait), {Text:"Personal Key"}
+	click FoundImagelocation() + Config().TextOffsets.(RemotePCLoginTextbox)
+	put FoundImageinfo().imagerectangle +[0,0, 250,150] into pkRect 
+
+	TypeText DataFile().Logins.SicomRemotePC.PersonalKey
+	
+	// Click Connect
+	waitFor Config().Waits.(minWait), {Text:"Connect", SearchRectangle: pkRect}
+	click FoundImageLocation()
+	
+	// If POS window or KDS is already opened, do nothing. Else perform putty steps to open windows
+	if imagefound (Text:"Request", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf)) or if imagefound (Text:"Support Terminal", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf))
+		LogSuccess "Sicom POS already launched"
+	else
+		// Write Code to open Putty and Launch Sicom POS, if Required in the future
+		
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end openSicomFC
+
+
+(**  
+launchPuttyAndSicom - Internal Handler to launch the Sicom FC after opening Putty
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to launchPuttyAndSicom
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0),
+	
+	// Open Putty application
+	//waitFor Config().Waits.(minWait), {Image:"Icons/SicomPutty", SearchRectangle: Config().SearchRectangles.(RightHalf)}
+	waitFor Config().Waits.(minWait), {text:"PuTTY", SearchRectangle: Config().SearchRectangles.(RightHalf)}
+	doubleclick FoundImageLocation()
+	wait 2
+	
+	waitFor Config().Waits.(minWait), {text:"PuTTY Configuration"}
+	put FoundImageInfo().imagerectangle+[0,0,300,400] into puttyRect
+	click text: "192.168", SearchRectangle: puttyRect, DPI: "144"
+	
+	waitFor Config().Waits.(minWait), {text:"PuTTY Configuration"}
+	put FoundImageInfo().imagerectangle+[0,0,300,400] into puttyRect
+	put EveryImageLocation(text:"Load", SearchRectangle: puttyRect) 
+	
+	"Icons/SicomTightVNC"
+	
+	WaitFor Config().Waits.(midWait), text:"Password", SearchRectangle: Config().SearchRectangles.(CommandCenterLogin)
+TypeText DataFile().Logins.CommandCenter.password
+
+Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+
+end launchPuttyAndSicom
+(**
+	End Common Functions used for Sicom POS
+	**)

@@ -1,0 +1,77 @@
+﻿(**
+ScriptName: DataFile
+Version 1.0
+Author: Sajeendra Das
+CreatedOn: 4227/25
+PeerReviewedBy:
+PeerReviewedOn:
+EditedBy: 
+EditedOn: 
+Description:  DataFile contains return value for the config data used in POS testing.
+**)
+
+(**
+"This software is copyright Keysight Technologies, Inc. and licensed under the terms of Keysight’s End User License Agreement. Terms of Keysight’s EULA may be found here: www.keysight.com/find/sweula By using this Software, you agree to the terms of the Keysight EULA."
+
+**) 
+
+return { 
+	(* Login Information to be used inside the POS system. Currently Cashier, Supervisor and CashOffice logins are configured*)
+	Logins:{
+		NCRPOS:{
+			employeeCode:"100",
+		},
+		OraclePOS:{
+			employeeCode:"100",
+		},
+		Windows:{
+			userName: "Tester",
+			password: "1234",
+		},
+		CommandCenter:{
+			userName: "ikenbenchayev@rbi.com",
+			password: "Opyat2025@",
+			popupPassword: "Plkqa2025",
+		},
+		SicomRemotePC:{
+			userName: "plkautopc@gmail.com",
+			password: "Plkqa2025",
+			PersonalKey: "57072025",
+		},
+	},
+	
+	
+	(* Loyalty/Customer List to be used in the POS system. Each entry contains the ID and the Name of the Customer*)
+	LoyaltyList:{
+		ClarkWhite: {
+			Name: "Clark White",
+			email: "clark.white@gmail.com",
+		},
+	},
+	ColumnMapping:{
+		NCR: {
+			TestCaseName: "B",
+			DiningOption: "C",
+			MainCourse: "D",
+			SelectMeal: "E",
+			SelectMealOption: "F",
+			MealDisplayName: "G",
+			Flavors: "H",
+			Sides: "I",
+			Drink: "J",
+
+		},
+	},
+	SUTNames:{
+		NCRLocal: "MyLocalTrainingPC",
+		NCRPOS: "",
+		NCRKDS: "",
+		OraclePOS: "OraclePOS",
+		OracleKDS: "OracleKDS",
+		SicomLocal: "MyLocalTrainingPC",
+SicomPOS: "910259_FC-Sicom",
+SicomKDS: "",
+},
+
+
+}

@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		87,
+		55,
+		16,
+		16
+	],
+	"lastmodifieddate": 1747072010.404,
+	"createddate": 1747072010.404,
+	"name": "Icons/ChromeRefreshIcon",
+	"lastfounddate": 1747153945.971,
+	"ocrcapturestring": "3",
+	"lastfoundlocation": [
+		87,
+		55,
+		16,
+		16
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 62723,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[8,8]",
+					"Tolerance": "_45",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/ChromeRefreshIcon.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					87,
+					55,
+					16,
+					16
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "3"
+			}
+	]
+}

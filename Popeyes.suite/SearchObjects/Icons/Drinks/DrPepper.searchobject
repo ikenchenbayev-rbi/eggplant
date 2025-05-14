@@ -1,0 +1,38 @@
+{
+	"lastmodifieddate": 1746547877.089,
+	"originalcapturelocation": [
+		1018,
+		907,
+		63,
+		34
+	],
+	"createddate": 1746547877.089,
+	"testlocationdata": [
+		{
+				"connectionportnum": 5500,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Tolerance": "_45",
+					"HotSpot": "[31,17]",
+					"Scale": "    1",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/Drinks/DrPepper.png",
+				"connectionname": "127.0.0.1",
+				"type": 1,
+				"capturerect": [
+					1018,
+					907,
+					63,
+					34
+				],
+				"connectionserverid": "127.0.0.1"
+			}
+	],
+	"name": "Icons/Drinks/DrPepper"
+}

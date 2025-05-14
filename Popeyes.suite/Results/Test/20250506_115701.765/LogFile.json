@@ -1,0 +1,52 @@
+{
+	"entries": [
+		{
+				"message": "Running Test.script",
+				"identifier": "START",
+				"timestamp": "2025-05-06 11:57:01.770 -0400"
+			},
+		{
+				"handlerName": "on_setplatformname",
+				"timestamp": "2025-05-06 11:57:01.867 -0400",
+				"message": "Setting Global Platform name to: POS",
+				"scriptName": "Common.script",
+				"handlerLine": 2,
+				"identifier": "Log"
+			},
+		{
+				"handlerName": "on_setposplatformname",
+				"timestamp": "2025-05-06 11:57:01.880 -0400",
+				"message": "Setting Global POS Platform name to: NCR",
+				"scriptName": "Common.script",
+				"handlerLine": 2,
+				"identifier": "Log"
+			},
+		{
+				"handlerName": "on_settestcasename",
+				"timestamp": "2025-05-06 11:57:01.898 -0400",
+				"message": "Setting Global Test Case name to: Butterfly Shrimp & Tender Combo",
+				"scriptName": "Common.script",
+				"handlerLine": 2,
+				"identifier": "Log"
+			},
+		{
+				"handlerName": "on_launchncrpos",
+				"timestamp": "2025-05-06 11:57:01.911 -0400",
+				"message": "Running Script: Common.launchncrpos",
+				"scriptName": "Common.script",
+				"handlerLine": 2,
+				"identifier": "Log"
+			},
+		{
+				"message": "(Duration:\"0.891\", Errors:\"1\", Exceptions:\"0\", StartTime:\"2025-05-06 11:57:01 -0400\", Successes:\"0\", TestCase:\"Test.script\", Warnings:\"0\")",
+				"identifier": "EndTestCase",
+				"timestamp": "2025-05-06 11:57:02.664 -0400"
+			},
+		{
+				"message": "Execution Time 0:00:00 Test.script",
+				"identifier": "ABORTED",
+				"timestamp": "2025-05-06 11:57:02.682 -0400"
+			}
+	],
+	"createdTimestamp": "2025-05-06 11:57:01.773 -0400"
+}

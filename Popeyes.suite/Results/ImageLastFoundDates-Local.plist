@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>ChromeIcon.png</key>
+    <string>2025-04-23 15:07 +0000</string>
+    <key>Icons/ChromeIcon.png</key>
+    <string>2025-05-06 20:25 +0000</string>
+    <key>Icons/ChromeRefreshIcon.png</key>
+    <string>2025-05-13 16:32 +0000</string>
+    <key>Icons/CloseCommandCenter.png</key>
+    <string>2025-04-30 14:37 +0000</string>
+    <key>Icons/Drinks/CocaCola.png</key>
+    <string>2025-05-02 18:26 +0000</string>
+    <key>Icons/Drinks/DietCoke.png</key>
+    <string>2025-05-01 16:59 +0000</string>
+    <key>Icons/Drinks/DrPepperLarge.png</key>
+    <string>2025-05-07 17:29 +0000</string>
+    <key>Icons/KDSNext.png</key>
+    <string>2025-05-02 17:47 +0000</string>
+    <key>Icons/SicomPutty.png</key>
+    <string>2025-05-14 14:39 +0000</string>
+    <key>Icons/SicomTightVNC.png</key>
+    <string>2025-05-13 21:07 +0000</string>
+    <key>Icons/VNC.png</key>
+    <string>2025-05-07 17:30 +0000</string>
+    <key>Icons/authenticator.png</key>
+    <string>2025-05-07 15:55 +0000</string>
+    <key>VNC.png</key>
+    <string>2025-04-23 15:13 +0000</string>
+    <key>authenticator.png</key>
+    <string>2025-04-23 15:07 +0000</string>
+</dict>
+</plist>

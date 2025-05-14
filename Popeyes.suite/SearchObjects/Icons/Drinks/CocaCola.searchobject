@@ -1,0 +1,45 @@
+{
+	"lastmodifieddate": 1745518237.175,
+	"lastfoundlocation": [
+		610,
+		233,
+		78,
+		43
+	],
+	"originalcapturelocation": [
+		610,
+		233,
+		78,
+		43
+	],
+	"createddate": 1745518237.175,
+	"lastfounddate": 1746210392.954,
+	"testlocationdata": [
+		{
+				"connectionportnum": 5500,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[39,21]",
+					"Tolerance": "_45",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/Drinks/CocaCola.png",
+				"connectionname": "127.0.0.1",
+				"type": 1,
+				"capturerect": [
+					610,
+					233,
+					78,
+					43
+				],
+				"connectionserverid": "127.0.0.1"
+			}
+	],
+	"name": "Icons/Drinks/CocaCola"
+}

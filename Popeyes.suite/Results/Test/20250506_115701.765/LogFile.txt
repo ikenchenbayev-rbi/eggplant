@@ -1,0 +1,7 @@
+﻿2025-05-06 11:57:01.770 -0400	START		Running Test.script
+2025-05-06 11:57:01.867 -0400	Log		Setting Global Platform name to: POS	2	on_setplatformname	Common.script
+2025-05-06 11:57:01.880 -0400	Log		Setting Global POS Platform name to: NCR	2	on_setposplatformname	Common.script
+2025-05-06 11:57:01.898 -0400	Log		Setting Global Test Case name to: Butterfly Shrimp & Tender Combo	2	on_settestcasename	Common.script
+2025-05-06 11:57:01.911 -0400	Log		Running Script: Common.launchncrpos	2	on_launchncrpos	Common.script
+2025-05-06 11:57:02.664 -0400	EndTestCase		(Duration:"0.891", Errors:"1", Exceptions:"0", StartTime:"2025-05-06 11:57:01 -0400", Successes:"0", TestCase:"Test.script", Warnings:"0")
+2025-05-06 11:57:02.682 -0400	ABORTED		Execution Time 0:00:00 Test.script
