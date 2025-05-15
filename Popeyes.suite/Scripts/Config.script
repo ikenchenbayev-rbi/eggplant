@@ -49,6 +49,6 @@ return {
 	TextOffsets:{
 	(* TextOffsets used in the POS system to enable typetext commands*)
 		CommandCenterTextbox:[55,0],
-		RemotePCLoginTextbox: [0,20]
+		RemotePCLoginTextbox: [0,20],
 	},
 }

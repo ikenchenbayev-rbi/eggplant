@@ -1,0 +1,46 @@
+{
+	"lastmodifieddate": 1747245089.395,
+	"lastfoundlocation": [
+		520,
+		997,
+		14,
+		13
+	],
+	"originalcapturelocation": [
+		520,
+		997,
+		14,
+		13
+	],
+	"createddate": 1747245089.395,
+	"lastfounddate": 1747245107.6370001,
+	"testlocationdata": [
+		{
+				"connectionportnum": 54820,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[7,6]",
+					"Tolerance": "_45",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/SicomTaskbarPOS.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"capturerect": [
+					520,
+					997,
+					14,
+					13
+				],
+				"connectiontype": "Single System",
+				"connectionserverid": "127.0.0.1"
+			}
+	],
+	"name": "Icons/SicomTaskbarPOS"
+}

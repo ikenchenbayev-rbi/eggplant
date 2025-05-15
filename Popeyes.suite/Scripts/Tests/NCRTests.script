@@ -1,31 +1,4 @@
-﻿// Oracle Test Case 1: Butterfly Shrimp & Tender Combo
-Common.setPlatformName "POS"
-Common.setPOSPlatformName "Oracle"
-Common.setTestCaseName "Butterfly Shrimp & Tender Combo"
-Common.launchOraclePOS
-"DAIWrappers/POSNCR".loginToOraclePOS
-
-"DAIWrappers/POSNCR".selectDiningOption
-"DAIWrappers/POSNCR".selectMainCourse
-"DAIWrappers/POSNCR".selectMealAndOption
-"DAIWrappers/POSNCR".selectFlavors
-"DAIWrappers/POSNCR".selectSides 
-"DAIWrappers/POSNCR".selectDrink
-"DAIWrappers/POSNCR".proceedToTender
-"DAIWrappers/POSNCR".exactPayment
-Common.disconnectFromNCRPOS
-
-//KDS
-"DAIWrappers/KDS".connectToNCRKDS
-"DAIWrappers/KDS".bumpOrderIDOnNCRKDS
-"DAIWrappers/KDS".disconnectFromNCRKDS
-
-(*=================================*)
-
-
-
-
-
+﻿
 // NCR Test Case 1: Butterfly Shrimp & Tender Combo
 Common.setPlatformName "POS"
 Common.setPOSPlatformName "NCR"

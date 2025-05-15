@@ -392,24 +392,20 @@ to launchSicomPOS
 	
 	// Connect to the Local PC as Single-SUT to launch Remote PC to connect to Sicom
 	log "Performing steps to launch Remote PC and Sicom POS"
-	Connect DataFile().SUTNames.SicomLocal
+	Connect DataFile().SUTNames.SicomLocal, visible: True
 	
-	// Open Chrome
-	launchChrome
-	
-	// Open Remote PC URL and login
-	openRemotePC
-	
-	// Open the Sicom remotePC Connection for FC
-	openSicomFC
-	
-	// If POS window is already open, do nothing
-	// Else Open Putty and perform steps to connect to the POS via VNC
-	
-	if ImageFound(text:"SICOM POS OR SOMETHING LIKE THAT", waitFor:2, searchRectangle: Config().SearchRectangles.(TopHalf))
+	// If POS window or KDS is already opened, do nothing. Else perform putty steps to open windows
+	if imagefound (Text:"Request", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf)) or if imagefound (Text:"Support Terminal", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf))
+		LogSuccess "Sicom POS already launched"
+	else
+		// Open Chrome
+		launchChrome
 		
-	else 
+		// Open Remote PC URL and login
+		openRemotePC
 		
+		// Open the Sicom remotePC Connection for FC
+		openSicomFC
 	end if
 	
 	
@@ -482,7 +478,6 @@ to openSicomFC
 	waitFor Config().Waits.(minWait), {Text:"Connect", SearchRectangle: fcRect}
 	click FoundImageLocation()
 	
-	wait 5
 	// Wait for the Personal Key screen and enter the Personal Key
 	waitFor Config().Waits.(minWait), {Text:"Personal Key"}
 	click FoundImagelocation() + Config().TextOffsets.(RemotePCLoginTextbox)
@@ -499,7 +494,8 @@ to openSicomFC
 		LogSuccess "Sicom POS already launched"
 	else
 		// Write Code to open Putty and Launch Sicom POS, if Required in the future
-		
+		launchPuttyAndSicom
+		launchSicomKDS
 	end if
 	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
@@ -521,22 +517,144 @@ to launchPuttyAndSicom
 	doubleclick FoundImageLocation()
 	wait 2
 	
+	// Wait for Putty window to open and load the configuration
 	waitFor Config().Waits.(minWait), {text:"PuTTY Configuration"}
 	put FoundImageInfo().imagerectangle+[0,0,300,400] into puttyRect
 	click text: "192.168", SearchRectangle: puttyRect, DPI: "144"
+	click the last item of EveryImageLocation(text:"Load", SearchRectangle: puttyRect, waitFor:Config().Waits.(minWait) )
+	click text: "Open", waitFor: Config().Waits.(minWait),  SearchRectangle: puttyRect
 	
-	waitFor Config().Waits.(minWait), {text:"PuTTY Configuration"}
-	put FoundImageInfo().imagerectangle+[0,0,300,400] into puttyRect
-	put EveryImageLocation(text:"Load", SearchRectangle: puttyRect) 
 	
-	"Icons/SicomTightVNC"
+	// Wait for Command Prompt and perform steps to set up the tunnel
+	waitFor Config().Waits.(minWait), {text:"Password"}
+	typetext DataFile().Logins.SicomVNC.PuttyPassword, returnKey
 	
-	WaitFor Config().Waits.(midWait), text:"Password", SearchRectangle: Config().SearchRectangles.(CommandCenterLogin)
-TypeText DataFile().Logins.CommandCenter.password
-
-Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
-
+	waitFor Config().Waits.(minWait), {text:"vncuser"}
+	typetext DataFile().Logins.SicomVNC.vncUser, returnKey
+	
+	// Validate that VNC Tunnel was opened successfully
+	assert that ImageFound(text:"VNC desktop", DPI: 144,waitFor: Config().Waits.(minWait)) with error "VNC Tunnel Open"
+	
+	
+	// Open TightVNC application
+	waitFor Config().Waits.(minWait), {Image:"Icons/SicomTightVNC", SearchRectangle: Config().SearchRectangles.(RightHalf)}
+	//waitFor Config().Waits.(minWait), {text:"TightVNC", SearchRectangle: Config().SearchRectangles.(RightHalf)}
+	doubleclick FoundImageLocation()
+	wait 2
+	
+	// Click on Connect
+	waitFor Config().Waits.(minWait), {text:"New TightVNC Connection"}
+	put FoundImageInfo().imagerectangle+[200,0,300,150] into vncRect
+	click text: "Connect", SearchRectangle: vncRect
+	
+	// Validate Sicom POS opened successfully
+	assert that imagefound (Text:"Request", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf)) with error "Sicom POS launch"
+	
+	if ImageFound(text:"Proceed", waitFor:Config().Waits.(minWait))
+		click the last item of EveryImageLocation(text:"Proceed")
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
 end launchPuttyAndSicom
+
+(**  
+launchSicomKDS - Internal Handler to launch the Sicom KDS on Egde
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to launchSicomKDS
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0),
+	
+	// Open Edge application from taskbar
+	waitFor Config().Waits.(minWait), {image:"Icons/EdgeBrowser", SearchRectangle: Config().SearchRectangles.(BottomHalf)}
+	click FoundImageLocation()
+	wait 2
+	
+	// Wait for Edge window to open and open the webpage
+	waitFor Config().Waits.(minWait), {text:"MGRNG Login", SearchRectangle: Config().SearchRectangles.(TopHalf) }
+	click FoundImageLocation()
+	wait 2
+	
+	// Wait for login window and enter credentials
+	waitFor Config().Waits.(minWait), {text:"User Name", SearchRectangle: Config().SearchRectangles.(TopHalf) }
+	click FoundImageLocation()+ Config().TextOffsets.(CommandCenterTextbox)
+	typetext DataFile().Logins.SicomVNC.KDSUsername, tabKey
+	wait 1
+	typetext DataFile().Logins.SicomVNC.KDSPassword, returnKey
+	
+	// Wait for Page to Load. Click on System
+	waitFor Config().Waits.(minWait), {text:"System Maintenance", SearchRectangle: Config().SearchRectangles.(LeftHalf) }
+	click FoundImageLocation()
+	
+	// Click on Tools
+	waitFor Config().Waits.(minWait), {text:"Tools", SearchRectangle: Config().SearchRectangles.(TopHalf), caseSensitive: Yes }
+	click FoundImageLocation()
+	
+	// Click on Remote View
+	waitFor Config().Waits.(minWait), {text:"Remote View", SearchRectangle: Config().SearchRectangles.(TopHalf) }
+	click FoundImageLocation()
+	
+	// Wait for the kitchen screens selection window to open up
+	waitFor Config().Waits.(minWait), {text:"Kitchen screens", SearchRectangle: Config().SearchRectangles.(TopHalf) }
+	
+	// Select checkboxes for KDS screens
+	waitFor Config().Waits.(minWait), {text:"000:ks001", SearchRectangle: Config().SearchRectangles.(LeftHalf) }
+	click FoundImageLocation()
+	waitFor Config().Waits.(minWait), {text:"000:ks002", SearchRectangle: Config().SearchRectangles.(LeftHalf) }
+	click FoundImageLocation()
+	
+	// Set Refresh Rate
+	waitFor Config().Waits.(minWait), {text:"Refresh Rate", SearchRectangle: Config().SearchRectangles.(LeftHalf) }
+	click FoundImageLocation() + [200,0]
+	TypeText "5", returnKey
+	
+	// Validate Sicom KDS opened successfully
+	assert that imagefound (Text:"Terminal & Screen", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(LeftHalf)) with error "Sicom KDS launch"
+	
+	// Switch to POS Window
+	switchSicomWindowTo "POS"
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end launchSicomKDS
+
+
+(**  
+switchSicomWindowTo - Internal Handler to Switch the Sicom windows. Used to switch between POS and KDS between test cases
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+@Parameters: window - Window to switch to
+**)
+to switchSicomWindowTo window
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	if window is "POS" ignoring case
+		// Click on POS Icon on the taskbar
+		waitFor Config().Waits.(minWait), {image:"Icons/SicomTaskbarPOS", SearchRectangle: Config().SearchRectangles.(BottomHalf)}
+		click FoundImageLocation()
+		wait 2
+		
+		// Validate POS window opens successfully
+		assert that imagefound (Text:"Request", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf)) with error "Sicom POS launch"
+	end if
+	
+	
+	if window is "KDS" ignoring case
+		
+		// Click on POS Icon on the taskbar
+		waitFor Config().Waits.(minWait), {image:"Icons/SicomTaskbarKDS", SearchRectangle: Config().SearchRectangles.(BottomHalf)}
+		click FoundImageLocation()
+		wait 2
+		
+		// Validate Sicom KDS opened successfully
+		assert that imagefound (Text:"Terminal & Screen", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(LeftHalf)) with error "Sicom KDS launch"
+		
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end switchSicomWindowTo
 (**
-	End Common Functions used for Sicom POS
-	**)
+End Common Functions used for Sicom POS
+**)

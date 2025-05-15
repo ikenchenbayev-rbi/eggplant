@@ -1,20 +1,20 @@
 {
 	"originalcapturelocation": [
-		1748,
-		89,
-		29,
-		21
+		201,
+		993,
+		18,
+		17
 	],
-	"lastmodifieddate": 1747169957.0380001,
-	"createddate": 1747169957.0380001,
-	"name": "Icons/SicomTightVNC",
-	"lastfounddate": 1747240339.7839999,
-	"ocrcapturestring": "Vnc",
+	"lastmodifieddate": 1747241165.1059999,
+	"createddate": 1747241165.1059999,
+	"name": "Icons/EdgeBrowser",
+	"lastfounddate": 1747245160.174,
+	"ocrcapturestring": "%",
 	"lastfoundlocation": [
-		1748,
-		89,
-		29,
-		21
+		201,
+		993,
+		18,
+		17
 	],
 	"testlocationdata": [
 		{
@@ -23,26 +23,26 @@
 					"CropRectangle": "[0,0,0,0]",
 					"Rotate": 0,
 					"Scale": "    1",
-					"HotSpot": "[14,10]",
-					"Tolerance": "_73",
+					"HotSpot": "[9,8]",
+					"Tolerance": "_45",
 					"Discrepancy": "_0",
-					"SearchType": "Smoothed for Text"
+					"SearchType": "Tolerant of Background"
 				},
 				"sutinfo": {
 					"type": "Unknown VNC"
 				},
-				"name": "Icons/SicomTightVNC.png",
+				"name": "Icons/EdgeBrowser.png",
 				"connectionname": "MyLocalTrainingPC",
 				"type": 1,
 				"connectionserverid": "127.0.0.1",
 				"capturerect": [
-					1748,
-					89,
-					29,
-					21
+					201,
+					993,
+					18,
+					17
 				],
 				"connectiontype": "Single System",
-				"capturedocrtext": "Vnc"
+				"capturedocrtext": "%"
 			}
 	]
 }

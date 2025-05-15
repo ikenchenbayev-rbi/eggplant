@@ -16,12 +16,18 @@
     <string>2025-05-01 16:59 +0000</string>
     <key>Icons/Drinks/DrPepperLarge.png</key>
     <string>2025-05-07 17:29 +0000</string>
+    <key>Icons/EdgeBrowser.png</key>
+    <string>2025-05-14 17:52 +0000</string>
     <key>Icons/KDSNext.png</key>
     <string>2025-05-02 17:47 +0000</string>
     <key>Icons/SicomPutty.png</key>
     <string>2025-05-14 14:39 +0000</string>
+    <key>Icons/SicomTaskbarKDS.png</key>
+    <string>2025-05-14 17:55 +0000</string>
+    <key>Icons/SicomTaskbarPOS.png</key>
+    <string>2025-05-14 17:55 +0000</string>
     <key>Icons/SicomTightVNC.png</key>
-    <string>2025-05-13 21:07 +0000</string>
+    <string>2025-05-14 16:32 +0000</string>
     <key>Icons/VNC.png</key>
     <string>2025-05-07 17:30 +0000</string>
     <key>Icons/authenticator.png</key>

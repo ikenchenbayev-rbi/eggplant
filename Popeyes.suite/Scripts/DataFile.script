@@ -38,6 +38,14 @@ return {
 			password: "Plkqa2025",
 			PersonalKey: "57072025",
 		},
+		SicomVNC: {
+			PuttyPassword: "C0nnect456",
+			vncUser: "x11vnc",
+			KDSUsername: "RBI",
+			KDSPassword: "sicom1234",
+		},
+
+
 	},
 	
 	
@@ -69,9 +77,9 @@ return {
 		OraclePOS: "OraclePOS",
 		OracleKDS: "OracleKDS",
 		SicomLocal: "MyLocalTrainingPC",
-SicomPOS: "910259_FC-Sicom",
-SicomKDS: "",
-},
+		SicomPOS: "910259_FC-Sicom",
+		SicomKDS: "",
+	},
 
 
 }
