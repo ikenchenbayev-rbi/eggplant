@@ -139,6 +139,25 @@ to extendedFindText textToFind, waitValue, SR
 end extendedFindText
 
 (**
+connectToLocalSingleSystem - Handler to connect to the Local Single System SUT connection, which is needed to perform connections to other SUTs
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to connectToLocalSingleSystem
+
+	Connect DataFile().SUTNames.LocalSingleSystem, visible: True
+	
+	//If Single-SUT is already connected, do not perform login steps. Else click on the Tester login and enter password
+	if ImageFound(imageName: "Icons/ChromeIcon", waitFor:2, searchRectangle:Config().SearchRectangles.(TopHalf))
+		log "Single System SUT already connected"
+	else if ImageFound(text:"Tester", waitFor:Config().Waits.(midWait), SearchRectangle: Config().SearchRectangles.(UserList))
+		click FoundImageLocation()
+		Click text:"assword", waitFor:Config().Waits.(minWait), SearchRectangle:[717,502,1178,788]
+		TypeText DataFile().Logins.Windows.password
+		TypeText returnKey
+	end if
+end connectToLocalSingleSystem
+(**
 End Common Functions used for all Platforms
 **)
 
@@ -177,7 +196,7 @@ to launchNCRPOS
 	else
 		// Connect to the Local PC as Single-SUT to launch Command Center application of NCR
 		log "Performing steps to launch Command Center and NCR POS"
-		Connect DataFile().SUTNames.NCRLocal
+		Connect DataFile().SUTNames.LocalSingleSystem
 		
 		// If Command Center window is already opened from previous session, close it
 		if ImageFound(text:"Command Center", waitFor:2, searchRectangle: Config().SearchRectangles.(TopHalf)) and if ImageFound(text:"FC One", waitFor:2, SearchRectangle:Config().SearchRectangles.(LeftHalf))
@@ -185,15 +204,8 @@ to launchNCRPOS
 			// Use Handler to open VNC connection
 			launchNCRVNC "FC One"
 		else 
-			//If Single-SUT is already connected, do not perform login steps. Else click on the Tester login and enter password
-			if ImageFound(imageName: "Icons/ChromeIcon", waitFor:2, searchRectangle:Config().SearchRectangles.(TopHalf))
-				log "Single System SUT already connected. Opening Command Center"
-			else if ImageFound(text:"Tester", waitFor:Config().Waits.(midWait), SearchRectangle: Config().SearchRectangles.(UserList))
-				click FoundImageLocation()
-				Click text:"assword", waitFor:Config().Waits.(minWait), SearchRectangle:[717,502,1178,788]
-				TypeText DataFile().Logins.Windows.password
-				TypeText returnKey
-			end if
+			// Perform steps to login to single system SUT on local
+			connectToLocalSingleSystem
 			
 			// Call Internal handler to launch Command Center for NCR
 			launchCommandCenter
@@ -307,7 +319,7 @@ to launchNCRVNC vncLink
 	Click {Image:"Icons/VNC", WaitFor:Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf)}
 
 	if ImageFound(text:"Do you want", waitFor:Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(VNCPopup))
-		Click text:"assword", waitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(VNCPopup)
+		Click the last item of everyimagelocation(text:"assword", waitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(VNCPopup))
 		
 		TypeText DataFile().Logins.CommandCenter.popupPassword
 		TypeText returnKey
@@ -392,7 +404,7 @@ to launchSicomPOS
 	
 	// Connect to the Local PC as Single-SUT to launch Remote PC to connect to Sicom
 	log "Performing steps to launch Remote PC and Sicom POS"
-	Connect DataFile().SUTNames.SicomLocal, visible: True
+	connectToLocalSingleSystem
 	
 	// If POS window or KDS is already opened, do nothing. Else perform putty steps to open windows
 	if imagefound (Text:"Request", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf)) or if imagefound (Text:"Support Terminal", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf))
