@@ -34,7 +34,7 @@ return {
 		CommandCenterLogin: [765,223,1148,791],
 		CommandCenterSecurityCode: [826,630,1120,758],
 		GoogleAuthenticator: [1441,23,1824,591],
-		GoogleAuthCode: [1468,157,1632,212],
+		GoogleAuthCode: [1434,156,1567,202],
 		VNCPopup: [716,321,1241,860],
 		RemotePCLoginArea: [711,312,1194,639],
 
