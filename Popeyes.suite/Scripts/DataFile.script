@@ -16,7 +16,7 @@ Description:  DataFile contains return value for the config data used in POS tes
 **) 
 
 return { 
-(* Login Information to be used inside the POS system. Currently Cashier, Supervisor and CashOffice logins are configured*)
+	(* Login Information to be used inside the POS system. Currently Cashier, Supervisor and CashOffice logins are configured*)
 	Logins:{
 		NCRPOS:{
 			employeeCode:"100",
@@ -33,7 +33,7 @@ return {
 			password: "Plkqa2025@@",
 			popupPassword: "Plkqa2025",
 		},
-		SicomRemotePC:{
+		RemotePC:{
 			userName: "plkautopc@gmail.com",
 			password: "Plkqa2025",
 			PersonalKey: "57072025",
@@ -67,17 +67,31 @@ return {
 			Flavors: "H",
 			Sides: "I",
 			Drink: "J",
-
+		},
+		KioskNCR: {
+			TestCaseName: "B",
+			DiningOption: "C",
+			MainCourse: "D",
+			SelectMeal: "E",
+			SelectMealSize: "F",
+			Flavor: "G",
+			Sides: "H",
+			Drink: "I",
+			Biscuit: "J",
+			MealDisplayName: "K",
 		},
 	},
 	SUTNames:{
 		LocalSingleSystem: "MyLocalTrainingPC",
 		NCRPOS: "",
 		NCRKDS: "",
+		NCRKiosk: "999968_Kiosk",
 		OraclePOS: "OraclePOS",
 		OracleKDS: "OracleKDS",
+		OracleKiosk: "9004_KIOSK",
 		SicomPOS: "910259_FC-Sicom",
 		SicomKDS: "",
+		SicomKiosk: "910259_Kiosk",
 	},
 
 

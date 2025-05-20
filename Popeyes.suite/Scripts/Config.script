@@ -44,6 +44,7 @@ return {
 		NCRMainCourseSelectionArea: [0,0,1916,93],
 		NCROrdersAreaOptions: [4,772,534,1036],
 		NCROrderID: [48,200,121,232],
+		OracleSoftKeypadLogin: [931,82,1589,847]
 
 	},
 	TextOffsets:{

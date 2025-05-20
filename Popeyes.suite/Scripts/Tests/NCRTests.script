@@ -91,6 +91,28 @@ Common.disconnectFromNCRPOS
 "DAIWrappers/KDS".disconnectFromNCRKDS
 
 
+// NCR Test Case 5: KIOSK
+Common.setPlatformName "Kiosk"
+Common.setPOSPlatformName "NCRKiosk"
+Common.setTestCaseName "4 PC BIC Combo"
+"DAIWrappers/KioskNCR".launchNCRKiosk
+"DAIWrappers/KioskNCR".startKioskOrder
+
+"DAIWrappers/POSNCR".loginToNCRPOS
+"DAIWrappers/POSNCR".selectDiningOption
+"DAIWrappers/POSNCR".selectMainCourse
+"DAIWrappers/POSNCR".selectMealAndOption
+"DAIWrappers/POSNCR".selectFlavors
+"DAIWrappers/POSNCR".selectSides 
+"DAIWrappers/POSNCR".selectDrink
+"DAIWrappers/POSNCR".proceedToTender
+"DAIWrappers/POSNCR".exactPayment
+Common.disconnectFromNCRPOS
+
+//KDS
+"DAIWrappers/KDS".connectToNCRKDS
+"DAIWrappers/KDS".bumpOrderIDOnNCRKDS
+"DAIWrappers/KDS".disconnectFromNCRKDS
 
 
 
@@ -129,36 +151,6 @@ Common.disconnectFromNCRPOS
 
 
 
-
-
-
-
-//Cheese cake dessert not picking right value
-// 6 P wings dinner display name not correct
-
-
-Common.setTestCaseName "Butterfly Shrimp & Tender Combo"
-Common.setTestCaseName  "Chicken Tender 3 PC"
-Common.setTestCaseName "Kids Mac & Cheese"
-Common.setTestCaseName "Strawberry Cheesecake Cup"
-Common.setTestCaseName "6 PC Wings Dinner"
-
-
-
-// Code to keep SUTs active, if required
-switchSUTs
-
-to switchSUTs
-	Connect DataFile().SUTNames.NCRLocal
-	
-	// If Command Center window is already opened from previous session, close it
-	if ImageFound(text:"Command Center", waitFor:2, searchRectangle: Config().SearchRectangles.(TopHalf))
-		//Click Command Center window.
-		click FoundImageLocation()
-		wait 1
-	end if
-	Connect {serverID: "127.0.0.1", portNum:5500, Visible: "Yes"} 
-end switchSUTs
 
 
 
