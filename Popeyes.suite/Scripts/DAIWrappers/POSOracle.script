@@ -22,7 +22,31 @@ loginToOraclePOS - Handler to login to the Oracle POS SUT.
 to loginToOraclePOS 
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
-	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
+	// If POSOracle is already logged in and in the New Order screen, skip steps to login
+	if ImageFound(text:"Start Catering", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(LeftHalf)) 
+		log "POS Oracle is already in Logged in State"
+	else
+		// Wait for the Enter Employee Number screen
+		WaitFor Config().Waits.(maxWait), text:"Training Guides", SearchRectangle:Config().SearchRectangles.(BottomHalf)
+		
+		//Enter Employee Code and Click OK to login
+		Log "Entering Passcode"
+		put DataFile().Logins.OraclePOS.employeeCode into passCode
+		
+		repeat for each character in passCode
+			click text:it, SearchRectangle: Config().SearchRectangles.(OracleSoftKeypadLogin), waitFor: 1
+			wait 1
+		end repeat
+		
+		WaitFor Config().Waits.(maxWait), image:"Icons/OracleLoginButton", SearchRectangle:Config().SearchRectangles.(OracleSoftKeypadLogin)
+		click FoundImageLocation()
+		
+		// Validate login to POS Oracle
+		assert that ImageFound(text:"Start Catering", waitFor:Config().Waits.(maxWait),SearchRectangle:Config().SearchRectangles.(LeftHalf)) with error "POS Oracle Login Validation"
+		
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 end loginToOraclePOS

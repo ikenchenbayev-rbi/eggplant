@@ -1,0 +1,47 @@
+{
+	"originalcapturelocation": [
+		1461,
+		662,
+		32,
+		31
+	],
+	"lastmodifieddate": 1747705763.7690001,
+	"createddate": 1747705763.7690001,
+	"name": "Icons/OracleLoginButton",
+	"lastfounddate": 1747713146.9780002,
+	"ocrcapturestring": "»",
+	"lastfoundlocation": [
+		1461,
+		662,
+		32,
+		31
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 5900,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[16,9]",
+					"Tolerance": "_45",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/OracleLoginButton.png",
+				"connectionname": "OraclePOS",
+				"type": 1,
+				"capturerect": [
+					1461,
+					662,
+					32,
+					31
+				],
+				"connectionserverid": "192.168.1.2",
+				"capturedocrtext": "»"
+			}
+	]
+}
