@@ -16,13 +16,13 @@ Description:  DataFile contains return value for the config data used in POS tes
 **) 
 
 return { 
-	(* Login Information to be used inside the POS system. Currently Cashier, Supervisor and CashOffice logins are configured*)
+(* Login Information to be used inside the POS system. Currently Cashier, Supervisor and CashOffice logins are configured*)
 	Logins:{
 		NCRPOS:{
 			employeeCode:"100",
 		},
 		OraclePOS:{
-			employeeCode:"100",
+			employeeCode:"1911",
 		},
 		Windows:{
 			userName: "Tester",
@@ -30,7 +30,7 @@ return {
 		},
 		CommandCenter:{
 			userName: "ikenbenchayev@rbi.com",
-			password: "Opyat2025@",
+			password: "Plkqa2025@@",
 			popupPassword: "Plkqa2025",
 		},
 		SicomRemotePC:{
@@ -71,12 +71,11 @@ return {
 		},
 	},
 	SUTNames:{
-		NCRLocal: "MyLocalTrainingPC",
+		LocalSingleSystem: "MyLocalTrainingPC",
 		NCRPOS: "",
 		NCRKDS: "",
 		OraclePOS: "OraclePOS",
 		OracleKDS: "OracleKDS",
-		SicomLocal: "MyLocalTrainingPC",
 		SicomPOS: "910259_FC-Sicom",
 		SicomKDS: "",
 	},

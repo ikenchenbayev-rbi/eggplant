@@ -5,9 +5,15 @@
     <key>ChromeIcon.png</key>
     <string>2025-04-23 15:07 +0000</string>
     <key>Icons/ChromeIcon.png</key>
+<<<<<<< HEAD
     <string>2025-05-16 03:46 +0000</string>
     <key>Icons/ChromeRefreshIcon.png</key>
     <string>2025-05-16 04:06 +0000</string>
+=======
+    <string>2025-05-19 19:09 +0000</string>
+    <key>Icons/ChromeRefreshIcon.png</key>
+    <string>2025-05-19 18:18 +0000</string>
+>>>>>>> 6dcb89883706747afdaea57fdfaa8580ac7a9b35
     <key>Icons/CloseCommandCenter.png</key>
     <string>2025-04-30 14:37 +0000</string>
     <key>Icons/Drinks/CocaCola.png</key>
@@ -29,9 +35,15 @@
     <key>Icons/SicomTightVNC.png</key>
     <string>2025-05-14 16:32 +0000</string>
     <key>Icons/VNC.png</key>
+<<<<<<< HEAD
     <string>2025-05-16 03:47 +0000</string>
     <key>Icons/authenticator.png</key>
     <string>2025-05-16 03:46 +0000</string>
+=======
+    <string>2025-05-19 19:22 +0000</string>
+    <key>Icons/authenticator.png</key>
+    <string>2025-05-19 19:21 +0000</string>
+>>>>>>> 6dcb89883706747afdaea57fdfaa8580ac7a9b35
     <key>VNC.png</key>
     <string>2025-04-23 15:13 +0000</string>
     <key>authenticator.png</key>
