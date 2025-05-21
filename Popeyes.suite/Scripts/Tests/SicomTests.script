@@ -1,7 +1,7 @@
 ﻿// Oracle Test Case 1: Butterfly Shrimp & Tender Combo
 Common.setPlatformName "POS"
 Common.setPOSPlatformName "Sicom"
-Common.setTestCaseName "Butterfly Shrimp & Tender Combo"
+Common.setTestCaseName "12P Wings Large Combo"
 Common.launchSicomPOS
 
 "DAIWrappers/POSNCR".selectDiningOption

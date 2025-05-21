@@ -26,3 +26,64 @@ to loginToSicomPOS
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 end loginToSicomPOS
+
+(**  
+selectDiningOption - Handler to select the Dining Option on NCR POS, Dine In, Take Out etc.
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to selectDiningOption
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Read the DataFile to get the Column Number which has the Dining Option stored
+	put DataFile().ColumnMapping.(global posPlatformName).DiningOption into excelColumnNumber
+	log excelColumnNumber
+	// Read the Excel to get the Data Value for the Dining Option
+	put Common.readDataFromExcel (excelColumnNumber) into diningOption
+	
+	if diningOption is not empty
+		// Select the Dining Option on the screen
+		Click text:diningOption, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea)
+		
+		// Validate that the Main Course Selection screen has opened up
+		assert that ImageFound(text:"Repeat", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea)) is false with error "Dining Option Selection"
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end selectDiningOption
+
+(**  
+selectMainCourse - Handler to select the Main Course, Chicken, Seafood etc
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to selectMainCourse
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	//Select Main Course 
+	// Read the DataFile to get the Column Number which has the Dining Option stored
+	put DataFile().ColumnMapping.(global posPlatformName).MainCourse into excelColumnNumber
+	
+	// Read the Excel to get the Data Value for the Main Course
+	put Common.readDataFromExcel (excelColumnNumber) into mainCourse
+	
+	if mainCourse is not empty
+		split mainCourse by ","
+		
+		// Select Main Course and additional selections if any
+		repeat for each item of mainCourse
+			if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCRMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+				click FoundImageLocation() 
+				wait 1
+			else if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+				click FoundImageLocation()
+				wait 1
+			end if
+		end repeat
+	end if
+	// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
+	
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end selectMainCourse

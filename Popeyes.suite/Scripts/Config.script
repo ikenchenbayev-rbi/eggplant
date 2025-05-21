@@ -45,6 +45,9 @@ return {
 		NCROrdersAreaOptions: [4,772,534,1036],
 		NCROrderID: [48,200,121,232],
 
+		SicomItemSelectionArea: [713,247,1612,903],
+
+
 	},
 	TextOffsets:{
 	(* TextOffsets used in the POS system to enable typetext commands*)

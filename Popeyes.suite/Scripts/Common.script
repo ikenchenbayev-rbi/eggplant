@@ -406,13 +406,6 @@ to launchSicomPOS
 	log "Performing steps to launch Remote PC and Sicom POS"
 	connectToLocalSingleSystem
 	
-	if ImageFound(text:"Tester", waitFor:Config().Waits.(midWait), SearchRectangle: Config().SearchRectangles.(UserList))
-		click FoundImageLocation()
-		Click text:"assword", waitFor:Config().Waits.(minWait), SearchRectangle:[717,502,1178,788]
-		TypeText DataFile().Logins.Windows.password
-		TypeText returnKey
-		wait 5
-	end if
 	
 	// If POS window or KDS is already opened, do nothing. Else perform putty steps to open windows
 	if imagefound (Text:"Request", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf)) or if imagefound (Text:"Support Terminal", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf))
@@ -436,7 +429,7 @@ to launchSicomPOS
 	click [1900,500]
 
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
-
+	
 end launchSicomPOS
 
 
