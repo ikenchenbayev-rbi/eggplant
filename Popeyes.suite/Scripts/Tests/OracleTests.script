@@ -1,11 +1,10 @@
-﻿// Oracle Test Case 1: Butterfly Shrimp & Tender Combo
+﻿// Oracle Test Case 1: Popcorn Shrimp & Tender
 Common.setPlatformName "POS"
 Common.setPOSPlatformName "Oracle"
-Common.setTestCaseName "Butterfly Shrimp & Tender Combo"
+Common.setTestCaseName "Popcorn Shrimp & Tender"
 Common.launchOraclePOS
-"DAIWrappers/POSNCR".loginToOraclePOS
+"DAIWrappers/POSOracle".loginToOraclePOS
 
-"DAIWrappers/POSNCR".selectDiningOption
 "DAIWrappers/POSNCR".selectMainCourse
 "DAIWrappers/POSNCR".selectMealAndOption
 "DAIWrappers/POSNCR".selectFlavors

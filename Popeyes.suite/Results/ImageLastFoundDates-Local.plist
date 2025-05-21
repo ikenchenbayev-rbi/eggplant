@@ -3,6 +3,40 @@
 <plist version="1.0">
 <dict>
     <key>Icons/ChromeRefreshIcon.png</key>
+<<<<<<< HEAD
     <string>2025-05-20 14:28 +0000</string>
+=======
+    <string>2025-05-20 16:38 +0000</string>
+    <key>Icons/CloseCommandCenter.png</key>
+    <string>2025-04-30 14:37 +0000</string>
+    <key>Icons/Drinks/CocaCola.png</key>
+    <string>2025-05-02 18:26 +0000</string>
+    <key>Icons/Drinks/DietCoke.png</key>
+    <string>2025-05-01 16:59 +0000</string>
+    <key>Icons/Drinks/DrPepperLarge.png</key>
+    <string>2025-05-07 17:29 +0000</string>
+    <key>Icons/EdgeBrowser.png</key>
+    <string>2025-05-14 17:52 +0000</string>
+    <key>Icons/KDSNext.png</key>
+    <string>2025-05-02 17:47 +0000</string>
+    <key>Icons/OracleLoginButton.png</key>
+    <string>2025-05-20 16:17 +0000</string>
+    <key>Icons/SicomPutty.png</key>
+    <string>2025-05-14 14:39 +0000</string>
+    <key>Icons/SicomTaskbarKDS.png</key>
+    <string>2025-05-14 17:55 +0000</string>
+    <key>Icons/SicomTaskbarPOS.png</key>
+    <string>2025-05-14 17:55 +0000</string>
+    <key>Icons/SicomTightVNC.png</key>
+    <string>2025-05-14 16:32 +0000</string>
+    <key>Icons/VNC.png</key>
+    <string>2025-05-19 19:22 +0000</string>
+    <key>Icons/authenticator.png</key>
+    <string>2025-05-19 19:21 +0000</string>
+    <key>VNC.png</key>
+    <string>2025-04-23 15:13 +0000</string>
+    <key>authenticator.png</key>
+    <string>2025-04-23 15:07 +0000</string>
+>>>>>>> a8b24871f31b43b895c975b89f0eacebeda25828
 </dict>
 </plist>

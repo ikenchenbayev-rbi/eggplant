@@ -457,11 +457,11 @@ to openRemotePC
 	// Enter Credentials for RemotePC
 	Click (ImageLocation(text:"Email", SearchRectangle:Config().SearchRectangles.(RemotePCLoginArea)) +  Config().TextOffsets.(RemotePCLoginTextbox))
 	typetext controlKey, "a"
-	TypeText DataFile().Logins.SicomRemotePC.username
+	TypeText DataFile().Logins.RemotePC.username
 	
 	Click (ImageLocation(text:"Password", SearchRectangle:Config().SearchRectangles.(RemotePCLoginArea)) +  Config().TextOffsets.(RemotePCLoginTextbox))
 	typetext controlKey, "a"
-	TypeText DataFile().Logins.SicomRemotePC.password
+	TypeText DataFile().Logins.RemotePC.password
 	
 	// Click Login Again
 	waitFor Config().Waits.(minWait), {Text:"Login", SearchRectangle: Config().SearchRectangles.(RemotePCLoginArea)}
@@ -485,24 +485,7 @@ to openSicomFC
 	log "Performing steps to launch Sicom FC through remotePC"
 	put DataFile().SUTNames.SicomPOS into sicomFCName
 	
-	// Look for the name of the Sicom FC in the list of Remote PC connections
-	waitFor Config().Waits.(minWait), {Text:sicomFCName}
-	put FoundImageinfo().imagerectangle +[0,-15, 1000,15] into fcRect
-	
-	// Look for the connect button in the FC row
-	waitFor Config().Waits.(minWait), {Text:"Connect", SearchRectangle: fcRect}
-	click FoundImageLocation()
-	
-	// Wait for the Personal Key screen and enter the Personal Key
-	waitFor Config().Waits.(minWait), {Text:"Personal Key"}
-	click FoundImagelocation() + Config().TextOffsets.(RemotePCLoginTextbox)
-	put FoundImageinfo().imagerectangle +[0,0, 250,150] into pkRect 
-
-	TypeText DataFile().Logins.SicomRemotePC.PersonalKey
-	
-	// Click Connect
-	waitFor Config().Waits.(minWait), {Text:"Connect", SearchRectangle: pkRect}
-	click FoundImageLocation()
+	connectToRemotePCMachine sicomFCName
 	
 	// If POS window or KDS is already opened, do nothing. Else perform putty steps to open windows
 	if imagefound (Text:"Request", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf)) or if imagefound (Text:"Support Terminal", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf))
@@ -670,6 +653,40 @@ to switchSicomWindowTo window
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 end switchSicomWindowTo
+
+(**  
+connectToRemotePCMachine - Handler to Connect to a Remote PC machine from the list of systems
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+@Parameters: machineName - Machine Name to connect to on remote PC screen
+**)
+
+to connectToRemotePCMachine machineName
+
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Look for the name of the Sicom FC in the list of Remote PC connections
+	waitFor Config().Waits.(minWait), {Text:machineName}
+	put FoundImageinfo().imagerectangle +[0,-15, 1000,15] into fcRect
+	
+	// Look for the connect button in the FC row
+	waitFor Config().Waits.(minWait), {Text:"Connect", SearchRectangle: fcRect}
+	click FoundImageLocation()
+	
+	// Wait for the Personal Key screen and enter the Personal Key
+	if imagefound(Text:"Personal Key", waitFor:Config().Waits.(minWait))
+		click FoundImagelocation() + Config().TextOffsets.(RemotePCLoginTextbox)
+		put FoundImageinfo().imagerectangle +[0,0, 250,150] into pkRect 
+
+		TypeText DataFile().Logins.RemotePC.PersonalKey
+		
+		// Click Connect
+		waitFor Config().Waits.(minWait), {Text:"Connect", SearchRectangle: pkRect}
+		click FoundImageLocation()
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end connectToRemotePCMachine
 (**
 End Common Functions used for Sicom POS
 **)
