@@ -421,6 +421,8 @@ to launchSicomPOS
 		
 		// Open the Sicom remotePC Connection for FC
 		openSicomFC
+		launchSicomKDS
+		switchSicomWindowTo "POS"
 	end if
 	
 	

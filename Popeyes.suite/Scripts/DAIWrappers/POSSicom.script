@@ -28,6 +28,27 @@ to loginToSicomPOS
 end loginToSicomPOS
 
 (**  
+selectDiningOption - Handler to select the Route 3 POS system that activates expected printer to print item label.
+@Version 1.0 5/21/2025
+@ChangeReason Creation
+**)
+to clickRoute
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	if ImageFound(text:"REQUEST", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea))
+		//click on the Reuqest button
+		click FoundImageLocation()
+		//validate that Route 3 button is available
+		assert that ImageFound(text:"3", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomRequestPOSArea), Contrast: OFF)
+		click FoundImageLocation()
+	else
+		logWarning "Request button is not available"
+	end if
+	
+end clickRoute
+
+
+(**  
 selectDiningOption - Handler to select the Dining Option on NCR POS, Dine In, Take Out etc.
 @Version 1.0 4/22/2025
 @ChangeReason Creation
@@ -72,10 +93,10 @@ to selectMainCourse
 		
 		// Select Main Course and additional selections if any
 		repeat for each item of mainCourse
-			if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCRMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+			if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
 				click FoundImageLocation() 
 				wait 1
-			else if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+			else if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
 				click FoundImageLocation()
 				wait 1
 			end if
@@ -87,3 +108,328 @@ to selectMainCourse
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 end selectMainCourse
+
+(**  
+selectMainCourse - Handler to select the Meal like, BFLY SHRIMP, PopCorn Shrimp etc. And meal option like Combo, Regular etc.
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to selectMealAndOption
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	//Select Meal  
+	// Read the DataFile to get the Column Number which has the Meal, Meal Option and Display Names stored
+	put DataFile().ColumnMapping.(global posPlatformName).SelectMeal into excelColumnNumber
+	put Common.readDataFromExcel (excelColumnNumber) into selectMeal
+	
+	put DataFile().ColumnMapping.(global posPlatformName).SelectMealOption into excelColumnNumber
+	put Common.readDataFromExcel (excelColumnNumber) into selectMealOption
+	
+	put DataFile().ColumnMapping.(global posPlatformName).MealDisplayName into excelColumnNumber
+	put Common.readDataFromExcel (excelColumnNumber) into mealDisplayName
+	
+	// Select Meal
+	if selectMeal is not empty
+		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
+		split selectMeal by ","
+		
+		// Select Meal and additional selections if any
+		repeat for each item of selectMeal
+			if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+				click FoundImageLocation() 
+				wait 1
+			end if
+		end repeat
+	end if
+	
+	
+	// Select Meal Option
+	if selectMealOption is not empty
+		if ImageFound(text:"Would you like to make it a Large combo", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea))
+			put FoundImageInfo().imagerectangle +[0,0,200,200] into clickArea
+			click text: "No", waitFor:Config().Waits.(minWait),SearchRectangle:clickArea
+		end if
+		
+		// Click Meal Option on screen
+		Click text:selectMealOption, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes
+		
+	end if
+	
+	if selectMeal is not empty or selectMealOption is not empty
+		// Validate that Meal gets added to the order
+		//assert that ImageFound(text:mealDisplayName, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCROrdersArea), validCharacters: mealDisplayName, validWords: mealDisplayName, ignoreSpaces: Yes, ignoreNewLines: Yes) with error "Meal Added to Order"
+		assert that common.extendedFindText(mealDisplayName,Config().Waits.(minWait), Config().SearchRectangles.(SicomOrdersArea)) is true with error "Meal Added to Order"
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end selectMealAndOption
+
+(**  
+selectSides - Handler to select the first Sides like Mash Gravyy, Rice etc
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to selectFirstSide
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Read the DataFile to get the Column Number which has the Sides Options stored
+	put DataFile().ColumnMapping.(global posPlatformName).Sides1 into excelColumnNumber
+	
+	// Read the Excel to get the Data Value for the Sides
+	put Common.readDataFromExcel (excelColumnNumber) into sides
+	
+	if sides is not empty
+	(*		
+		//Select Sides on the Orders Section First
+		WaitFor Config().Waits.(maxWait), text:"Sides", SearchRectangle:Config().SearchRectangles.(NCROrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes
+		click FoundImageLocation()
+		wait 1*)
+		
+		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
+		split sides by ","
+		//validate that the option of sides in available in display area
+		assert that ImageFound(text: item 1 of sides, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomDisplayArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+		// Select Sides
+		// IF Flavors text is found in the orders area, click it
+		if ImageFound(text:trim(item 2 of sides), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+			click FoundImageLocation() 
+			wait 1
+		end if
+		
+		// Validate Sides are added, by ensuring "Sides" text is not found in Orders area
+		assert that not ImageFound(text:"SIDES", waitFor:2,SearchRectangle:Config().SearchRectangles.(SicomOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Side Added to Order"
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end selectFirstSide
+
+(**  
+selectSecondSides - Handler to select the second Sides like Mash Gravyy, Rice etc
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to selectSecondSide
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Read the DataFile to get the Column Number which has the Sides Options stored
+	put DataFile().ColumnMapping.(global posPlatformName).Sides2 into excelColumnNumber
+	
+	// Read the Excel to get the Data Value for the Sides
+	put Common.readDataFromExcel (excelColumnNumber) into sides
+	
+	if sides is not empty
+	(*		
+		//Select Sides on the Orders Section First
+		WaitFor Config().Waits.(maxWait), text:"Sides", SearchRectangle:Config().SearchRectangles.(NCROrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes
+		click FoundImageLocation()
+		wait 1*)
+	
+	// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
+		split sides by ","
+		//validate that the option of sides in available in display area
+		assert that ImageFound(text: item 1 of sides, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomDisplayArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+		// Select Sides
+		// IF Flavors text is found in the orders area, click it
+		if ImageFound(text:trim(item 2 of sides), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+			click FoundImageLocation() 
+			wait 1
+		end if
+		
+		// Validate Sides are added, by ensuring "Sides" text is not found in Orders area
+		assert that not ImageFound(text:"SIDES", waitFor:2,SearchRectangle:Config().SearchRectangles.(SicomOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Side Added to Order"
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end selectSecondSide
+
+(**  
+selectDrink - Handler to select the Drink like CocaCola, DrPepper etc
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to selectDrink
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Read the DataFile to get the Column Number which has the Drink Options stored
+	put DataFile().ColumnMapping.(global posPlatformName).Drink into excelColumnNumber
+	
+	// Read the Excel to get the Data Value for the Drink
+	put Common.readDataFromExcel (excelColumnNumber) into drink
+	
+	if drink is not empty
+		
+		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
+		split drink by ","
+		//Select Drinks on the Orders Section First
+		WaitFor Config().Waits.(maxWait), text:"BEVERAGES", SearchRectangle:Config().SearchRectangles.(SicomOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes
+		//validate that the option of drinks in available in display area
+		assert that ImageFound(text: item 1 of drink, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomDisplayArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+		click FoundImageLocation()
+		wait 1
+		
+		// Select Drink by clicking the image of the drink
+		// IF an Image of Drink exists, click Image. If not, do an OCR search for the Drink
+		if file (suiteinfo().imagesFolder&"/Icons/Drinks/"&item 2 of drink&".png") exists or if file (suiteinfo().imagesFolder&"/"&it) exists
+			if ImageFound(image:"Icons/Drinks/"&trim(item 2 of drink), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea))
+				click FoundImageLocation() 
+				wait 1
+			end if
+		else
+			if ImageFound(text:trim(item 2 of drink), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+				click FoundImageLocation() 
+				wait 1
+			end if
+		end if
+		
+		
+		
+		// Validate Sides are added, by ensuring "Sides" text is not found in Orders area
+		assert that not ImageFound(text:"BEVERAGES", waitFor:2,SearchRectangle:Config().SearchRectangles.(SicomOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Drink Added to Order"
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end selectDrink
+
+(**  
+selectFirstFlavors - Handler to select the first Flavors like BBQ Sauce, Ranch etc
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to selectFirstFlavors
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Read the DataFile to get the Column Number which has the Flavor Options stored
+	put DataFile().ColumnMapping.(global posPlatformName).Flavor1 into excelColumnNumber
+	
+	// Read the Excel to get the Data Value for the Flavors
+	put Common.readDataFromExcel (excelColumnNumber) into flavors
+	
+	if flavors is not empty
+		
+		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
+		split flavors by ","
+		
+		//Select Flavors on the Orders Section First
+		WaitFor Config().Waits.(maxWait), text:"CONDIMENTS", SearchRectangle:Config().SearchRectangles.(SicomOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes
+		//Validate that the flavour option is available in display area
+		assert that ImageFound(text: item 1 of flavors, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomDisplayArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+		click FoundImageLocation()
+		wait 
+		
+		// Select Flavor
+		if ImageFound(text:trim(item 2 of flavors), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes, caseSensitive: Yes)
+			click FoundImageLocation() 
+			wait 1
+		end if
+		
+		
+		// Validate Flavors are added, by ensuring "Flavor" text is not found in Orders area
+		assert that not ImageFound(text:"CONDIMENTS", waitFor:2,SearchRectangle:Config().SearchRectangles.(SicomOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Side Added to Order"
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end selectFirstFlavors
+
+(**  
+selectSecondFlavors - Handler to select the first Flavors like BBQ Sauce, Ranch etc
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to selectFirstFlavors
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Read the DataFile to get the Column Number which has the Flavor Options stored
+	put DataFile().ColumnMapping.(global posPlatformName).Flavor2 into excelColumnNumber
+	
+	// Read the Excel to get the Data Value for the Flavors
+	put Common.readDataFromExcel (excelColumnNumber) into flavors
+	
+	if flavors is not empty
+		
+		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
+		split flavors by ","
+		
+		//Select Flavors on the Orders Section First
+		WaitFor Config().Waits.(maxWait), text:"CONDIMENTS", SearchRectangle:Config().SearchRectangles.(SicomOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes
+		//Validate that the flavour option is available in display area
+		assert that ImageFound(text: item 1 of flavors, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomDisplayArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+		click FoundImageLocation()
+		wait 
+		
+		// Select Flavor
+		if ImageFound(text:trim(item 2 of flavors), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes, caseSensitive: Yes)
+			click FoundImageLocation() 
+			wait 1
+		end if
+		
+		
+		// Validate Flavors are added, by ensuring "Flavor" text is not found in Orders area
+		assert that not ImageFound(text:"CONDIMENTS", waitFor:2,SearchRectangle:Config().SearchRectangles.(SicomOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Side Added to Order"
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end selectSecondFlavors
+
+(**  
+proceedToTender - Handler to click the Total button to proceed to tender
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to proceedToTender
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Click Total button on the Orders Section First
+	WaitFor Config().Waits.(maxWait), text:"TOTAL", SearchRectangle:Config().SearchRectangles.(SicomOrdersAreaOptions), ignoreSpaces: Yes, ignoreNewLines: Yes
+	click FoundImageLocation()
+	wait 1
+	
+	// If Loyalty prompt shows up, click Not Today
+	if ImageFound(text:"Not Today", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea),  ignoreSpaces: Yes, ignoreNewLines: Yes,)
+		click FoundImageLocation() 
+		wait 1
+	end if
+	
+	// Validate Tenders screen has opened
+	assert that ImageFound(text:"EXACT CHANGE", waitFor:2,SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Tenders Screen"
+	
+	//Call handler to read and save the Order ID in a global parameter
+	saveOrderID
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end proceedToTender
+
+(**  
+exactPayment - Handler to click the Exact button to pay with Exact amount of order
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to exactPayment
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Click Exact button on the Order First
+	WaitFor Config().Waits.(maxWait), text:"EXACT CHANGE", SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes
+	click FoundImageLocation()
+	wait 1
+	
+	// Validate User is taken back to the New Order screen
+	assert that ImageFound(text:"New Order", waitFor:Config().Waits.(maxWait),SearchRectangle:Config().SearchRectangles.(BottomHalf),  ignoreSpaces: Yes, ignoreNewLines: Yes) with error "Sicom POS Login Validation"
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end exactPayment
+
+(**  
+saveOrderID - Handler to read the order ID from the Sicom screen and return the value, if needed for DAI
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to saveOrderID
+	Log "Reading Order ID"
+	put readText(Config().SearchRectangles.(SicomOrderID)) into global orderID
+	log global orderID
+	return global orderID
+end saveOrderID

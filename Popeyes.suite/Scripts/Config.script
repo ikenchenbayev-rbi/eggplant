@@ -44,10 +44,15 @@ return {
 		NCRMainCourseSelectionArea: [0,0,1916,93],
 		NCROrdersAreaOptions: [4,772,534,1036],
 		NCROrderID: [48,200,121,232],
-		OracleSoftKeypadLogin: [931,82,1589,847]
+		OracleSoftKeypadLogin: [931,82,1589,847],
 
 		SicomItemSelectionArea: [713,247,1612,903],
-
+		SicomMainCourseSelectionArea: [321,188,1602,252],
+		SicomRequestPOSArea: [726,750,1351,824],
+		SicomOrdersArea: [310,253,710,677],
+		SicomOrdersAreaOption: [311,677,708,908],
+		SicomOrderID: [510,250,582,279],
+		SicomDisplayArea: [320,258,713,676],
 
 	},
 	TextOffsets:{

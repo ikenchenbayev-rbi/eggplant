@@ -1,17 +1,19 @@
 ﻿// Oracle Test Case 1: Butterfly Shrimp & Tender Combo
 Common.setPlatformName "POS"
 Common.setPOSPlatformName "Sicom"
-Common.setTestCaseName "12P Wings Large Combo"
+Common.setTestCaseName "12P WINGS LARGE COMBO"
 Common.launchSicomPOS
 
-"DAIWrappers/POSNCR".selectDiningOption
-"DAIWrappers/POSNCR".selectMainCourse
-"DAIWrappers/POSNCR".selectMealAndOption
-"DAIWrappers/POSNCR".selectFlavors
-"DAIWrappers/POSNCR".selectSides 
-"DAIWrappers/POSNCR".selectDrink
-"DAIWrappers/POSNCR".proceedToTender
-"DAIWrappers/POSNCR".exactPayment
+"DAIWrappers/POSSicom".clickRoute
+
+"DAIWrappers/POSSicom".selectDiningOption
+"DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".selectMealAndOption
+"DAIWrappers/POSSicom".selectSides 
+"DAIWrappers/POSSicom".selectDrink
+"DAIWrappers/POSSicom".selectFlavors
+"DAIWrappers/POSSicom".proceedToTender
+"DAIWrappers/POSSicom".exactPayment
 Common.disconnectFromNCRPOS
 
 //KDS
