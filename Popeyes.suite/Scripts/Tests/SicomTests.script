@@ -16,7 +16,7 @@ Common.launchSicomPOS
 "DAIWrappers/POSSicom".selectSecondFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
-Common.disconnectFromNCRPOS
+Common.switchSicomWindowTo "KDS"
 
 //KDS
 "DAIWrappers/KDS".connectToNCRKDS
@@ -34,12 +34,11 @@ Common.launchSicomPOS
 "DAIWrappers/POSSicom".selectDiningOption
 "DAIWrappers/POSSicom".selectMainCourse
 "DAIWrappers/POSSicom".selectMealAndOption
-"DAIWrappers/POSSicom".selectSides 
+"DAIWrappers/POSSicom".selectFirstSide
 "DAIWrappers/POSSicom".selectDrink
-"DAIWrappers/POSSicom".selectFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
-Common.disconnectFromNCRPOS
+Common.switchSicomWindowTo "KDS"
 
 //KDS
 "DAIWrappers/KDS".connectToNCRKDS
@@ -57,12 +56,11 @@ Common.launchSicomPOS
 "DAIWrappers/POSSicom".selectDiningOption
 "DAIWrappers/POSSicom".selectMainCourse
 "DAIWrappers/POSSicom".selectMealAndOption
-"DAIWrappers/POSSicom".selectSides 
+"DAIWrappers/POSSicom".selectFirstSide
 "DAIWrappers/POSSicom".selectDrink
-"DAIWrappers/POSSicom".selectFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
-Common.disconnectFromNCRPOS
+Common.switchSicomWindowTo "KDS"
 
 //KDS
 "DAIWrappers/KDS".connectToNCRKDS
@@ -80,12 +78,14 @@ Common.launchSicomPOS
 "DAIWrappers/POSSicom".selectDiningOption
 "DAIWrappers/POSSicom".selectMainCourse
 "DAIWrappers/POSSicom".selectMealAndOption
-"DAIWrappers/POSSicom".selectSides 
+"DAIWrappers/POSSicom".selectFirstSide
+"DAIWrappers/POSSicom".selectSecondSide
 "DAIWrappers/POSSicom".selectDrink
-"DAIWrappers/POSSicom".selectFlavors
+"DAIWrappers/POSSicom".selectFirstFlavors
+"DAIWrappers/POSSicom".selectSecondFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
-Common.disconnectFromNCRPOS
+Common.switchSicomWindowTo "KDS"
 
 //KDS
 "DAIWrappers/KDS".connectToNCRKDS
@@ -103,12 +103,9 @@ Common.launchSicomPOS
 "DAIWrappers/POSSicom".selectDiningOption
 "DAIWrappers/POSSicom".selectMainCourse
 "DAIWrappers/POSSicom".selectMealAndOption
-"DAIWrappers/POSSicom".selectSides 
-"DAIWrappers/POSSicom".selectDrink
-"DAIWrappers/POSSicom".selectFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
-Common.disconnectFromNCRPOS
+Common.switchSicomWindowTo "KDS"
 
 //KDS
 "DAIWrappers/KDS".connectToNCRKDS

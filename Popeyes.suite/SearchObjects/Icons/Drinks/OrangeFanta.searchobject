@@ -1,27 +1,27 @@
 {
-	"lastmodifieddate": 1747245159.6069999,
+	"lastmodifieddate": 1749530430.477,
 	"lastfoundlocation": [
-		234,
-		261,
-		16,
-		12
+		1295,
+		293,
+		97,
+		93
 	],
 	"originalcapturelocation": [
-		203,
-		994,
-		16,
-		12
+		1295,
+		293,
+		97,
+		93
 	],
-	"createddate": 1747245159.6069999,
-	"lastfounddate": 1749544510.97,
+	"createddate": 1749530430.477,
+	"lastfounddate": 1749530449.323,
 	"testlocationdata": [
 		{
-				"connectionportnum": 54820,
+				"connectionportnum": 50927,
 				"properties": {
 					"CropRectangle": "[0,0,0,0]",
 					"Rotate": 0,
 					"Scale": "    1",
-					"HotSpot": "[8,6]",
+					"HotSpot": "[29,4]",
 					"Tolerance": "_45",
 					"Discrepancy": "_0",
 					"SearchType": "Tolerant of Background"
@@ -29,18 +29,18 @@
 				"sutinfo": {
 					"type": "Unknown VNC"
 				},
-				"name": "Icons/SicomTaskbarKDS.png",
+				"name": "Icons/Drinks/OrangeFanta.png",
 				"connectionname": "MyLocalTrainingPC",
 				"type": 1,
 				"capturerect": [
-					203,
-					994,
-					16,
-					12
+					1295,
+					293,
+					97,
+					93
 				],
 				"connectiontype": "Single System",
 				"connectionserverid": "127.0.0.1"
 			}
 	],
-	"name": "Icons/SicomTaskbarKDS"
+	"name": "Icons/Drinks/OrangeFanta"
 }
