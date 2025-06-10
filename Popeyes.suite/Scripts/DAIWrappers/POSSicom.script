@@ -224,8 +224,8 @@ to selectSecondSide
 		WaitFor Config().Waits.(maxWait), text:"Sides", SearchRectangle:Config().SearchRectangles.(NCROrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes
 		click FoundImageLocation()
 		wait 1*)
-	
-	// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
+		
+		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
 		split sides by ","
 		//validate that the option of sides in available in display area
 		assert that ImageFound(text: item 1 of sides, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomDisplayArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
@@ -339,7 +339,7 @@ selectSecondFlavors - Handler to select the first Flavors like BBQ Sauce, Ranch 
 @Version 1.0 4/22/2025
 @ChangeReason Creation
 **)
-to selectFirstFlavors
+to selectSecondFlavors
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 	// Read the DataFile to get the Column Number which has the Flavor Options stored
