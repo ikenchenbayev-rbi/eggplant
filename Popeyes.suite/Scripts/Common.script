@@ -490,7 +490,7 @@ to openSicomFC
 	connectToRemotePCMachine sicomFCName
 	
 	// If POS window or KDS is already opened, do nothing. Else perform putty steps to open windows
-	if imagefound (Text:"Request", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf)) or if imagefound (Text:"Support Terminal", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf))
+	if imagefound (Text:"REQUEST", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf)) or if imagefound (Text:"Support Terminal", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf))
 		LogSuccess "Sicom POS already launched"
 	else
 		// Write Code to open Putty and Launch Sicom POS, if Required in the future
