@@ -144,13 +144,17 @@ to selectMealAndOption
 	
 	// Select Meal Option
 	if selectMealOption is not empty
-		if ImageFound(text:"Would you like to make it a Large combo", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea))
+		// Click Meal Option on screen
+		assert that ImageFound(text: selectMealOption, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+		click FoundImageLocation()
+		
+		if ImageFound(text:"WOULD YOU LIKE TO MAKE IT A LARGE COMBO", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea))
 			put FoundImageInfo().imagerectangle +[0,0,200,200] into clickArea
 			click text: "No", waitFor:Config().Waits.(minWait),SearchRectangle:clickArea
 		end if
 		
 		// Click Meal Option on screen
-		Click text:selectMealOption, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes
+		//Click text:selectMealOption, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes
 		
 	end if
 	
@@ -184,8 +188,8 @@ to selectFirstSide
 		WaitFor Config().Waits.(maxWait), text:"Sides", SearchRectangle:Config().SearchRectangles.(NCROrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes
 		click FoundImageLocation()
 		wait 1*)
-		
-		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
+	
+	// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
 		split sides by ","
 		//validate that the option of sides in available in display area
 		assert that ImageFound(text: item 1 of sides, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomDisplayArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
@@ -374,6 +378,23 @@ to selectSecondFlavors
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 end selectSecondFlavors
+
+(**  
+cancelUpsizeOption - Handler to click the Cancel button of upsize window when selecting a normal size combo
+@Version 1.0 5/22/2025
+@ChangeReason Creation
+**)
+to cancelUpsizeOption
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Validate Upsize window has opene
+	assert that ImageFound(text:"WOULD YOU LIKE TO MAKE IT A LARGE COMBO", waitFor:2,SearchRectangle:Config().SearchRectangles.(TopHalf), ignoreNewLines: Yes, ) with error "Upsize Screen"
+	
+	//Click NO to close close the window
+	assert that ImageFound(text:"NO", waitFor:2,SearchRectangle:Config().SearchRectangles.(RightHalf), ignoreNewLines: Yes)
+	click FoundImageLocation()
+	wait 1
+end cancelUpsizeOption
 
 (**  
 proceedToTender - Handler to click the Total button to proceed to tender

@@ -7,8 +7,8 @@ Common.launchSicomPOS
 "DAIWrappers/POSSicom".clickRoute
 
 "DAIWrappers/POSSicom".selectDiningOption
-"DAIWrappers/POSSicom".selectMainCourse
 "DAIWrappers/POSSicom".selectMealAndOption
+"DAIWrappers/POSSicom".selectMainCourse
 "DAIWrappers/POSSicom".selectFirstSide
 "DAIWrappers/POSSicom".selectSecondSide
 "DAIWrappers/POSSicom".selectDrink
@@ -34,8 +34,8 @@ Common.launchSicomPOS
 "DAIWrappers/POSSicom".clickRoute
 
 "DAIWrappers/POSSicom".selectDiningOption
-"DAIWrappers/POSSicom".selectMainCourse
 "DAIWrappers/POSSicom".selectMealAndOption
+"DAIWrappers/POSSicom".selectMainCourse
 "DAIWrappers/POSSicom".selectFirstSide
 "DAIWrappers/POSSicom".selectDrink
 "DAIWrappers/POSSicom".proceedToTender
@@ -58,8 +58,8 @@ Common.launchSicomPOS
 "DAIWrappers/POSSicom".clickRoute
 
 "DAIWrappers/POSSicom".selectDiningOption
-"DAIWrappers/POSSicom".selectMainCourse
 "DAIWrappers/POSSicom".selectMealAndOption
+"DAIWrappers/POSSicom".selectMainCourse
 "DAIWrappers/POSSicom".selectFirstSide
 "DAIWrappers/POSSicom".selectDrink
 "DAIWrappers/POSSicom".proceedToTender
@@ -82,8 +82,8 @@ Common.launchSicomPOS
 "DAIWrappers/POSSicom".clickRoute
 
 "DAIWrappers/POSSicom".selectDiningOption
-"DAIWrappers/POSSicom".selectMainCourse
 "DAIWrappers/POSSicom".selectMealAndOption
+"DAIWrappers/POSSicom".selectMainCourse
 "DAIWrappers/POSSicom".selectFirstSide
 "DAIWrappers/POSSicom".selectSecondSide
 "DAIWrappers/POSSicom".selectDrink
@@ -109,8 +109,8 @@ Common.launchSicomPOS
 "DAIWrappers/POSSicom".clickRoute
 
 "DAIWrappers/POSSicom".selectDiningOption
-"DAIWrappers/POSSicom".selectMainCourse
 "DAIWrappers/POSSicom".selectMealAndOption
+"DAIWrappers/POSSicom".selectMainCourse
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
 Common.switchSicomWindowTo "KDS"
