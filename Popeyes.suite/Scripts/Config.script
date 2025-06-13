@@ -68,5 +68,6 @@ return {
 	(* TextOffsets used in the POS system to enable typetext commands*)
 		CommandCenterTextbox:[55,0],
 		RemotePCLoginTextbox: [0,20],
+		ClickScreenOffset: [1900,500],
 	},
 }

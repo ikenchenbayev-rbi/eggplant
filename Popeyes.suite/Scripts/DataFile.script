@@ -16,7 +16,7 @@ Description:  DataFile contains return value for the config data used in POS tes
 **) 
 
 return { 
-(* Login Information to be used inside the POS system. Currently Cashier, Supervisor and CashOffice logins are configured*)
+	(* Login Information to be used inside the POS system, for Oracle, NCR and SiCOM*)
 	Logins:{
 		NCRPOS:{
 			employeeCode:"100",
@@ -58,6 +58,8 @@ return {
 	(* Loyalty/Customer List to be used in the POS system. Each entry contains the ID and the Name of the Customer*)
 	LoyaltyList:{
 	},
+	
+	(* Column Mapping to be used in the POS code to read the excel to pass the right data for each plstform*)
 	ColumnMapping:{
 		NCR: {
 			TestCaseName: "B",
@@ -111,6 +113,8 @@ return {
 			LabelMealDisplayName: "O",
 		},
 	},
+	
+	(* SUT Names to be used to in the code to connect to platforrms under test*)
 	SUTNames:{
 		LocalSingleSystem: "MyLocalTrainingPC",
 		NCRPOS: "",

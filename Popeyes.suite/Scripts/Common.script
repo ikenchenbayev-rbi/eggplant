@@ -207,7 +207,7 @@ to launchNCRPOS
 		Connect {serverID: "127.0.0.1", portNum:5500, Visible: "Yes"} 
 
 		// Click to wake up the system, incase it is showing the screen saver
-		click [1900,500]
+		click Config().TextOffsets.(ClickScreenOffset)
 	else
 		// Connect to the Local PC as Single-SUT to launch Command Center application of NCR
 		log "Performing steps to launch Command Center and NCR POS"
@@ -243,8 +243,8 @@ to launchNCRPOS
 	Connect {serverID: "127.0.0.1", portNum:5500, Visible: "Yes"} 
 
 	// Click to wake up the system, incase it is showing the screen saver
-	click [1900,500]
-
+	click Config().TextOffsets.(ClickScreenOffset)
+	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 end launchNCRPOS
@@ -312,7 +312,7 @@ to getGoogleAuthCode
 end getGoogleAuthCode
 
 (**  
-getGoogleAuthCode - Handler to disonnect from the NCR POS SUT
+disconnectFromNCRPOS - Handler to disonnect from the NCR POS SUT
 @Version 1.0 4/22/2025
 @ChangeReason Creation
 **)
@@ -487,8 +487,8 @@ to launchSicomPOS
 	
 	
 	// Click to wake up the system, incase it is showing the screen saver
-	click [1900,500]
-
+	click Config().TextOffsets.(ClickScreenOffset)
+	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 end launchSicomPOS
