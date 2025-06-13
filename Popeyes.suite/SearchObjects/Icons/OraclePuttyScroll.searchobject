@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		1901,
+		21,
+		19,
+		20
+	],
+	"lastmodifieddate": 1749497754.835,
+	"createddate": 1749490947.8010001,
+	"name": "Icons/OraclePuttyScroll",
+	"lastfounddate": 1749821761.276,
+	"ocrcapturestring": "A",
+	"lastfoundlocation": [
+		1901,
+		21,
+		19,
+		20
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 65125,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[9,10]",
+					"Tolerance": "_45",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/OraclePuttyScroll/OraclePuttyScroll.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					1901,
+					21,
+					19,
+					20
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "A"
+			}
+	]
+}

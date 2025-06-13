@@ -1,0 +1,47 @@
+{
+	"originalcapturelocation": [
+		0,
+		995,
+		320,
+		64
+	],
+	"lastmodifieddate": 1748487697.016,
+	"createddate": 1748486175.214,
+	"name": "Icons/OracleTotalButton",
+	"lastfounddate": 1749821642.566,
+	"ocrcapturestring": "Total",
+	"lastfoundlocation": [
+		120,
+		1008,
+		84,
+		43
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 5900,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[160,32]",
+					"Tolerance": "_73",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/OracleTotalButton.png",
+				"connectionname": "OraclePOS",
+				"type": 1,
+				"capturerect": [
+					0,
+					995,
+					320,
+					64
+				],
+				"connectionserverid": "192.168.1.2",
+				"capturedocrtext": "Total"
+			}
+	]
+}

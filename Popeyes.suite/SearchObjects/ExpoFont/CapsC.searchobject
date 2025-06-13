@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		178,
+		679,
+		18,
+		19
+	],
+	"lastmodifieddate": 1749150943.467,
+	"createddate": 1749150943.467,
+	"name": "ExpoFont/CapsC",
+	"lastfounddate": 1749150944.007,
+	"ocrcapturestring": "c",
+	"lastfoundlocation": [
+		178,
+		679,
+		18,
+		19
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 60488,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[9,9]",
+					"Tolerance": "_45",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "ExpoFont/CapsC.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					178,
+					679,
+					18,
+					19
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "c"
+			}
+	]
+}

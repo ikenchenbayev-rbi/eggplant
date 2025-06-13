@@ -44,8 +44,25 @@ return {
 		NCRMainCourseSelectionArea: [0,0,1916,93],
 		NCROrdersAreaOptions: [4,772,534,1036],
 		NCROrderID: [48,200,121,232],
-		OracleSoftKeypadLogin: [931,82,1589,847]
-
+		OracleSoftKeypadLogin: [931,82,1589,847],
+		OracleMainCourseSelectionArea: [4,1,1918,90],
+		OracleItemSelectionArea: [322,91,1920,996],
+		OracleOrderTypeSelectionArea: [320,138,399,549],
+		OracleOrdersArea: [0,131,323,1063],
+		OracleSidesSelectionArea: [397,716,1919,996],
+		OracleChangeDuePopup: [664,314,1257,724],
+		OracleCashPullPopup:[425,446,1496,633],
+		OracleOrderID: [42,113,191,139],
+		KioskMainWindow: [692,66,1228,1031],
+		KioskItemSelectionArea: [860,91,1223,1021],
+		KioskOptionsSelectionArea: [696,355,1225,970],
+		KioskMainCourseSelectionArea: [696,95,847,1025],
+		KioskNameSoftKeyboard: [743,362,1185,543],
+		OracleKioskMainWindow: [0,0,1080,1920], 
+		OracleKioskItemSelectionArea: [301,0,1080,1838],
+		OracleKioskOptionsSelectionArea: [0,572,1080,1671],
+		OracleKioskMainCourseSelectionArea: [0,0,302,1829],
+		OracleKioskNameSoftKeyboard: [95,581,988,953],
 	},
 	TextOffsets:{
 	(* TextOffsets used in the POS system to enable typetext commands*)

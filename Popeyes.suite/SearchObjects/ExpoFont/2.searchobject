@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		288,
+		678,
+		17,
+		21
+	],
+	"lastmodifieddate": 1749151048.464,
+	"createddate": 1749151048.464,
+	"name": "ExpoFont/2",
+	"lastfounddate": 1749151049.155,
+	"ocrcapturestring": "2",
+	"lastfoundlocation": [
+		288,
+		678,
+		17,
+		21
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 60488,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[8,10]",
+					"Tolerance": "_45",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "ExpoFont/2.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					288,
+					678,
+					17,
+					21
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "2"
+			}
+	]
+}

@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		65,
+		490,
+		327,
+		21
+	],
+	"lastmodifieddate": 1749485071.1659999,
+	"createddate": 1749485071.1659999,
+	"name": "Icons/OracleExpo/TndrClsc2Pc",
+	"lastfounddate": 1749698842.1459999,
+	"ocrcapturestring": "Tndr else 2 Pc.",
+	"lastfoundlocation": [
+		65,
+		637,
+		327,
+		21
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 65125,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[163,10]",
+					"Tolerance": "_72",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/OracleExpo/TndrClsc2Pc.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					65,
+					490,
+					327,
+					21
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "Tndr else 2 Pc."
+			}
+	]
+}

@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		1056,
+		941,
+		69,
+		18
+	],
+	"lastmodifieddate": 1747936194.329,
+	"createddate": 1747936194.329,
+	"name": "Icons/KioskPayNow",
+	"lastfounddate": 1747936275.3740001,
+	"ocrcapturestring": "Pay Now",
+	"lastfoundlocation": [
+		1056,
+		941,
+		69,
+		18
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 61954,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[34,9]",
+					"Tolerance": "_73",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/KioskPayNow.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					1056,
+					941,
+					69,
+					18
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "Pay Now"
+			}
+	]
+}

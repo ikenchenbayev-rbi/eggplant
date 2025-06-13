@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		3,
+		280,
+		80,
+		41
+	],
+	"lastmodifieddate": 1749584461.947,
+	"createddate": 1749584461.947,
+	"name": "Icons/OracleStickyStart_Top",
+	"lastfounddate": 1749821888.9190001,
+	"ocrcapturestring": "123 MLU",
+	"lastfoundlocation": [
+		3,
+		70,
+		80,
+		41
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 50127,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[40,20]",
+					"Tolerance": "_72",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/OracleStickyStart_Top.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					3,
+					280,
+					80,
+					41
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "123 MLU"
+			}
+	]
+}
