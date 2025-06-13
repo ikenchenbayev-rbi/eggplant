@@ -4,12 +4,32 @@
 <dict>
     <key>ChromeIcon.png</key>
     <string>2025-04-23 15:07 +0000</string>
+    <key>ExpoFont/2.png</key>
+    <string>2025-06-05 19:17 +0000</string>
+    <key>ExpoFont/CapsC.png</key>
+    <string>2025-06-05 19:15 +0000</string>
+    <key>ExpoFont/CapsP.png</key>
+    <string>2025-06-05 19:17 +0000</string>
+    <key>ExpoFont/LowerC.png</key>
+    <string>2025-06-05 19:17 +0000</string>
+    <key>ExpoFont/LowerD.png</key>
+    <string>2025-06-05 19:15 +0000</string>
+    <key>ExpoFont/LowerL.png</key>
+    <string>2025-06-05 19:16 +0000</string>
+    <key>ExpoFont/LowerN.png</key>
+    <string>2025-06-05 19:15 +0000</string>
+    <key>ExpoFont/LowerR.png</key>
+    <string>2025-06-05 19:15 +0000</string>
+    <key>ExpoFont/LowerS.png</key>
+    <string>2025-06-05 19:16 +0000</string>
+    <key>ExpoFontOld/CapsP.png</key>
+    <string>2025-06-05 19:31 +0000</string>
     <key>Icons/ChromeIcon.png</key>
-    <string>2025-05-19 19:09 +0000</string>
+    <string>2025-06-13 08:12 +0000</string>
     <key>Icons/ChromeRefreshIcon.png</key>
-    <string>2025-05-20 16:38 +0000</string>
+    <string>2025-06-13 06:42 +0000</string>
     <key>Icons/CloseCommandCenter.png</key>
-    <string>2025-04-30 14:37 +0000</string>
+    <string>2025-06-04 21:02 +0000</string>
     <key>Icons/Drinks/CocaCola.png</key>
     <string>2025-05-02 18:26 +0000</string>
     <key>Icons/Drinks/DietCoke.png</key>
@@ -20,8 +40,36 @@
     <string>2025-05-14 17:52 +0000</string>
     <key>Icons/KDSNext.png</key>
     <string>2025-05-02 17:47 +0000</string>
+    <key>Icons/KioskNext.png</key>
+    <string>2025-06-13 06:22 +0000</string>
+    <key>Icons/KioskPayNow.png</key>
+    <string>2025-06-13 06:22 +0000</string>
+    <key>Icons/KioskViewCart.png</key>
+    <string>2025-06-13 06:22 +0000</string>
+    <key>Icons/LgCombo.png</key>
+    <string>2025-06-13 03:05 +0000</string>
+    <key>Icons/OracleExpo/ShrmpPop14LB.png</key>
+    <string>2025-06-13 13:35 +0000</string>
+    <key>Icons/OracleExpo/TndrClsc2Pc.png</key>
+    <string>2025-06-12 03:27 +0000</string>
+    <key>Icons/OracleExpo/TndrSpcy2Pc.png</key>
+    <string>2025-06-13 13:35 +0000</string>
+    <key>Icons/OracleIcon.png</key>
+    <string>2025-06-13 03:04 +0000</string>
     <key>Icons/OracleLoginButton.png</key>
-    <string>2025-05-20 16:17 +0000</string>
+    <string>2025-06-13 03:05 +0000</string>
+    <key>Icons/OracleOKButton.png</key>
+    <string>2025-06-13 13:34 +0000</string>
+    <key>Icons/OraclePuttyScroll/OraclePuttyScroll.png</key>
+    <string>2025-06-13 13:36 +0000</string>
+    <key>Icons/OraclePuttyScroll/OraclePuttyScroll_Clicked.png</key>
+    <string>2025-06-13 13:36 +0000</string>
+    <key>Icons/OracleStickyStart.png</key>
+    <string>2025-06-13 13:38 +0000</string>
+    <key>Icons/OracleStickyStart_Top.png</key>
+    <string>2025-06-13 13:38 +0000</string>
+    <key>Icons/OracleTotalButton.png</key>
+    <string>2025-06-13 13:34 +0000</string>
     <key>Icons/SicomPutty.png</key>
     <string>2025-05-14 14:39 +0000</string>
     <key>Icons/SicomTaskbarKDS.png</key>
@@ -31,11 +79,49 @@
     <key>Icons/SicomTightVNC.png</key>
     <string>2025-05-14 16:32 +0000</string>
     <key>Icons/VNC.png</key>
-    <string>2025-05-19 19:22 +0000</string>
+    <string>2025-06-13 08:05 +0000</string>
     <key>Icons/authenticator.png</key>
-    <string>2025-05-19 19:21 +0000</string>
+    <string>2025-06-13 08:05 +0000</string>
     <key>VNC.png</key>
     <string>2025-04-23 15:13 +0000</string>
+    <key>[Character_Collections]/ExpoFont/digit_1.png</key>
+    <string>2025-06-10 19:41 +0000</string>
+    <key>[Character_Collections]/ExpoFont/digit_2.png</key>
+    <string>2025-06-11 17:16 +0000</string>
+    <key>[Character_Collections]/ExpoFont/digit_4.png</key>
+    <string>2025-06-11 17:16 +0000</string>
+    <key>[Character_Collections]/ExpoFont/lower_c.png</key>
+    <string>2025-06-11 17:16 +0000</string>
+    <key>[Character_Collections]/ExpoFont/lower_d.png</key>
+    <string>2025-06-11 17:16 +0000</string>
+    <key>[Character_Collections]/ExpoFont/lower_h.png</key>
+    <string>2025-06-09 21:53 +0000</string>
+    <key>[Character_Collections]/ExpoFont/lower_l.png</key>
+    <string>2025-06-09 21:53 +0000</string>
+    <key>[Character_Collections]/ExpoFont/lower_m.png</key>
+    <string>2025-06-09 15:49 +0000</string>
+    <key>[Character_Collections]/ExpoFont/lower_n.png</key>
+    <string>2025-06-09 21:53 +0000</string>
+    <key>[Character_Collections]/ExpoFont/lower_o.png</key>
+    <string>2025-06-11 17:16 +0000</string>
+    <key>[Character_Collections]/ExpoFont/lower_p.png</key>
+    <string>2025-06-09 15:49 +0000</string>
+    <key>[Character_Collections]/ExpoFont/lower_r.png</key>
+    <string>2025-06-11 17:16 +0000</string>
+    <key>[Character_Collections]/ExpoFont/lower_s.png</key>
+    <string>2025-06-11 17:16 +0000</string>
+    <key>[Character_Collections]/ExpoFont/slash.png</key>
+    <string>2025-06-09 15:49 +0000</string>
+    <key>[Character_Collections]/ExpoFont/upper_B.png</key>
+    <string>2025-06-09 21:53 +0000</string>
+    <key>[Character_Collections]/ExpoFont/upper_C.png</key>
+    <string>2025-06-11 17:16 +0000</string>
+    <key>[Character_Collections]/ExpoFont/upper_L.png</key>
+    <string>2025-06-11 17:16 +0000</string>
+    <key>[Character_Collections]/ExpoFont/upper_P.png</key>
+    <string>2025-06-09 21:53 +0000</string>
+    <key>[Character_Collections]/ExpoFont/upper_T.png</key>
+    <string>2025-06-09 16:04 +0000</string>
     <key>authenticator.png</key>
     <string>2025-04-23 15:07 +0000</string>
 </dict>

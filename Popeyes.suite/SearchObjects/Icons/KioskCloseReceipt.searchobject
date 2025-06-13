@@ -1,0 +1,41 @@
+{
+	"lastmodifieddate": 1749795973.9920001,
+	"ocrcapturestring": "X",
+	"originalcapturelocation": [
+		785,
+		246,
+		86,
+		86
+	],
+	"createddate": 1749795848.638,
+	"testlocationdata": [
+		{
+				"connectionportnum": 3389,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[37,38]",
+					"Tolerance": "_45",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown RDP"
+				},
+				"name": "Icons/KioskCloseReceipt.png",
+				"connectionname": "OracleKiosk",
+				"type": 1,
+				"connectionserverid": "192.168.7.4",
+				"capturerect": [
+					785,
+					246,
+					86,
+					86
+				],
+				"connectiontype": "RDP",
+				"capturedocrtext": "X"
+			}
+	],
+	"name": "Icons/KioskCloseReceipt"
+}

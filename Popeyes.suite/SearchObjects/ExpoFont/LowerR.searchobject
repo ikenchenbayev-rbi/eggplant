@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		135,
+		682,
+		14,
+		16
+	],
+	"lastmodifieddate": 1749150913.434,
+	"createddate": 1749150913.434,
+	"name": "ExpoFont/LowerR",
+	"lastfounddate": 1749150913.9759998,
+	"ocrcapturestring": "r",
+	"lastfoundlocation": [
+		135,
+		682,
+		14,
+		16
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 60488,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[6,11]",
+					"Tolerance": "_45",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "ExpoFont/LowerR.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					135,
+					682,
+					14,
+					16
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "r"
+			}
+	]
+}

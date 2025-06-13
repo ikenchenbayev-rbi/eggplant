@@ -374,6 +374,6 @@ saveOrderID - Handler to read the order ID from the NCR screen and return the va
 to saveOrderID
 	Log "Reading Order ID"
 	put readText(Config().SearchRectangles.(NCROrderID)) into global orderID
-	log global orderID
+	log "Order ID is: "&global orderID
 	return global orderID
 end saveOrderID

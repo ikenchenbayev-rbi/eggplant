@@ -1,0 +1,47 @@
+{
+	"originalcapturelocation": [
+		333,
+		358,
+		53,
+		36
+	],
+	"lastmodifieddate": 1749161854.5929999,
+	"createddate": 1749161519.211,
+	"name": "Icons/LgCombo",
+	"lastfounddate": 1749783940.7649999,
+	"ocrcapturestring": "Lg Combo",
+	"lastfoundlocation": [
+		333,
+		358,
+		53,
+		36
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 5900,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[26,18]",
+					"Tolerance": "_73",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/LgCombo.png",
+				"connectionname": "OraclePOS",
+				"type": 1,
+				"capturerect": [
+					333,
+					358,
+					53,
+					36
+				],
+				"connectionserverid": "192.168.1.2",
+				"capturedocrtext": "Lg Combo"
+			}
+	]
+}

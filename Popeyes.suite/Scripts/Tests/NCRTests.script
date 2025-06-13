@@ -16,9 +16,9 @@ Common.launchNCRPOS
 Common.disconnectFromNCRPOS
 
 //KDS
-"DAIWrappers/KDS".connectToNCRKDS
-"DAIWrappers/KDS".bumpOrderIDOnNCRKDS
-"DAIWrappers/KDS".disconnectFromNCRKDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
 
 
 // NCR Test Case 2: Classic Chicken Sandwich Combo
@@ -91,28 +91,56 @@ Common.disconnectFromNCRPOS
 "DAIWrappers/KDS".disconnectFromNCRKDS
 
 
-// NCR Test Case 5: KIOSK
+// NCR Test Case 5: KIOSK 1/4 lb Popcorn Shrimp
 Common.setPlatformName "Kiosk"
 Common.setPOSPlatformName "NCRKiosk"
-Common.setTestCaseName "4 PC BIC Combo"
-"DAIWrappers/KioskNCR".launchNCRKiosk
-"DAIWrappers/KioskNCR".startKioskOrder
+Common.setTestCaseName "1/4 lb Popcorn Shrimp Combo"
+"DAIWrappers/Kiosk".launchKiosk
+"DAIWrappers/Kiosk".startKioskOrder
+"DAIWrappers/Kiosk".selectDiningOption
+"DAIWrappers/Kiosk".selectMainCourse
+"DAIWrappers/Kiosk".selectMealAndSize
+"DAIWrappers/Kiosk".selectFlavors
+"DAIWrappers/Kiosk".selectSides 
+"DAIWrappers/Kiosk".selectDrink
+"DAIWrappers/Kiosk".selectBiscuit
+"DAIWrappers/Kiosk".addToCart
+"DAIWrappers/Kiosk".viewCart
+"DAIWrappers/Kiosk".proceedToTender
+"DAIWrappers/Kiosk".enterNameOnOrder "Test"
+//TO TEST
+"DAIWrappers/Kiosk".payAtCounter
+"DAIWrappers/Kiosk".completeOrder
 
-"DAIWrappers/POSNCR".loginToNCRPOS
-"DAIWrappers/POSNCR".selectDiningOption
-"DAIWrappers/POSNCR".selectMainCourse
-"DAIWrappers/POSNCR".selectMealAndOption
-"DAIWrappers/POSNCR".selectFlavors
-"DAIWrappers/POSNCR".selectSides 
-"DAIWrappers/POSNCR".selectDrink
-"DAIWrappers/POSNCR".proceedToTender
-"DAIWrappers/POSNCR".exactPayment
 Common.disconnectFromNCRPOS
 
 //KDS
 "DAIWrappers/KDS".connectToNCRKDS
 "DAIWrappers/KDS".bumpOrderIDOnNCRKDS
 "DAIWrappers/KDS".disconnectFromNCRKDS
+
+
+// NCR Test Case 6: KIOSK 6 pc Boneless wings
+Common.setPlatformName "Kiosk"
+Common.setPOSPlatformName "NCRKiosk"
+Common.setTestCaseName "6 Pc Boneless Wings Combo"
+"DAIWrappers/Kiosk".launchNCRKiosk
+"DAIWrappers/Kiosk".startKioskOrder
+"DAIWrappers/Kiosk".selectDiningOption
+"DAIWrappers/POS".selectMainCourse
+"DAIWrappers/POS".selectMealAndOption
+"DAIWrappers/POS".selectFlavors
+"DAIWrappers/POS".selectSides 
+"DAIWrappers/POS".selectDrink
+"DAIWrappers/POS".proceedToTender
+"DAIWrappers/POS".exactPayment
+Common.disconnectFromNCRPOS
+
+//KDS
+"DAIWrappers/KDS".connectToNCRKDS
+"DAIWrappers/KDS".bumpOrderIDOnNCRKDS
+"DAIWrappers/KDS".disconnectFromNCRKDS
+
 
 
 
