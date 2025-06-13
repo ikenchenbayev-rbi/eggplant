@@ -55,8 +55,8 @@ to connectToKDS
 		end repeat
 		
 		// Click to wake up the system, incase it is showing the screen saver
-		click [1900,500]
-
+		click Config().TextOffsets.(ClickScreenOffset)
+		
 	end if
 	
 	
@@ -130,7 +130,7 @@ end bumpOrderIDOnKDS
 
 
 (**  
-disconnectFromNCRKDS - Handler to Disconnect from the KDS SUT
+disconnectFromKDS - Handler to Disconnect from the KDS SUT
 @Version 1.0 4/22/2025
 @ChangeReason Creation
 **)

@@ -50,7 +50,7 @@ to launchKiosk
 	assert that imagefound (Text:"Order Now", waitFor: Config().Waits.(maxWait), SearchRectangle: Config().SearchRectangles.(BottomHalf)) with error "Kiosk main screen"
 	
 	// Click to wake up the system, incase it is showing the screen saver
-	click [1900,500]
+	click Config().TextOffsets.(ClickScreenOffset)
 
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	

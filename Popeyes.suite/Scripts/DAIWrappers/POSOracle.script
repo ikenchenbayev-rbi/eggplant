@@ -448,7 +448,7 @@ to validateReceipt
 	
 	if imageFound(text: "Simphony", WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(BottomHalf))
 		LogSuccess "Oracle Receipt validation window already open"
-		click [1900,500]
+		click Config().TextOffsets.(ClickScreenOffset)
 		// Type command for opening latest receipt
 		typetext DataFile().Logins.OracleReceipts.receiptCommand, returnKey
 		wait 1
@@ -485,7 +485,7 @@ to validateExpoReceipt
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 	// Scroll to the bottom of the screen
-	click [1900,500]
+	click Config().TextOffsets.(ClickScreenOffset)
 	typetext controlKey, shiftKey, pageDown
 	
 	put DataFile().ColumnMapping.(global posPlatformName).ExpoLabelDisplayName into excelColumnNumber
@@ -525,7 +525,7 @@ to validateCustomerReceipt
 	put Common.readDataFromExcel (excelColumnNumber) into mealDisplayName
 	
 	// Scroll to the bottom of the screen
-	click [1900,500]
+	click Config().TextOffsets.(ClickScreenOffset)
 	typetext controlKey, shiftKey, pageDown
 	
 	// Validate Customer Receipts
@@ -576,10 +576,10 @@ to validateStickyReceipt
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 	// Scroll to the bottom of the screen
-	click [1900,500]
+	click Config().TextOffsets.(ClickScreenOffset)
 	typetext controlKey, shiftKey, pageDown
 	
-	click [1900,500]
+	click Config().TextOffsets.(ClickScreenOffset)
 	ScrollWheelUp 1
 	
 	put DataFile().ColumnMapping.(global posPlatformName).LabelMealDisplayName into excelColumnNumber
@@ -589,7 +589,7 @@ to validateStickyReceipt
 	// Scroll up to the Sticky Label. Find based on text 1 of 3
 	repeat until ImageFound(image:"Icons/OracleStickyStart", waitFor:2, SearchRectangle: Config().SearchRectangles.(LeftHalf)) and ImageFound(image:"Icons/OracleStickyStart_Top", waitFor:2, SearchRectangle: Config().SearchRectangles.(LeftHalf))
 		//click "Icons/OraclePuttyScroll"
-		click [1900,500]
+		click Config().TextOffsets.(ClickScreenOffset)
 		ScrollWheelUp 1
 	end repeat
 	
