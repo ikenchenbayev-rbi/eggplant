@@ -1,0 +1,102 @@
+{
+	"originalcapturelocation": [
+		130,
+		385,
+		44,
+		43
+	],
+	"lastmodifieddate": 1750041863.8099999,
+	"createddate": 1750039999.503,
+	"name": "Icons/SicomTightVNC2",
+	"lastfounddate": 1750041868.9200001,
+	"ocrcapturestring": "ywc",
+	"lastfoundlocation": [
+		130,
+		385,
+		44,
+		43
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 55551,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[17,3]",
+					"Tolerance": 50,
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/SicomTightVNC.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					130,
+					385,
+					44,
+					43
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "ywc"
+			},
+		{
+				"connectionportnum": 55551,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[17,3]",
+					"Tolerance": "_73",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/SicomTightVNC.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					130,
+					385,
+					44,
+					43
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "ywc"
+			},
+		{
+				"connectionportnum": 55572,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[17,3]",
+					"Tolerance": 78,
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/SicomTightVNC.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					130,
+					385,
+					44,
+					43
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "ywc"
+			}
+	]
+}

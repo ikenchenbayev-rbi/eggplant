@@ -46,14 +46,15 @@ return {
 		NCROrderID: [48,200,121,232],
 		OracleSoftKeypadLogin: [931,82,1589,847],
 
-		SicomItemSelectionArea: [713,247,1612,903],
-		SicomMainCourseSelectionArea: [321,188,1602,252],
-		SicomRequestPOSArea: [726,750,1351,824],
-		SicomOrdersArea: [310,253,710,677],
-		SicomOrdersAreaOption: [311,677,708,908],
-		SicomOrderID: [510,250,582,279],
-		SicomDisplayArea: [320,258,713,676],
+		SicomPOSInterfaceArea: [294,159,1623,909], --full interface of SICOM POS (not fullscreen)--
+		SicomMealSelectionArea: [321,193,1598,251], --area of the meal section (SANDWICHES, CHICKEN tect), not fulllscreen--
+		SicomMainCourseSelectionArea: [709,230,1623,826], --area of menu selection, not fullscreen--
+		SicomRequestPOSArea: [716,742,1363,826], --area of route selection-, not fullscreen--
+		SicomOrdersArea: [296,231,700,903], --area of selected menu display, not fullscreen--
+		SicomDineOptionArea: [713,828,1390,897], --area for dining option selection, not fullscreen--
+		SicomOrderID: [521,255,575,280], --area of order ID--
 
+	
 	},
 	TextOffsets:{
 	(* TextOffsets used in the POS system to enable typetext commands*)

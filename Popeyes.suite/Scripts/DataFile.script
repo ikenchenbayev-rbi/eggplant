@@ -16,7 +16,7 @@ Description:  DataFile contains return value for the config data used in POS tes
 **) 
 
 return { 
-(* Login Information to be used inside the POS system. Currently Cashier, Supervisor and CashOffice logins are configured*)
+	(* Login Information to be used inside the POS system. Currently Cashier, Supervisor and CashOffice logins are configured*)
 	Logins:{
 		NCRPOS:{
 			employeeCode:"100",
@@ -82,9 +82,9 @@ return {
 		},
 		Sicom: {
 			TestCaseName: "B",
-			DiningOption: "C",
-			MainCourse: "D",
-			SelectMeal: "E",
+			DineOption: "C",
+			MainCourse: "E",
+			SelectMeal: "D",
 			SelectMealOption: "F",
 			MealDisplayName: "G",
 			Flavor1: "H",

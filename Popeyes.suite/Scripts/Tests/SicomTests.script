@@ -16,19 +16,142 @@ Common.launchSicomPOS
 "DAIWrappers/POSSicom".selectSecondFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
+"DAIWrappers/POSSicom".saveOrderID
 Common.switchSicomWindowTo "KDS"
 
 //KDS
-"DAIWrappers/KDS".connectToNCRKDS
-"DAIWrappers/KDS".bumpOrderIDOnNCRKDS
+"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
 "DAIWrappers/KDS".disconnectFromNCRKDS
 
 (*=================================*)
 
-//Sicom Test Case 2: Spicy chicken sandwich combo with side and drink upcharge
+//Sicom Test Case 2: 12pc bone-in wings dinner
 Common.setPlatformName "POS"
 Common.setPOSPlatformName "Sicom"
-Common.setTestCaseName "SPICY CHICKEN SANDWICH"
+Common.setTestCaseName "12P WINGS DINNER"
+Common.launchSicomPOS
+
+"DAIWrappers/POSSicom".clickRoute
+
+"DAIWrappers/POSSicom".selectDiningOption
+"DAIWrappers/POSSicom".selectMealAndOption
+"DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".selectFirstSide
+"DAIWrappers/POSSicom".selectFirstFlavors
+"DAIWrappers/POSSicom".selectSecondFlavors
+"DAIWrappers/POSSicom".proceedToTender
+"DAIWrappers/POSSicom".exactPayment
+"DAIWrappers/POSSicom".saveOrderID
+Common.switchSicomWindowTo "KDS"
+
+//KDS
+"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+"DAIWrappers/KDS".disconnectFromNCRKDS
+
+(*=================================*)
+
+//Sicom Test Case 3: 12pc bone-in wings combo
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Sicom"
+Common.setTestCaseName "12P WINGS LARGE COMBO"
+Common.launchSicomPOS
+
+"DAIWrappers/POSSicom".clickRoute
+
+"DAIWrappers/POSSicom".selectDiningOption
+"DAIWrappers/POSSicom".selectMealAndOption
+"DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".selectFirstSide
+"DAIWrappers/POSSicom".selectDrink
+"DAIWrappers/POSSicom".selectFirstFlavors
+"DAIWrappers/POSSicom".selectSecondFlavors
+"DAIWrappers/POSSicom".proceedToTender
+"DAIWrappers/POSSicom".exactPayment
+"DAIWrappers/POSSicom".saveOrderID
+Common.switchSicomWindowTo "KDS"
+
+//KDS
+"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+"DAIWrappers/KDS".disconnectFromNCRKDS
+
+(*=================================*)
+
+//Sicom Test Case 4: 12pc bone-in wings large combo
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Sicom"
+Common.setTestCaseName "12P WINGS LARGE COMBO"
+Common.launchSicomPOS
+
+"DAIWrappers/POSSicom".clickRoute
+
+"DAIWrappers/POSSicom".selectDiningOption
+"DAIWrappers/POSSicom".selectMealAndOption
+"DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".selectFirstSide
+"DAIWrappers/POSSicom".selectSecondSide
+"DAIWrappers/POSSicom".selectDrink
+"DAIWrappers/POSSicom".selectFirstFlavors
+"DAIWrappers/POSSicom".selectSecondFlavors
+"DAIWrappers/POSSicom".proceedToTender
+"DAIWrappers/POSSicom".exactPayment
+"DAIWrappers/POSSicom".saveOrderID
+Common.switchSicomWindowTo "KDS"
+
+//KDS
+"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+"DAIWrappers/KDS".disconnectFromNCRKDS
+
+(*=================================*)
+
+//Sicom Test Case 5: Spicy chicken sandwich ala-carte
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Sicom"
+Common.setTestCaseName "SPICY CHICKEN SANDWICH ALA CARTE"
+Common.launchSicomPOS
+
+"DAIWrappers/POSSicom".clickRoute
+
+"DAIWrappers/POSSicom".selectDiningOption
+"DAIWrappers/POSSicom".selectMealAndOption
+"DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".proceedToTender
+"DAIWrappers/POSSicom".exactPayment
+"DAIWrappers/POSSicom".saveOrderID
+Common.switchSicomWindowTo "KDS"
+
+//KDS
+"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+"DAIWrappers/KDS".disconnectFromNCRKDS
+
+(*=================================*)
+
+//Sicom Test Case 6: Spicy chicken sandwich dinner set
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Sicom"
+Common.setTestCaseName "SPICY CHICKEN SANDWICH DINNER"
+Common.launchSicomPOS
+
+"DAIWrappers/POSSicom".clickRoute
+
+"DAIWrappers/POSSicom".selectDiningOption
+"DAIWrappers/POSSicom".selectMealAndOption
+"DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".selectFirstSide
+"DAIWrappers/POSSicom".proceedToTender
+"DAIWrappers/POSSicom".exactPayment
+"DAIWrappers/POSSicom".saveOrderID
+Common.switchSicomWindowTo "KDS"
+
+//KDS
+"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+"DAIWrappers/KDS".disconnectFromNCRKDS
+
+(*=================================*)
+
+//Sicom Test Case 7: Spicy chicken sandwich combo with side and drink upcharge
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Sicom"
+Common.setTestCaseName "SPICY CHICKEN SANDWICH COMBO"
 Common.launchSicomPOS
 
 "DAIWrappers/POSSicom".clickRoute
@@ -40,16 +163,62 @@ Common.launchSicomPOS
 "DAIWrappers/POSSicom".selectDrink
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
+"DAIWrappers/POSSicom".saveOrderID
 Common.switchSicomWindowTo "KDS"
 
 //KDS
-"DAIWrappers/KDS".connectToNCRKDS
-"DAIWrappers/KDS".bumpOrderIDOnNCRKDS
+"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
 "DAIWrappers/KDS".disconnectFromNCRKDS
 
 (*=================================*)
 
-//Sicom Test Case 3:4pc BIC all white combo
+//Sicom Test Case 8: Spicy chicken sandwich large combo with side and drink upcharge
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Sicom"
+Common.setTestCaseName "SPICY CHICKEN SANDWICH LARGE COMBO"
+Common.launchSicomPOS
+
+"DAIWrappers/POSSicom".clickRoute
+
+"DAIWrappers/POSSicom".selectDiningOption
+"DAIWrappers/POSSicom".selectMealAndOption
+"DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".proceedToTender
+"DAIWrappers/POSSicom".exactPayment
+"DAIWrappers/POSSicom".saveOrderID
+Common.switchSicomWindowTo "KDS"
+
+//KDS
+"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+"DAIWrappers/KDS".disconnectFromNCRKDS
+
+(*=================================*)
+
+//Sicom Test Case 9:4pc BIC all white dinner
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Sicom"
+Common.setTestCaseName "4PC BIC DINNER"
+Common.launchSicomPOS
+
+"DAIWrappers/POSSicom".clickRoute
+
+"DAIWrappers/POSSicom".selectDiningOption
+"DAIWrappers/POSSicom".selectMealAndOption
+"DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".selectFirstSide
+"DAIWrappers/POSSicom".selectSecondSide
+"DAIWrappers/POSSicom".proceedToTender
+"DAIWrappers/POSSicom".exactPayment
+"DAIWrappers/POSSicom".saveOrderID
+Common.switchSicomWindowTo "KDS"
+
+//KDS
+"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+"DAIWrappers/KDS".disconnectFromNCRKDS
+
+(*=================================*)
+
+//Sicom Test Case 10:4pc BIC all white combo
 Common.setPlatformName "POS"
 Common.setPOSPlatformName "Sicom"
 Common.setTestCaseName "4PC BIC COMBO"
@@ -64,16 +233,86 @@ Common.launchSicomPOS
 "DAIWrappers/POSSicom".selectDrink
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
+"DAIWrappers/POSSicom".saveOrderID
 Common.switchSicomWindowTo "KDS"
 
 //KDS
-"DAIWrappers/KDS".connectToNCRKDS
-"DAIWrappers/KDS".bumpOrderIDOnNCRKDS
+"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
 "DAIWrappers/KDS".disconnectFromNCRKDS
 
 (*=================================*)
 
-//Sicom Test Case 4: 1/4lb shrimp and 2 tenders combo customized
+//Sicom Test Case 11:4pc BIC all white large combo
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Sicom"
+Common.setTestCaseName "4PC BIC COMBO"
+Common.launchSicomPOS
+
+"DAIWrappers/POSSicom".clickRoute
+
+"DAIWrappers/POSSicom".selectDiningOption
+"DAIWrappers/POSSicom".selectMealAndOption
+"DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".proceedToTender
+"DAIWrappers/POSSicom".exactPayment
+"DAIWrappers/POSSicom".saveOrderID
+Common.switchSicomWindowTo "KDS"
+
+//KDS
+"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+"DAIWrappers/KDS".disconnectFromNCRKDS
+
+(*=================================*)
+
+//Sicom Test Case 12: 1/4lb shrimp and 2 tenders combo customized
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Sicom"
+Common.setTestCaseName "SHRIMP AND 2 TENDERS ALA CARTE CUST"
+Common.launchSicomPOS
+
+"DAIWrappers/POSSicom".clickRoute
+
+"DAIWrappers/POSSicom".selectDiningOption
+"DAIWrappers/POSSicom".selectMealAndOption
+"DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".proceedToTender
+"DAIWrappers/POSSicom".exactPayment
+"DAIWrappers/POSSicom".saveOrderID
+Common.switchSicomWindowTo "KDS"
+
+//KDS
+"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+"DAIWrappers/KDS".disconnectFromNCRKDS
+
+(*=================================*)
+
+//Sicom Test Case 13: 1/4lb shrimp and 2 tenders dinner customized
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Sicom"
+Common.setTestCaseName "SHRIMP AND 2 TENDERS DINNER CUST"
+Common.launchSicomPOS
+
+"DAIWrappers/POSSicom".clickRoute
+
+"DAIWrappers/POSSicom".selectDiningOption
+"DAIWrappers/POSSicom".selectMealAndOption
+"DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".selectFirstSide
+"DAIWrappers/POSSicom".selectSecondSide
+"DAIWrappers/POSSicom".selectFirstFlavors
+"DAIWrappers/POSSicom".selectSecondFlavors
+"DAIWrappers/POSSicom".proceedToTender
+"DAIWrappers/POSSicom".exactPayment
+"DAIWrappers/POSSicom".saveOrderID
+Common.switchSicomWindowTo "KDS"
+
+//KDS
+"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+"DAIWrappers/KDS".disconnectFromNCRKDS
+
+(*=================================*)
+
+//Sicom Test Case 14: 1/4lb shrimp and 2 tenders combo customized
 Common.setPlatformName "POS"
 Common.setPOSPlatformName "Sicom"
 Common.setTestCaseName "SHRIMP AND 2 TENDERS COMBO CUST"
@@ -91,11 +330,55 @@ Common.launchSicomPOS
 "DAIWrappers/POSSicom".selectSecondFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
+"DAIWrappers/POSSicom".saveOrderID
 Common.switchSicomWindowTo "KDS"
 
 //KDS
-"DAIWrappers/KDS".connectToNCRKDS
-"DAIWrappers/KDS".bumpOrderIDOnNCRKDS
+"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+"DAIWrappers/KDS".disconnectFromNCRKDS
+
+(*=================================*)
+
+//Sicom Test Case 15: 1/4lb shrimp and 2 tenders combo default
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Sicom"
+Common.setTestCaseName "SHRIMP AND 2 TENDERS ALA CARTE"
+Common.launchSicomPOS
+
+"DAIWrappers/POSSicom".clickRoute
+
+"DAIWrappers/POSSicom".selectDiningOption
+"DAIWrappers/POSSicom".selectMealAndOption
+"DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".proceedToTender
+"DAIWrappers/POSSicom".exactPayment
+"DAIWrappers/POSSicom".saveOrderID
+Common.switchSicomWindowTo "KDS"
+
+//KDS
+"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+"DAIWrappers/KDS".disconnectFromNCRKDS
+
+(*=================================*)
+
+//Sicom Test Case 16: 1/4lb shrimp and 2 tenders combo default
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Sicom"
+Common.setTestCaseName "SHRIMP AND 2 TENDERS DINNER"
+Common.launchSicomPOS
+
+"DAIWrappers/POSSicom".clickRoute
+
+"DAIWrappers/POSSicom".selectDiningOption
+"DAIWrappers/POSSicom".selectMealAndOption
+"DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".proceedToTender
+"DAIWrappers/POSSicom".exactPayment
+"DAIWrappers/POSSicom".saveOrderID
+Common.switchSicomWindowTo "KDS"
+
+//KDS
+"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
 "DAIWrappers/KDS".disconnectFromNCRKDS
 
 (*=================================*)
@@ -113,9 +396,10 @@ Common.launchSicomPOS
 "DAIWrappers/POSSicom".selectMainCourse
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
+"DAIWrappers/POSSicom".saveOrderID
 Common.switchSicomWindowTo "KDS"
 
 //KDS
-"DAIWrappers/KDS".connectToNCRKDS
-"DAIWrappers/KDS".bumpOrderIDOnNCRKDS
+"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
 "DAIWrappers/KDS".disconnectFromNCRKDS
+Common.switchSicomWindowTo "POS"

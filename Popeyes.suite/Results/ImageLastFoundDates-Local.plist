@@ -5,7 +5,7 @@
     <key>Icons/ChromeIcon.png</key>
     <string>2025-06-12 04:32 +0000</string>
     <key>Icons/ChromeRefreshIcon.png</key>
-    <string>2025-06-12 05:02 +0000</string>
+    <string>2025-06-13 07:51 +0000</string>
     <key>Icons/Drinks/OrangeFanta.png</key>
     <string>2025-06-10 04:40 +0000</string>
     <key>Icons/Drinks/SicomDrPepper.png</key>
@@ -13,8 +13,10 @@
     <key>Icons/EdgeBrowser.png</key>
     <string>2025-05-23 10:53 +0000</string>
     <key>Icons/SicomTaskbarKDS.png</key>
-    <string>2025-06-10 08:35 +0000</string>
+    <string>2025-06-17 06:51 +0000</string>
     <key>Icons/SicomTaskbarPOS.png</key>
     <string>2025-06-10 04:35 +0000</string>
+    <key>Icons/SicomTightVNC.png</key>
+    <string>2025-06-16 02:44 +0000</string>
 </dict>
 </plist>
