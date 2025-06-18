@@ -1,0 +1,50 @@
+﻿// Oracle Kiosk Test Case 1: 6 Pc Boneless Wings Combo
+Common.setPlatformName "Kiosk"
+Common.setPOSPlatformName "OracleKiosk"
+Common.setTestCaseName "6 Pc Boneless Wings Combo"
+"DAIWrappers/Kiosk".launchKiosk
+"DAIWrappers/Kiosk".startKioskOrder
+"DAIWrappers/Kiosk".selectDiningOption
+"DAIWrappers/Kiosk".selectMainCourse
+"DAIWrappers/Kiosk".selectMealAndSize
+"DAIWrappers/Kiosk".selectFlavors
+"DAIWrappers/Kiosk".selectSides 
+"DAIWrappers/Kiosk".selectDrink
+"DAIWrappers/Kiosk".selectBiscuit
+"DAIWrappers/Kiosk".addToCart
+"DAIWrappers/Kiosk".viewCart
+"DAIWrappers/Kiosk".proceedToTender
+"DAIWrappers/Kiosk".enterNameOnOrder "Test"
+"DAIWrappers/Kiosk".payAtCounter
+"DAIWrappers/Kiosk".completeOrder
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+
+// Oracle Kiosk Test Case 2: 1/4 lb Popcorn Shrimp Combo
+Common.setPlatformName "Kiosk"
+Common.setPOSPlatformName "OracleKiosk"
+Common.setTestCaseName "1/4 lb Popcorn Shrimp Combo"
+"DAIWrappers/Kiosk".launchOracleKiosk
+"DAIWrappers/Kiosk".startKioskOrder
+"DAIWrappers/Kiosk".selectDiningOption
+"DAIWrappers/Kiosk".selectMainCourse
+"DAIWrappers/Kiosk".selectMealAndSize
+"DAIWrappers/Kiosk".selectFlavors
+"DAIWrappers/Kiosk".selectSides 
+"DAIWrappers/Kiosk".selectDrink
+"DAIWrappers/Kiosk".selectBiscuit
+"DAIWrappers/Kiosk".addToCart
+"DAIWrappers/Kiosk".viewCart
+"DAIWrappers/Kiosk".proceedToTender
+"DAIWrappers/Kiosk".enterNameOnOrder "Test"
+"DAIWrappers/Kiosk".payAtCounter
+"DAIWrappers/Kiosk".completeOrder
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS

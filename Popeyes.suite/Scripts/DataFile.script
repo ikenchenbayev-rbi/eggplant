@@ -16,13 +16,19 @@ Description:  DataFile contains return value for the config data used in POS tes
 **) 
 
 return { 
-	(* Login Information to be used inside the POS system. Currently Cashier, Supervisor and CashOffice logins are configured*)
+	(* Login Information to be used inside the POS system, for Oracle, NCR and SiCOM*)
 	Logins:{
 		NCRPOS:{
 			employeeCode:"100",
 		},
 		OraclePOS:{
 			employeeCode:"1911",
+		},
+		OracleReceipts: {
+			userName: "possupport",
+			password: "Micros1!",
+			directoryCommand: "cd /opt/oracle/simphony",
+			receiptCommand: "cat CusteomerReceiptAuto.txt",
 		},
 		Windows:{
 			userName: "Tester",
@@ -51,11 +57,9 @@ return {
 	
 	(* Loyalty/Customer List to be used in the POS system. Each entry contains the ID and the Name of the Customer*)
 	LoyaltyList:{
-		ClarkWhite: {
-			Name: "Clark White",
-			email: "clark.white@gmail.com",
-		},
 	},
+	
+	(* Column Mapping to be used in the POS code to read the excel to pass the right data for each plstform*)
 	ColumnMapping:{
 		NCR: {
 			TestCaseName: "B",
@@ -68,17 +72,46 @@ return {
 			Sides: "I",
 			Drink: "J",
 		},
-		KioskNCR: {
+		NCRKiosk: {
 			TestCaseName: "B",
 			DiningOption: "C",
 			MainCourse: "D",
 			SelectMeal: "E",
 			SelectMealSize: "F",
-			Flavor: "G",
+			Flavors: "G",
 			Sides: "H",
 			Drink: "I",
 			Biscuit: "J",
 			MealDisplayName: "K",
+		},
+		
+		OracleKiosk: {
+			TestCaseName: "B",
+			DiningOption: "C",
+			MainCourse: "D",
+			SelectMeal: "E",
+			SelectMealSize: "F",
+			Flavors: "G",
+			Sides: "H",
+			Drink: "I",
+			Biscuit: "J",
+			MealDisplayName: "K",
+		},
+		Oracle: {
+			TestCaseName: "B",
+			MainCourse: "C",
+			SelectMeal: "D",
+			MealDisplayName: "E",
+			Flavors: "F",
+			OrderType: "G",
+			Sides: "H",
+			Drink: "I",
+			SideUpcharge: "J",
+			DrinkUpcharge: "K",
+			KDSMealDisplayName: "L",
+			ExpoLabelDisplayName: "M",
+			ReceiptDisplayName: "N",
+			LabelMealDisplayName: "O",
 		},
 		Sicom: {
 			TestCaseName: "B",
@@ -92,9 +125,24 @@ return {
 			Sides1: "J",
 			Sides2: "K",
 			Drink: "L",
-
 		},
+		
+		SicomKiosk: {
+			TestCaseName: "B",
+			DiningOption: "C",
+			MainCourse: "D",
+			SelectMeal: "E",
+			SelectMealSize: "F",
+			Flavors: "G",
+			Sides: "H",
+			Drink: "I",
+			Biscuit: "J",
+			MealDisplayName: "K",
+		},
+
 	},
+	
+	(* SUT Names to be used to in the code to connect to platforrms under test*)
 	SUTNames:{
 		LocalSingleSystem: "MyLocalTrainingPC",
 		NCRPOS: "",
@@ -102,7 +150,7 @@ return {
 		NCRKiosk: "999968_Kiosk",
 		OraclePOS: "OraclePOS",
 		OracleKDS: "OracleKDS",
-		OracleKiosk: "9004_KIOSK",
+		OracleKiosk: "OracleKiosk",
 		SicomPOS: "910259_FC-Sicom",
 		SicomKDS: "",
 		SicomKiosk: "910259_Kiosk",

@@ -15,6 +15,28 @@ Description:  Handlers specific to the POS Operations on the Oracle POS platform
 **) 
 
 (**  
+updateDB - Handler to click the Oracle button and update database
+@Version 1.0 5/21/2025
+@ChangeReason Creation
+**)
+to updateDB
+	Log "Update Orable Database"
+	
+	//Click the Oracle Icon to update database
+	if ImageFound(Image:"Icons/OracleIcon", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(RightHalf)) 
+		Click FoundImageLocation()
+		
+		//Wait for the Update Database option and click
+		WaitFor Config().Waits.(maxWait), text:"Update Database", SearchRectangle:Config().SearchRectangles.(RightHalf)
+		Click FoundImageLocation()
+	end if
+	
+	//Wait for the database to complete update
+	Wait 2
+end updateDB
+
+
+(**  
 loginToOraclePOS - Handler to login to the Oracle POS SUT.
 @Version 1.0 4/22/2025
 @ChangeReason Creation
@@ -22,7 +44,8 @@ loginToOraclePOS - Handler to login to the Oracle POS SUT.
 to loginToOraclePOS 
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
-	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	// Calling the Update DB step
+	"DAIWrappers/POSOracle".updateDB
 	
 	// If POSOracle is already logged in and in the New Order screen, skip steps to login
 	if ImageFound(text:"Start Catering", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(LeftHalf)) 
@@ -50,3 +73,563 @@ to loginToOraclePOS
 	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 end loginToOraclePOS
+
+
+(**  
+selectMainCourse - Handler to select the Main Course, Chicken, Seafood etc
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to selectMainCourse
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	//Select Main Course 
+	// Read the DataFile to get the Column Number which has the Dining Option stored
+	put DataFile().ColumnMapping.(global posPlatformName).MainCourse into excelColumnNumber
+	
+	// Read the Excel to get the Data Value for the Main Course
+	put Common.readDataFromExcel (excelColumnNumber) into mainCourse
+	
+	if mainCourse is not empty
+		split mainCourse by ","
+		
+		// Select Main Course and additional selections if any
+		repeat for each item of mainCourse
+			if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+				click FoundImageLocation() 
+				wait 1
+			end if
+		end repeat
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end selectMainCourse
+
+(**  
+selectMeal - Handler to select the Meal like, BFLY SHRIMP, PopCorn Shrimp etc.
+@Version 1.0 5/21/2025
+@ChangeReason Creation
+**)
+to selectMeal
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	//Select Meal  
+	// Read the DataFile to get the Column Number which has the Meal, Meal Option and Display Names stored
+	put DataFile().ColumnMapping.(global posPlatformName).SelectMeal into excelColumnNumber
+	put Common.readDataFromExcel (excelColumnNumber) into selectMeal
+	
+	put DataFile().ColumnMapping.(global posPlatformName).MealDisplayName into excelColumnNumber
+	put Common.readDataFromExcel (excelColumnNumber) into mealDisplayName
+	
+	// Select Meal
+	if selectMeal is not empty
+		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
+		split selectMeal by ","
+		
+		log readtext(Config().SearchRectangles.(OracleItemSelectionArea))
+		// Select Meal and additional selections if any
+		repeat for each item of selectMeal
+			if common.extendedFindText(trim(it),Config().Waits.(minWait), Config().SearchRectangles.(OracleItemSelectionArea)) is true 
+				click FoundImageLocation()	
+			end if
+		end repeat
+		
+		// Validate that Meal gets added to the order
+		assert that common.extendedFindText(mealDisplayName,Config().Waits.(maxWait), Config().SearchRectangles.(OracleOrdersArea)) is true with error "Meal Added to Order"
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end selectMeal
+
+(**  
+selectFlavors - Handler to select the Flavors like BBQ Sauce, Ranch etc
+@Version 1.0  5/21/2025
+@ChangeReason Creation
+**)
+to selectFlavors
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Read the DataFile to get the Column Number which has the Flavor Options stored
+	put DataFile().ColumnMapping.(global posPlatformName).Flavors into excelColumnNumber
+	
+	// Read the Excel to get the Data Value for the Flavors
+	put Common.readDataFromExcel (excelColumnNumber) into flavors
+	
+	if flavors is not empty
+		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
+		split flavors by ","
+		
+		// Select Flavors
+		repeat for each item of flavors
+			// Select Flavor
+			if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes, caseSensitive: Yes)
+				click FoundImageLocation() 
+				wait 1
+			end if
+		end repeat
+		
+		
+		// Validate Flavors are added, by ensuring "Flavor" text is not found in Orders area
+		assert that not ImageFound(text:"Flavor", waitFor:2,SearchRectangle:Config().SearchRectangles.(OracleOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Side Added to Order"
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end selectFlavors
+
+(**  
+selectOrderType - Handler to select the Order Type like Combo, A La Carte etc.
+@Version 1.0 5/21/2025
+@ChangeReason Creation
+**)
+to selectOrderType
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	//Select Order Type  
+	// Read the DataFile to get the Column Number which has the Order Type stored
+	put DataFile().ColumnMapping.(global posPlatformName).OrderType into excelColumnNumber
+	put Common.readDataFromExcel (excelColumnNumber) into orderType
+	
+	// Select Order Type
+	if orderType is not empty
+		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
+		split orderType by ","
+		
+		// Select Order Type
+		repeat for each item of orderType
+			// IF an Image of Drink exists, click Image. If not, do an OCR search for the Drink
+			if file (suiteinfo().imagesFolder&"/Icons/"&trimall(it)&".png") exists or if file (suiteinfo().imagesFolder&"/"&it) exists
+				if ImageFound(image:"Icons/"&trimall(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleOrderTypeSelectionArea))
+					click FoundImageLocation() 
+					wait 1
+				end if
+			else
+				if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleOrderTypeSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes, validCharacters: it)
+					click FoundImageLocation() 
+					wait 1
+				end if
+			end if
+		end repeat
+		
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end selectOrderType
+
+(**  
+selectSides - Handler to select the Sides like Mash Gravyy, Rice etc
+@Version 1.0  5/21/2025
+@ChangeReason Creation
+**)
+to selectSides
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Read the DataFile to get the Column Number which has the Sides Options stored
+	put DataFile().ColumnMapping.(global posPlatformName).Sides into excelColumnNumber
+	
+	// Read the Excel to get the Data Value for the Sides
+	put Common.readDataFromExcel (excelColumnNumber) into sides
+	
+	if sides is not empty
+		
+		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
+		split sides by ","
+		
+		// Select Sides
+		repeat for each item of sides
+			// IF Sides text is found in the orders area, click it
+			if imagefound (text:"Side", WaitFor: Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(OracleOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+				click FoundImageLocation()
+				wait 1
+			end if
+			
+			if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleSidesSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+				click FoundImageLocation() 
+				wait 1
+			end if
+		end repeat
+		
+		wait 2
+		// Validate Sides are added, by ensuring "Sides" text is not found in Orders area
+		assert that not ImageFound(text:"Side", waitFor:2,SearchRectangle:Config().SearchRectangles.(OracleOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes) with error "Side Added to Order"
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end selectSides
+
+
+(**  
+selectDrink - Handler to select the Drink like CocaCola, DrPepper etc
+@Version 1.0  5/21/2025
+@ChangeReason Creation
+**)
+to selectDrink
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Read the DataFile to get the Column Number which has the Drink Options stored
+	put DataFile().ColumnMapping.(global posPlatformName).Drink into excelColumnNumber
+	
+	// Read the Excel to get the Data Value for the Drink
+	put Common.readDataFromExcel (excelColumnNumber) into drink
+	
+	if drink is not empty
+		
+		//Select Drinks on the Orders Section First
+		WaitFor Config().Waits.(maxWait), text:"Drink", SearchRectangle:Config().SearchRectangles.(OracleOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes
+		click FoundImageLocation()
+		wait 1
+		
+		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
+		split drink by ","
+		
+		
+		// Select Drink by clicking the image of the drink
+		repeat for each item of drink
+			// IF an Image of Drink exists, click Image. If not, do an OCR search for the Drink
+			if file (suiteinfo().imagesFolder&"/Icons/Drinks/"&it&".png") exists or if file (suiteinfo().imagesFolder&"/"&it) exists
+				if ImageFound(image:"Icons/Drinks/"&trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleSidesSelectionArea))
+					click FoundImageLocation() 
+					wait 1
+				end if
+			else
+				
+				if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleSidesSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+					click FoundImageLocation() 
+					wait 1
+				else
+					//If the drink is not found on the first tier then click on page down button to scroll
+					Repeat until ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleSidesSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+						Click text:"Page Down", SearchRectangle:Config().SearchRectangles.(OracleSidesSelectionArea)
+					End Repeat
+					//Clicks on the drink selection
+					Click FoundImageLocation()
+				end if
+				
+			end if
+			
+		end repeat
+		wait 2
+		// Validate Sides are added, by ensuring "Sides" text is not found in Orders area
+		assert that not ImageFound(text:"Drink", waitFor:2,SearchRectangle:Config().SearchRectangles.(OracleOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Drink Added to Order"
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end selectDrink
+
+
+(**  
+proceedToTender - Handler to click the Total button to proceed to tender
+@Version 1.0  5/21/2025
+@ChangeReason Creation
+**)
+to proceedToTender
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Click Total button on the Orders Section First
+	WaitFor Config().Waits.(maxWait), Image:"Icons/OracleTotalButton", SearchRectangle:Config().SearchRectangles.(OracleOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes
+	Click FoundImageLocation()
+	wait 1
+	
+	// If Loyalty prompt shows up, click Not Today
+	if ImageFound(text:"Not Today", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleItemSelectionArea),  ignoreSpaces: Yes, ignoreNewLines: Yes,)
+		click FoundImageLocation() 
+		wait 1
+	end if
+	
+	// Validate Tenders screen has opened
+	assert that ImageFound(text:"Payments", waitFor:2,SearchRectangle:Config().SearchRectangles.(OracleItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Tenders Screen"
+	
+	//Call handler to read and save the Order ID in a global parameter
+	saveOrderID
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end proceedToTender
+
+
+(**  
+exactPayment - Handler to click the Exact button to pay with Exact amount of order
+@Version 1.0 5/21/2025
+@ChangeReason Creation
+**)
+to exactPayment
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Click Exact button on the Order First
+	WaitFor Config().Waits.(maxWait), text:"Exact", SearchRectangle:Config().SearchRectangles.(OracleItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes
+	click FoundImageLocation()
+	wait 1
+	
+	// Click the OK button in the Change Due popup
+	WaitFor Config().Waits.(maxWait), text:"Change Due", SearchRectangle:Config().SearchRectangles.(OracleChangeDuePopup), Contrast:ON
+	click image:"Icons/OracleOKButton", waitFor:Config().Waits.(maxWait), SearchRectangle:Config().SearchRectangles.(OracleChangeDuePopup)
+	wait 1
+	
+	// If the Cash Pull Threshold popup appears, click Ok or No.
+	if ImageFound(text:"Cash Pull Threshold", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleItemSelectionArea),  ignoreSpaces: Yes, ignoreNewLines: Yes,)
+		Assert that imageFound(text:"No", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleCashPullPopup)) or imageFound(image:"Icons/OracleOKButton", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleCashPullPopup)) with warning "Cash Pull Threshold Popup"
+		Click FoundImageLocation()
+	end if
+	
+	// Validate User is taken back to the New Order screen
+	assert that ImageFound(text:"Start Catering", waitFor:Config().Waits.(maxWait),SearchRectangle:Config().SearchRectangles.(LeftHalf)) with error "POS Oracle Login Validation"
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end exactPayment
+
+
+(**  
+validatePremiumUpcharges - Handler to validate the upcharges for premium sides and drinks.
+@Version 1.0 5/22/2025
+@ChangeReason Creation
+**)
+to validatePremiumUpcharges
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Read the DataFile to get the Column Number which has the sideUpcharge, drinkUpcharge, sides and drink stored.
+	put DataFile().ColumnMapping.(global posPlatformName).SideUpcharge into excelColumnNumber
+	put Common.readDataFromExcel (excelColumnNumber) into sideUpcharge
+	
+	put DataFile().ColumnMapping.(global posPlatformName).DrinkUpcharge into excelColumnNumber
+	put Common.readDataFromExcel (excelColumnNumber) into drinkUpcharge
+	
+	
+	if sideUpcharge is not empty
+		split sideUpcharge by ","
+		
+		// Validate the Premium Side and Upcharge Value on the Orders Area
+		put the first item of sideUpcharge into premiumSide
+		put the second item of sideUpcharge into upchargeValue
+		
+		// Validate the Premium Side is visible on the Orders Area
+		Assert that imagefound (text:trim(premiumSide), WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(OracleOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes) is true with error "Side Item Found on the Orders Area."
+		//Creates a rectangle around the item
+		put FoundImageInfo().imagerectangle +[-10,-5,110,5] into itemRect
+
+		// Validate that the Upcharge Value is visible under the itemRect
+		assert that common.extendedFindText(trim(upchargeValue),Config().Waits.(minWait),itemRect) is true with error "Upcharge Value Displayed on the Orders Area."
+	end if
+	
+	
+	if drinkUpcharge is not empty
+		split drinkUpcharge by ","
+		
+		// Validate the Premium Drink and Upcharge Value on the Orders Area
+		put the first item of drinkUpcharge into premiumDrink
+		put the second item of drinkUpcharge into upchargeValue
+		
+		// Validate the Premium Drink is visible on the Orders Area
+		Assert that imagefound (text:trim(premiumDrink), WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(OracleOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes) is true with error "Side Item Found on the Orders Area."
+		
+		//Creates a rectangle around the item
+		put FoundImageInfo().imagerectangle +[-10,-5,110,5] into itemRect
+
+		// Validate that the Upcharge Value is visible under the itemRect
+		assert that common.extendedFindText(trim(upchargeValue),Config().Waits.(minWait),itemRect) is true with error "Upcharge Value Displayed on the Orders Area."
+	end if
+	
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end validatePremiumUpcharges
+
+(**  
+validateReceipt - Handler to Open the Putty connection and validate the text receipt for Oracle
+@Version 1.0 5/21/2025
+@ChangeReason Creation
+**)
+to validateReceipt
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Connect to the local Single-SUT connection
+	Log "Connecting to Local Single-System SUT"
+	Common.connectToLocalSingleSystem
+	
+	if imageFound(text: "Simphony", WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(BottomHalf))
+		LogSuccess "Oracle Receipt validation window already open"
+		click Config().TextOffsets.(ClickScreenOffset)
+		// Type command for opening latest receipt
+		typetext DataFile().Logins.OracleReceipts.receiptCommand, returnKey
+		wait 1
+		typetext controlKey, shiftKey, pageDown
+	else
+		Log "Opening Oracle Digital Receipt"
+		// Open Putty and Connect to the Oracle System
+		Common.launchPuttyForOracleReceipts
+		
+	end if
+	
+	// Call Handler to validate the Expo Receipt
+	validateExpoReceipt
+	
+	// Call Handler to validate the Customer Receipt
+	validateCustomerReceipt
+	
+	// Call Handler to validate the Sticky Label Receipt
+	validateStickyReceipt
+	
+	// Scroll to bottom once done
+	wait 1
+	typetext controlKey, shiftKey, pageDown
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end validateReceipt
+
+(**  
+validateExpoReceipt - Handler to validate the Expo receipt for Oracle
+@Version 1.0 5/21/2025
+@ChangeReason Creation
+**)
+to validateExpoReceipt
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Scroll to the bottom of the screen
+	click Config().TextOffsets.(ClickScreenOffset)
+	typetext controlKey, shiftKey, pageDown
+	
+	put DataFile().ColumnMapping.(global posPlatformName).ExpoLabelDisplayName into excelColumnNumber
+	put Common.readDataFromExcel (excelColumnNumber) into mealDisplayName
+	
+	// Validate Expo receipt
+	waitfor Config().Waits.(minWait), {text:"Restaurant"}
+	put foundimageinfo().imagerectangle +[0,0,500,500] into expoRect
+
+	// Validate Order ID on the Expo Receipt
+	assert that imageFound(text: global orderID, waitFor:  Config().Waits.(minWait), SearchRectangle: expoRect) with error "Expo Label Order ID"
+	
+	split mealDisplayName by ","
+	
+	// Validate meal names on the Expo Receipt
+	repeat for each item of mealDisplayName
+		if file (suiteinfo().imagesFolder&"/Icons/OracleExpo/"&trimall(it,"/ ")&".png") exists or if file (suiteinfo().imagesFolder&"/Icons/OracleExpo/"&trimall(it,"/ ")) exists
+			assert that imagefound(image: "/Icons/OracleExpo/"&trimall(it,"/ "),waitFor: Config().Waits.(minWait),searchRectangle: expoRect) with error "Meal Displayed on Expo Label"
+		else
+			assert that common.extendedFindText(trim(it),Config().Waits.(minWait),expoRect) is true with error "Meal Displayed on Expo Label"
+		end if
+	end repeat
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end validateExpoReceipt
+
+
+(**  
+validateCustomerReceipt - Handler to validate the Customer receipt for Oracle
+@Version 1.0 5/21/2025
+@ChangeReason Creation
+**)
+to validateCustomerReceipt
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	put DataFile().ColumnMapping.(global posPlatformName).ReceiptDisplayName into excelColumnNumber
+	put Common.readDataFromExcel (excelColumnNumber) into mealDisplayName
+	
+	// Scroll to the bottom of the screen
+	click Config().TextOffsets.(ClickScreenOffset)
+	typetext controlKey, shiftKey, pageDown
+	
+	// Validate Customer Receipts
+	// Look for top of the receipt
+	repeat until ImageFound(text:"Popeyes Louisiana Kitchen", waitFor:2, dpi: 144)
+		click "Icons/OraclePuttyScroll"
+		wait 1
+	end repeat
+	
+	put foundimageinfo().imagerectangle's topleft-[60,0] into receiptStart
+
+	// Look for bottom of the receipt
+	waitFor Config().Waits.(minWait), {text:"Check Closed", dpi: 144}
+	put foundimageinfo().imagerectangle's bottomRight+[100,0] into receiptEnd
+
+	// Validate Customer receipts for Order ID and Meal Name
+	put [receiptStart, receiptEnd] into receiptRect
+
+	assert that imageFound(text: global orderID, waitFor:  Config().Waits.(minWait), SearchRectangle: receiptRect, ignoreSpaces: Yes) with error "Customer Receipt Order ID"
+	
+	split mealDisplayName by ","
+	
+	// Validate Parent-Child PLUs on the Expo Receipt
+	put the first item of mealDisplayName into parentPLU
+	put the second item of mealDisplayName into childPLU
+	
+	// Validate Parent PLU is visible on Receipt
+	if parentPLU is not empty
+		assert that common.extendedFindText(trim(parentPLU),Config().Waits.(minWait),receiptRect) is true with error "Parent PLU Displayed on Customer Receipt"
+		put foundimageinfo().imagerectangle +[-5,10,500,500] into childRect
+	end if
+	
+	if childPLU is not empty
+		// Validate Child PLU is visible under Parent
+		assert that common.extendedFindText(trim(childPLU),Config().Waits.(minWait),childRect) is true with error "Child PLU Displayed on Customer Receipt"
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end validateCustomerReceipt
+
+
+(**  
+validateStickyReceipt - Handler to validate the Sticky receipt for Oracle
+@Version 1.0 5/21/2025
+@ChangeReason Creation
+**)
+to validateStickyReceipt
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Scroll to the bottom of the screen
+	click Config().TextOffsets.(ClickScreenOffset)
+	typetext controlKey, shiftKey, pageDown
+	
+	click Config().TextOffsets.(ClickScreenOffset)
+	ScrollWheelUp 1
+	
+	put DataFile().ColumnMapping.(global posPlatformName).LabelMealDisplayName into excelColumnNumber
+	put Common.readDataFromExcel (excelColumnNumber) into mealDisplayName
+	
+	// Validate Sticky Label receipts for Order ID and Meal Name
+	// Scroll up to the Sticky Label. Find based on text 1 of 3
+	repeat until ImageFound(image:"Icons/OracleStickyStart", waitFor:2, SearchRectangle: Config().SearchRectangles.(LeftHalf)) and ImageFound(image:"Icons/OracleStickyStart_Top", waitFor:2, SearchRectangle: Config().SearchRectangles.(LeftHalf))
+		//click "Icons/OraclePuttyScroll"
+		click Config().TextOffsets.(ClickScreenOffset)
+		ScrollWheelUp 1
+	end repeat
+	
+	// Read order id to identify the sticky label
+	put EveryImageRectangle(text:global orderID) into orderList
+	put the first item of orderList + [-500,0,500, 700] into stickyRect
+	
+	// Validate order ID and Meal Names on the sticky label
+	assert that imageFound(text: global orderID, waitFor:  Config().Waits.(minWait), SearchRectangle: stickyRect) with error "Sticky Label Order ID"
+	
+	split mealDisplayName by ","
+	
+	repeat for each item of mealDisplayName
+		assert that common.extendedFindText(trim(it),Config().Waits.(minWait),stickyRect) is true with error "Meal Displayed on Sticky Label"
+	end repeat
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end validateStickyReceipt
+
+(**  
+chooseClassic - Handler to click the classic button for orders like 4 Pc. BIC.
+@Version 1.0 5/21/2025
+@ChangeReason Creation
+**)
+to chooseClassic
+	Log "Select the Classic Option"
+	
+	//Look for the custom button on top of the screen and click
+	Assert that ImageFound(text:"Classic", SearchRectangle:Config().SearchRectangles.(TopHalf), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	Click FoundImageLocation()
+end chooseClassic
+
+(**  
+saveOrderID - Handler to read the order ID from the Oracle screen and return the value, if needed for DAI
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to saveOrderID
+	Log "Reading Order ID"
+	put readText(Config().SearchRectangles.(OracleOrderID)) into global orderID
+	log "Order ID is: "&global orderID
+	return global orderID
+end saveOrderID

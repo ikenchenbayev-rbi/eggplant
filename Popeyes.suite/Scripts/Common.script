@@ -116,8 +116,13 @@ to extendedFindText textToFind, waitValue, SR
 		return true
 	end if
 	
-	// else add valid words and valid characters
-	if imageFound(text: textToFind, waitFor: 1, SearchRectangle: SR, validCharacters: textToFind, validWords: textToFind, ignoreSpaces: Yes, ignoreNewLines: Yes)
+	// else add valid characters
+	if imageFound(text: textToFind, waitFor: 1, SearchRectangle: SR, validCharacters: textToFind,multiLine: Yes, ignoreSpaces: Yes, ignoreNewLines: Yes)
+		return true
+	end if
+	
+	// else add valid words 
+	if imageFound(text: textToFind, waitFor: 1, SearchRectangle: SR, validCharacters: textToFind, validWords: textToFind,multiLine: Yes, ignoreSpaces: Yes, ignoreNewLines: Yes)
 		return true
 	end if
 	
@@ -126,8 +131,18 @@ to extendedFindText textToFind, waitValue, SR
 		return true
 	end if
 	
+	// else add DPI parameter
+	if imageFound(text: textToFind, waitFor: 1, SearchRectangle: SR, validCharacters: textToFind, validWords: textToFind, ignoreSpaces: Yes, ignoreNewLines: Yes, DPI: 250)
+		return true
+	end if
+	
+	// else add Text Difference of 1 parameter
+	if imageFound(text: textToFind, waitFor: 1, SearchRectangle: SR, validCharacters: textToFind, validWords: textToFind, ignoreSpaces: Yes, ignoreNewLines: Yes, DPI: 250, textDifference: 1)
+		return true
+	end if
+	
 	// else add Contrast parameter
-	if imageFound(text: textToFind, waitFor: 1, SearchRectangle: SR, validCharacters: textToFind, validWords: textToFind, ignoreSpaces: Yes, ignoreNewLines: Yes, DPI: 144, contrast: on)
+	if imageFound(text: textToFind, waitFor: 1, SearchRectangle: SR, validCharacters: textToFind, validWords: textToFind, ignoreSpaces: Yes, ignoreNewLines: Yes, DPI: 250, textDifference: 1, contrast: on)
 		return true
 	end if
 	
@@ -192,7 +207,7 @@ to launchNCRPOS
 		Connect {serverID: "127.0.0.1", portNum:5500, Visible: "Yes"} 
 
 		// Click to wake up the system, incase it is showing the screen saver
-		click [1900,500]
+		click Config().TextOffsets.(ClickScreenOffset)
 	else
 		// Connect to the Local PC as Single-SUT to launch Command Center application of NCR
 		log "Performing steps to launch Command Center and NCR POS"
@@ -228,8 +243,8 @@ to launchNCRPOS
 	Connect {serverID: "127.0.0.1", portNum:5500, Visible: "Yes"} 
 
 	// Click to wake up the system, incase it is showing the screen saver
-	click [1900,500]
-
+	click Config().TextOffsets.(ClickScreenOffset)
+	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 end launchNCRPOS
@@ -297,7 +312,7 @@ to getGoogleAuthCode
 end getGoogleAuthCode
 
 (**  
-getGoogleAuthCode - Handler to disonnect from the NCR POS SUT
+disconnectFromNCRPOS - Handler to disonnect from the NCR POS SUT
 @Version 1.0 4/22/2025
 @ChangeReason Creation
 **)
@@ -377,12 +392,61 @@ to launchOraclePOS
 	end repeat
 	
 	// Click to wake up the system, incase it is showing the screen saver
-	click [1900,500]
-
+	click [1900,800]
+	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 end launchOraclePOS
 
+(**  
+launchPuttyForOracleReceipts - Internal Handler to launch Putty for connecting to Oracle Receipts
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to launchPuttyForOracleReceipts
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0),
+	
+	// Open Putty application
+	Typetext windowsKey,"r"
+	TypeText "Putty", ReturnKey -- Maxmize Doesn't always work
+	
+	// Wait for Putty window to open and load the configuration
+	waitFor Config().Waits.(minWait), {text:"PuTTY Configuration"}
+	put FoundImageInfo().imagerectangle+[0,0,300,500] into puttyRect
+	click text: "192.168", SearchRectangle: puttyRect, DPI: "144"
+	click the last item of EveryImageLocation(text:"Load", SearchRectangle: puttyRect, waitFor:Config().Waits.(minWait) )
+	click text: "Open", waitFor: Config().Waits.(minWait),  SearchRectangle: puttyRect, DPI: 144
+	wait 1
+	
+	// Maximize window
+	TypeText windowskey, upArrow -- Maximize Any Window
+	
+	// Wait for Command Prompt and perform steps to set up the tunnel
+	waitFor Config().Waits.(minWait), {text:"Login as"}
+	typetext DataFile().Logins.OracleReceipts.userName, returnKey
+	wait 1
+	
+	waitFor Config().Waits.(minWait), {text:"password"}
+	typetext DataFile().Logins.OracleReceipts.password, returnKey
+	
+	// Validate that SSH connection to Oracle POS was opened successfully
+	assert that ImageFound(text:"FC2-POS02", DPI: 144,waitFor: Config().Waits.(minWait)) with error "SSH Tunnel Open"
+	
+	
+	// Navigate to Folder for Receipts
+	typetext DataFile().Logins.OracleReceipts.directoryCommand, returnKey
+	wait 1
+	
+	// Type command for opening latest receipt
+	typetext DataFile().Logins.OracleReceipts.receiptCommand, returnKey
+	wait 1
+	
+	// Validate Latest Receipt opened successfully
+	assert that imagefound (Text:"raw data", waitFor: Config().Waits.(minWait)) with warning "Oracle Receipt"
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end launchPuttyForOracleReceipts
 
 (**
 End Common Functions used for Oracle POS
@@ -428,8 +492,8 @@ to launchSicomPOS
 	
 	
 	// Click to wake up the system, incase it is showing the screen saver
-	click [1900,500]
-
+	click Config().TextOffsets.(ClickScreenOffset)
+	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 end launchSicomPOS
