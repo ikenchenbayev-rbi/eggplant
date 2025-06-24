@@ -489,7 +489,8 @@ to launchSicomPOS
 		switchSicomWindowTo "POS"
 	end if
 	
-	
+	//cliking the required route 3 for POS system
+	"DAIWrappers/POSSicom".clickRoute
 	
 	// Click to wake up the system, incase it is showing the screen saver
 	click Config().TextOffsets.(ClickScreenOffset)

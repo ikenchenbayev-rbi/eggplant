@@ -22,6 +22,9 @@ return {
 		minWait:10,
 		midWait: 30,
 		maxWait: 60,
+		SicomKDSWait: 150,
+
+
 	},
 	SearchRectangles: {
 	(* SearchRectangles to be used inside the POS SUT. Screens are divided into sections to make it easy for the OCR engine to work*)

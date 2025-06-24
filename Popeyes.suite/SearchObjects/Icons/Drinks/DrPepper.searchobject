@@ -1,5 +1,5 @@
 {
-	"lastmodifieddate": 1746547877.089,
+	"lastmodifieddate": 1750254502.164,
 	"originalcapturelocation": [
 		1018,
 		907,
@@ -13,16 +13,16 @@
 				"properties": {
 					"CropRectangle": "[0,0,0,0]",
 					"Rotate": 0,
-					"Tolerance": "_45",
-					"HotSpot": "[31,17]",
 					"Scale": "    1",
+					"HotSpot": "[31,17]",
+					"Tolerance": "_45",
 					"Discrepancy": "_0",
 					"SearchType": "Tolerant of Background"
 				},
 				"sutinfo": {
 					"type": "Unknown VNC"
 				},
-				"name": "Icons/Drinks/DrPepper.png",
+				"name": "Icons/Drinks/DrPepper/DrPepper.png",
 				"connectionname": "127.0.0.1",
 				"type": 1,
 				"capturerect": [
