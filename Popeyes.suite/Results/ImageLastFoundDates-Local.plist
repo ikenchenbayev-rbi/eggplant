@@ -2,11 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>Icons/ChromeIcon.png</key>
+    <string>2025-07-02 04:49 +0000</string>
     <key>Icons/ChromeRefreshIcon.png</key>
-    <string>2025-06-18 09:16 +0000</string>
+    <string>2025-07-02 04:50 +0000</string>
+    <key>Icons/Drinks/DrPepper/SicomDrPepper.png</key>
+    <string>2025-06-26 06:56 +0000</string>
+    <key>Icons/Drinks/OrangeFanta.png</key>
+    <string>2025-06-26 07:06 +0000</string>
+    <key>Icons/EdgeBrowser.png</key>
+    <string>2025-07-02 04:50 +0000</string>
     <key>Icons/SicomTaskbarKDS.png</key>
-    <string>2025-06-23 05:24 +0000</string>
+    <string>2025-07-02 10:35 +0000</string>
     <key>Icons/SicomTaskbarPOS.png</key>
-    <string>2025-06-18 09:39 +0000</string>
+    <string>2025-07-02 04:52 +0000</string>
+    <key>Icons/SicomTightVNC.png</key>
+    <string>2025-07-02 04:48 +0000</string>
 </dict>
 </plist>

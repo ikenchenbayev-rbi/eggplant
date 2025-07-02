@@ -84,9 +84,15 @@ to selectMainCourse
 	//Select Main Course 
 	// Read the DataFile to get the Column Number which has the Dining Option stored
 	put DataFile().ColumnMapping.(global posPlatformName).MainCourse into excelColumnNumber
-	
 	// Read the Excel to get the Data Value for the Main Course
 	put Common.readDataFromExcel (excelColumnNumber) into mainCourse
+	
+	put DataFile().ColumnMapping.(global posPlatformName).SelectMealOption into excelColumnNumber
+	put Common.readDataFromExcel (excelColumnNumber) into selectMealOption
+	
+	put DataFile().ColumnMapping.(global posPlatformName).MealDisplayName into excelColumnNumber
+	put Common.readDataFromExcel (excelColumnNumber) into mealDisplayName
+	
 	
 	if mainCourse is not empty
 		split mainCourse by ","
@@ -103,7 +109,16 @@ to selectMainCourse
 		end repeat
 	end if
 	// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
+	if ImageFound(text:"WOULD YOU LIKE TO MAKE IT A LARGE COMBO", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomPOSInterfaceArea))
+		put FoundImageInfo().imagerectangle +[0,0,200,200] into clickArea
+		click text: "No", waitFor:Config().Waits.(minWait),SearchRectangle:clickArea
+	end if
 	
+	if selectMeal is not empty or selectMealOption is not empty
+		// Validate that Meal gets added to the order
+		//assert that ImageFound(text:mealDisplayName, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCROrdersArea), validCharacters: mealDisplayName, validWords: mealDisplayName, ignoreSpaces: Yes, ignoreNewLines: Yes) with error "Meal Added to Order"
+		assert that common.extendedFindText(mealDisplayName,Config().Waits.(minWait), Config().SearchRectangles.(SicomOrdersArea)) is true with error "Meal Added to Order"
+	end if
 	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
@@ -158,11 +173,6 @@ to selectMealAndOption
 		
 	end if
 	
-	if selectMeal is not empty or selectMealOption is not empty
-		// Validate that Meal gets added to the order
-		//assert that ImageFound(text:mealDisplayName, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCROrdersArea), validCharacters: mealDisplayName, validWords: mealDisplayName, ignoreSpaces: Yes, ignoreNewLines: Yes) with error "Meal Added to Order"
-		assert that common.extendedFindText(mealDisplayName,Config().Waits.(minWait), Config().SearchRectangles.(SicomOrdersArea)) is true with error "Meal Added to Order"
-	end if
 	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
@@ -177,7 +187,7 @@ to selectSide
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 	// Read the DataFile to get the Column Number which has the Sides Options stored
-	put DataFile().ColumnMapping.(global posPlatformName).Sides1 into excelColumnNumber
+	put DataFile().ColumnMapping.(global posPlatformName).Sides into excelColumnNumber
 	
 	// Read the Excel to get the Data Value for the Sides
 	put Common.readDataFromExcel (excelColumnNumber) into sides
@@ -187,14 +197,14 @@ to selectSide
 		split sides by ","
 		
 		repeat with each item of sides
-			if it's currentIndex is an odd number
+			if sides's currentIndex is an odd number
 				//validate that the option of sides in available in display area
 				assert that ImageFound(text: trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
 				click FoundImageLocation()
 				wait 2
 			end if
 			
-			if it's currentIndex is an even number
+			if sides's currentIndex is an even number
 				// Select Sides
 				// IF preferred option of side is found in the orders area, click it
 				if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
@@ -202,7 +212,7 @@ to selectSide
 					wait 2
 				end if
 				// Validate Sides are added, by ensuring "Sides" text is not found in Orders area
-				assert that not ImageFound(text:it.currentIndex - 1, waitFor:2,SearchRectangle:Config().SearchRectangles.(SicomOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Side Added to Order"
+				assert that not ImageFound(text:sides.currentIndex - 1, waitFor:2,SearchRectangle:Config().SearchRectangles.(SicomOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Side Added to Order"
 			end if
 		end repeat
 	end if
@@ -281,14 +291,14 @@ to selectFlavors
 		split flavors by ","
 		
 		repeat with each item of flavors
-			if it's currentIndex is an odd number
+			if flavors's currentIndex is an odd number
 				//validate that the option of flavors in available in display area
 				assert that ImageFound(text: trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
 				click FoundImageLocation()
 				wait 2
 			end if
 			
-			if it's currentIndex is an even number
+			if flavors's currentIndex is an even number
 				// Select default flavors
 				// IF Flavors text is found in the orders area, click it
 				if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
@@ -296,7 +306,7 @@ to selectFlavors
 					wait 2
 				end if
 				// Validate flavors are added, by ensuring the pre default option text is not found in Orders area
-				assert that not ImageFound(text:it.currentIndex - 1, waitFor:2,SearchRectangle:Config().SearchRectangles.(SicomOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Side Added to Order"
+				assert that not ImageFound(text:flavors.currentIndex -1, waitFor:2,SearchRectangle:Config().SearchRectangles.(SicomOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Side Added to Order"
 			end if
 		end repeat
 	end if
@@ -415,6 +425,64 @@ to bumpOrderIDOnSicomKDS
 	
 end bumpOrderIDOnSicomKDS
 
+(**  
+logOn - Handler to log on the POS system
+@Version 1.0 5/21/2025
+@ChangeReason Creation
+**)
+to logOnSicomPOS
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	//check if the system has been logged on or not
+	if ImageFound(text:"MANAGER", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomManagerInfo)) or ImageFound(text:"Delivery", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomManagerInfo))
+		LogSuccess "POS system has been log on"
+	else
+		
+		if ImageFound(text:"REQUEST", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomMealSelectionArea))
+			//click on the Reuqest button
+			click FoundImageLocation()
+			//input the manager id using the cashier number pad
+			put DataFile().Logins.SicomPOS.ManagerID into managerID
+			log managerID
+			repeat with each item numID of managerID
+				log numID
+				assert that ImageFound(text: numID, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomNumPad), ignoreSpaces: Yes, ignoreNewLines: Yes)
+				click FoundImageLocation()
+				wait 1
+			end repeat
+			//click on Manager Log On button
+			assert that ImageFound(text:"MANAGER LOG ON", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea),  ignoreSpaces: Yes, ignoreNewLines: Yes)
+			click FoundImageLocation()
+			wait 6
+			//input the cashier id using the cashier number pad
+			put DataFile().Logins.SicomPOS.cashierID into cashierID
+			repeat with each item numID of cashierID
+				log numID 
+				assert that ImageFound(text: numID, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomNumPad), ignoreSpaces: Yes, ignoreNewLines: Yes)
+				click FoundImageLocation()
+				wait 1
+			end repeat
+			//click on Log On button
+			assert that ImageFound(text:"LOG ON", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(TopHalf),  ignoreSpaces: Yes, ignoreNewLines: Yes)
+			click FoundImageLocation()
+			wait 6
+			
+			//assert that a pop-up to select insert to log on has appeared
+			if ImageFound(text:"MANAGER POS ERROR", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(TopHalf),  ignoreSpaces: Yes, ignoreNewLines: Yes)
+				LogWarning "Cashier ID is wrong"
+				
+			else if ImageFound(text: "Select Insert to Log On", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomPOSInterfaceArea),  ignoreSpaces: Yes, ignoreNewLines: Yes)
+				assert that ImageFound(text:"Log On Insert", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomPOSInterfaceArea),  ignoreSpaces: Yes, ignoreNewLines: Yes)
+				//click on the Insert button
+				click FoundImageLocation()
+			end if
+		else
+			
+			logWarning "Request button is not available"
+		end if
+	end if
+	
+end logOnSicomPOS
+logOnSicomPOS
 (**  
 enterCustomerName - Handler to click enter whenver a pop-up to enter the customer name appeared
 @Version 1.0 6/18/2025

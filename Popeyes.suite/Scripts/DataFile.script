@@ -50,6 +50,10 @@ return {
 			KDSUsername: "RBI",
 			KDSPassword: "sicom1234",
 		},
+		SicomPOS:{
+			ManagerID:["1","2","3","4","5"],
+			CashierID: ["1","0","1"],
+		},
 
 
 	},
@@ -120,11 +124,9 @@ return {
 			SelectMeal: "D",
 			SelectMealOption: "F",
 			MealDisplayName: "G",
-			Flavor1: "H",
-			Flavor2: "I",
-			Sides1: "J",
-			Sides2: "K",
-			Drink: "L",
+			Flavors: "H",
+			Sides: "I",
+			Drink: "J",
 		},
 		
 		SicomKiosk: {

@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <statistics>
+ <script name="DAIWrappers/POSSicom">
+  <LastStatus>Success</LastStatus>
+  <NumberOfRuns>1</NumberOfRuns>
+  <NumberOfFails>0</NumberOfFails>
+  <FirstRun>2025-07-01 02:04:34 -0400</FirstRun>
+  <LastRun>2025-07-01 02:04:34 -0400</LastRun>
+  <TotalTimeOnSuccess>0.074000</TotalTimeOnSuccess>
+ </script>
  <script name="Tests/KioskTests">
   <LastStatus>Failure</LastStatus>
   <NumberOfRuns>2</NumberOfRuns>

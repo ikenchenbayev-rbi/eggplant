@@ -22,7 +22,7 @@ return {
 		minWait:10,
 		midWait: 30,
 		maxWait: 60,
-		SicomKDSWait: 150,
+		SicomKDSWait: 180,
 
 
 	},
@@ -56,8 +56,9 @@ return {
 		SicomOrdersArea: [296,231,700,903], --area of selected menu display, not fullscreen--
 		SicomDineOptionArea: [713,828,1390,897], --area for dining option selection, not fullscreen--
 		SicomOrderID: [521,255,575,280], --area of order ID--
-
-
+		SicomNumPad: [322,672,632,899], --area of number pad
+		SicomManagerInfo: [319,261,726,282], --area to determine whether the system has been logged on--
+		
 		OracleMainCourseSelectionArea: [4,1,1918,90],
 		OracleItemSelectionArea: [322,91,1920,996],
 		OracleOrderTypeSelectionArea: [320,138,399,549],
@@ -77,8 +78,8 @@ return {
 		OracleKioskOptionsSelectionArea: [0,572,1080,1671],
 		OracleKioskMainCourseSelectionArea: [0,0,302,1829],
 		OracleKioskNameSoftKeyboard: [95,581,988,953],
-
-
+	
+	
 	},
 	TextOffsets:{
 	(* TextOffsets used in the POS system to enable typetext commands*)

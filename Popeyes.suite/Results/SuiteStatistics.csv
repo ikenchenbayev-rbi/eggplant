@@ -1,2 +1,3 @@
 ﻿Script,Last Status,Runs,Fails,First Run,Last Run,Avg Time(Success)
+DAIWrappers/POSSicom,Success,1,0,2025-07-01 02:04:34 -0400,2025-07-01 02:04:34 -0400,0:00:00
 Tests/KioskTests,Failure,2,2,2025-06-06 01:58:00 -0400,2025-06-10 01:36:18 -0400,0:00:00

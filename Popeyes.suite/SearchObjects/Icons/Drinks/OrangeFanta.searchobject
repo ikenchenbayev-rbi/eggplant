@@ -1,10 +1,10 @@
 {
-	"lastmodifieddate": 1749530430.477,
+	"lastmodifieddate": 1750921273.4489999,
 	"lastfoundlocation": [
-		1295,
-		293,
-		97,
-		93
+		1246,
+		334,
+		82,
+		79
 	],
 	"originalcapturelocation": [
 		1295,
@@ -13,10 +13,11 @@
 		93
 	],
 	"createddate": 1749530430.477,
-	"lastfounddate": 1749530449.323,
+	"lastfounddate": 1750920840.7049999,
 	"testlocationdata": [
 		{
 				"connectionportnum": 50927,
+				"deleted": true,
 				"properties": {
 					"CropRectangle": "[0,0,0,0]",
 					"Rotate": 0,
@@ -40,6 +41,145 @@
 				],
 				"connectiontype": "Single System",
 				"connectionserverid": "127.0.0.1"
+			},
+		{
+				"connectionportnum": 57259,
+				"deleted": true,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": " 0.85",
+					"HotSpot": "[24,3]",
+					"Tolerance": "_73",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/Drinks/OrangeFanta.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"capturerect": [
+					1295,
+					293,
+					82,
+					79
+				],
+				"connectiontype": "Single System",
+				"connectionserverid": "127.0.0.1"
+			},
+		{
+				"connectionportnum": 57259,
+				"deleted": true,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": " 0.85",
+					"HotSpot": "[20,2]",
+					"Tolerance": "_73",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/Drinks/OrangeFanta.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					1295,
+					293,
+					69,
+					67
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "3"
+			},
+		{
+				"connectionportnum": 57259,
+				"deleted": true,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": " 0.85",
+					"HotSpot": "[20,2]",
+					"Tolerance": "_30",
+					"Discrepancy": "_0",
+					"SearchType": "Adaptive to Image"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/Drinks/OrangeFanta.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					1295,
+					293,
+					69,
+					67
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "3"
+			},
+		{
+				"connectionportnum": 57259,
+				"deleted": true,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": " 0.85",
+					"HotSpot": "[20,2]",
+					"Tolerance": 65,
+					"Discrepancy": "_0",
+					"SearchType": "Adaptive to Image"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/Drinks/OrangeFanta.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					1295,
+					293,
+					69,
+					67
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "3"
+			},
+		{
+				"connectionportnum": 57259,
+				"deleted": true,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": " 0.85",
+					"HotSpot": "[20,2]",
+					"Tolerance": 65,
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/Drinks/OrangeFanta.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					1295,
+					293,
+					69,
+					67
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "3"
 			}
 	],
 	"name": "Icons/Drinks/OrangeFanta"
