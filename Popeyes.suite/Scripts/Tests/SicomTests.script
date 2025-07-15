@@ -13,6 +13,7 @@ Common.switchSicomWindowTo "KDS"
 
 //KDS
 "DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+Common.switchSicomWindowTo "POS"
 
 (*=================================*)
 
@@ -33,6 +34,7 @@ Common.switchSicomWindowTo "KDS"
 
 //KDS
 "DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+Common.switchSicomWindowTo "POS"
 
 (*=================================*)
 
@@ -54,6 +56,7 @@ Common.switchSicomWindowTo "KDS"
 
 //KDS
 "DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+Common.switchSicomWindowTo "POS"
 
 (*=================================*)
 
@@ -76,6 +79,7 @@ Common.switchSicomWindowTo "KDS"
 
 //KDS
 "DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+Common.switchSicomWindowTo "POS"
 
 (*=================================*)
 
@@ -94,6 +98,7 @@ Common.switchSicomWindowTo "KDS"
 
 //KDS
 "DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+Common.switchSicomWindowTo "POS"
 
 (*=================================*)
 
@@ -113,6 +118,7 @@ Common.switchSicomWindowTo "KDS"
 
 //KDS
 "DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+Common.switchSicomWindowTo "POS"
 
 (*=================================*)
 
@@ -133,6 +139,7 @@ Common.switchSicomWindowTo "KDS"
 
 //KDS
 "DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+Common.switchSicomWindowTo "POS"
 
 (*=================================*)
 
@@ -152,6 +159,7 @@ Common.switchSicomWindowTo "KDS"
 
 //KDS
 "DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+Common.switchSicomWindowTo "POS"
 
 (*=================================*)
 
@@ -171,6 +179,7 @@ Common.switchSicomWindowTo "KDS"
 
 //KDS
 "DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+Common.switchSicomWindowTo "POS"
 
 (*=================================*)
 
@@ -191,6 +200,7 @@ Common.switchSicomWindowTo "KDS"
 
 //KDS
 "DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+Common.switchSicomWindowTo "POS"
 
 (*=================================*)
 
@@ -209,6 +219,7 @@ Common.switchSicomWindowTo "KDS"
 
 //KDS
 "DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+Common.switchSicomWindowTo "POS"
 
 (*=================================*)
 
@@ -227,6 +238,7 @@ Common.switchSicomWindowTo "KDS"
 
 //KDS
 "DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+Common.switchSicomWindowTo "POS"
 
 (*=================================*)
 
@@ -247,6 +259,7 @@ Common.switchSicomWindowTo "KDS"
 
 //KDS
 "DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+Common.switchSicomWindowTo "POS"
 
 (*=================================*)
 
@@ -268,6 +281,7 @@ Common.switchSicomWindowTo "KDS"
 
 //KDS
 "DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+Common.switchSicomWindowTo "POS"
 
 (*=================================*)
 
@@ -286,6 +300,7 @@ Common.switchSicomWindowTo "KDS"
 
 //KDS
 "DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+Common.switchSicomWindowTo "POS"
 
 (*=================================*)
 
@@ -304,6 +319,7 @@ Common.switchSicomWindowTo "KDS"
 
 //KDS
 "DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
+Common.switchSicomWindowTo "POS"
 
 (*=================================*)
 

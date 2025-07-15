@@ -127,6 +127,11 @@ return {
 			Flavors: "H",
 			Sides: "I",
 			Drink: "J",
+			KDSMealDisplayName: "K",
+			ExpoLabelDisplayName: "L",
+			ReceiptDisplayName: "M",
+			SandSidesDessertsDisplayName: "N",
+			ProteinDisplayName: "O",
 		},
 		
 		SicomKiosk: {
@@ -156,6 +161,10 @@ return {
 		SicomPOS: "910259_FC-Sicom",
 		SicomKDS: "",
 		SicomKiosk: "910259_Kiosk",
+		SicomCustReceipt: "SicomCustReceipt",
+		SicomExpo: "SicomExpo",
+		SicomProtein: "SicomProtein",
+		SicomSandSides: "SicomSandSidesDesserts",
 	},
 
 

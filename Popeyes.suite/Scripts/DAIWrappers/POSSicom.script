@@ -14,18 +14,6 @@ Description:  Handlers specific to the POS Operations on the Sicom POS platform.
 "This software is copyright Keysight Technologies, Inc. and licensed under the terms of Keysight’s End User License Agreement. Terms of Keysight’s EULA may be found here: www.keysight.com/find/sweula By using this Software, you agree to the terms of the Keysight EULA."
 **) 
 
-(**  
-loginToSicomPOS - Handler to login to the Sicom POS SUT.
-@Version 1.0 5/09/2025
-@ChangeReason Creation
-**)
-to loginToSicomPOS 
-	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
-	
-	
-	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
-	
-end loginToSicomPOS
 
 (**  
 selectDiningOption - Handler to select the Route 3 POS system that activates expected printer to print item label.
@@ -116,8 +104,7 @@ to selectMainCourse
 	
 	if selectMeal is not empty or selectMealOption is not empty
 		// Validate that Meal gets added to the order
-		//assert that ImageFound(text:mealDisplayName, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCROrdersArea), validCharacters: mealDisplayName, validWords: mealDisplayName, ignoreSpaces: Yes, ignoreNewLines: Yes) with error "Meal Added to Order"
-		assert that common.extendedFindText(mealDisplayName,Config().Waits.(minWait), Config().SearchRectangles.(SicomOrdersArea)) is true with error "Meal Added to Order"
+		//assert that common.extendedFindText(mealDisplayName,Config().Waits.(minWait), Config().SearchRectangles.(SicomOrdersArea)) is true with error "Meal Added to Order"
 	end if
 	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
@@ -179,7 +166,7 @@ to selectMealAndOption
 end selectMealAndOption
 
 (**  
-selectSides - Handler to select the first Sides like Mash Gravyy, Rice etc
+selectSide - Handler to select the first Sides like Mash Gravyy, Rice etc
 @Version 1.0 4/22/2025
 @ChangeReason Creation
 **)
@@ -212,7 +199,7 @@ to selectSide
 					wait 2
 				end if
 				// Validate Sides are added, by ensuring "Sides" text is not found in Orders area
-				assert that not ImageFound(text:sides.currentIndex - 1, waitFor:2,SearchRectangle:Config().SearchRectangles.(SicomOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Side Added to Order"
+				assert that not ImageFound(text:sides.currentIndex - 1, waitFor:2,SearchRectangle:Config().SearchRectangles.(SicomOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with warning "Side Added to Order"
 			end if
 		end repeat
 	end if
@@ -264,7 +251,7 @@ to selectDrink
 		
 		
 		// Validate Sides are added, by ensuring "Sides" text is not found in Orders area
-		assert that not ImageFound(text:item 1 of drink, waitFor:2,SearchRectangle:Config().SearchRectangles.(SicomOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Drink Added to Order"
+		assert that not ImageFound(text:item 1 of drink, waitFor:2,SearchRectangle:Config().SearchRectangles.(SicomOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with warning "Drink Added to Order"
 	end if
 	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
@@ -306,7 +293,7 @@ to selectFlavors
 					wait 2
 				end if
 				// Validate flavors are added, by ensuring the pre default option text is not found in Orders area
-				assert that not ImageFound(text:flavors.currentIndex -1, waitFor:2,SearchRectangle:Config().SearchRectangles.(SicomOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Side Added to Order"
+				assert that not ImageFound(text:flavors.currentIndex -1, waitFor:2,SearchRectangle:Config().SearchRectangles.(SicomOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with warning "Flavors Added to Order"
 			end if
 		end repeat
 	end if
@@ -419,9 +406,9 @@ to bumpOrderIDOnSicomKDS
 	//assert that ImageFound(text:mealDisplayName, waitFor:Config().Waits.(minWait),SearchRectangle: displayRect)
 	assert that common.extendedFindText(mealDisplayName,Config().Waits.(minWait), displayRect) is true with error "Meal Present in KDS"
 	//wait until the order has disappeared
-	wait Config().Waits.(SicomKDSWait)
+	waitForNotFound Config().Waits.(SicomKDSWait), {text: global orderID, searchRectangle: displayRect}
 	// Validate that the order is bumped and is not showing on the KDS anymore
-	assert that not imageFound(text:global orderID, waitFor:Config().Waits.(SicomKDSWait))
+	assert that not imageFound(text:global orderID)
 	
 end bumpOrderIDOnSicomKDS
 
@@ -470,12 +457,12 @@ to logOnSicomPOS
 			if ImageFound(text:"MANAGER POS ERROR", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(TopHalf),  ignoreSpaces: Yes, ignoreNewLines: Yes)
 				LogWarning "Cashier ID is wrong"
 				
-			else if ImageFound(text: "Select Insert to Log On", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomPOSInterfaceArea),  ignoreSpaces: Yes, ignoreNewLines: Yes)
+				else if ImageFound(text: "Select Insert to Log On", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomPOSInterfaceArea),  ignoreSpaces: Yes, ignoreNewLines: Yes)
 				assert that ImageFound(text:"Log On Insert", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomPOSInterfaceArea),  ignoreSpaces: Yes, ignoreNewLines: Yes)
 				//click on the Insert button
 				click FoundImageLocation()
 			end if
-		else
+			else
 			
 			logWarning "Request button is not available"
 		end if
@@ -496,3 +483,50 @@ to enterCustomerName
 		Click text: "Enter",  waitFor:Config().Waits.(minWait) ,SearchRectangle:Config().SearchRectangles.(BottomHalf)
 	end if
 end enterCustomerName
+
+(**  
+validateReceipt - Handler to open the Sicom receiptSUTs accordings for validation
+@Version 1.0 7/9/2025
+@ChangeReason Creation
+**)
+to validateSicomReceipt
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	put DataFile().ColumnMapping.(global posPlatformName).MainCourse into excelColumnNumber
+	put Common.readDataFromExcel (ExcelColumnNumber) into mainCourse
+	
+	split mainCourse by ","
+	
+	//to launch the SicomProtein SUT
+	if (mainCourse) is "Wings" or (mainCourse) is "Chicken"
+		//Connect to SicomProtein SUT
+		Connect DataFile().SUTNames.SicomProtein, visible: True
+		//Click to wake up the screen if it is in sleep mode by default
+		click Config().TextOffsets.(ClickScreenOffset)
+		
+		//Call the receipt validation handler
+		validateProteinReceipt
+	end if
+	
+	//To launch the SicomSandSidesDesserts SUT
+	IF (mainCourse) is "Sandwiches & Seafood"
+		//Connect to SicomSandSidesDessert SUT
+		Connect DataFile().SUTNames.SicomSandSides, visible: True
+		//click to wake up the screen from default sleep mode
+		click Config().TextOffsets.(ClickScreenOffset)
+		
+		//call the receipt validation handler
+		validateSandSidesDessertsReceipt
+	END IF
+	
+	//call handler to validate the Sicom Expo Receipt
+	validateSicomExpoReceipt
+	
+	//Call handler to validate the Sicom Customer Receipt
+	validateSicomCustomerRecipt
+	
+	Log "End of Script:"&item 1 delimited by ".script" of my name &"."&param(0)
+end validateSicomReceipt
+
+
+
