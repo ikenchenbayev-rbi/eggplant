@@ -16,7 +16,7 @@ Description:  DataFile contains return value for the config data used in POS tes
 **) 
 
 return { 
-	(* Login Information to be used inside the POS system, for Oracle, NCR and SiCOM*)
+(* Login Information to be used inside the POS system, for Oracle, NCR and SiCOM*)
 	Logins:{
 		NCRPOS:{
 			employeeCode:"100",
@@ -118,20 +118,20 @@ return {
 			LabelMealDisplayName: "O",
 		},
 		Sicom: {
-			TestCaseName: "B",
-			DineOption: "C",
-			MainCourse: "E",
-			SelectMeal: "D",
-			SelectMealOption: "F",
-			MealDisplayName: "G",
-			Flavors: "H",
-			Sides: "I",
-			Drink: "J",
-			KDSMealDisplayName: "K",
-			ExpoLabelDisplayName: "L",
-			ReceiptDisplayName: "M",
-			SandSidesDessertsDisplayName: "N",
-			ProteinDisplayName: "O",
+			TestCaseName: "TestCaseName",
+			DineOption: "DineOption",
+			MainCourse: "MainCourse",
+			SelectMeal: "SelectMeal",
+			SelectMealOption: "SelectMealOption",
+			MealDisplayName: "MealDisplayName",
+			Flavors: "Flavors",
+			Sides: "Sides",
+			Drink: "Drink",
+			KDSMealDisplayName: "KDSMealDisplayName",
+			ExpoLabelDisplayName: "ExpoLabelDisplayName",
+			ReceiptDisplayName: "ReceiptDisplayName",
+			SandSidesDessertsDisplayName: "SandSidesDessertsDisplayName",
+			ProteinDisplayName: "ProteinDisplayName",
 		},
 		
 		SicomKiosk: {

@@ -70,12 +70,11 @@ to readDataFromExcel excelColumn
 	// read in spreadsheet to memory
 	put global posPlatformName&".xlsx" into fileName
 	
-	set Spreadsheet to Workbook(ResourcePath(fileName))
+	// Older version of Reading Excel as as File. This code is replaced with using Excel as a Database
+	(*	set Spreadsheet to Workbook(ResourcePath(fileName))
 	// read in tab to memory
 	set entryData to Spreadsheet.Worksheet(1)
-	
 	put 2 into count
-	
 	// When we get to the end of the spreadsheet, then exit the repeat
 	repeat until eof_flag is "true"
 		if entryData.Cell("A"&(count)) is empty
@@ -83,15 +82,16 @@ to readDataFromExcel excelColumn
 		else
 			// If the global test case name matches excel test case name, read corresponding row and column value
 			put entryData.Cell("B"&(count)) into excelTestCaseName
-			
 			if excelTestCaseName is equal to global testCaseName ignoring case
 				put entryData.Cell(excelColumn&(count)) into dataValue
 				exit repeat
 			end if
 			add 1 to count
 		end if
-		
-	end repeat
+	end repeat*)
+	
+	set myExcelDB to {type:"excel", file:ResourcePath(fileName)} 
+	put the (excelColumn) of the record of myExcelDB where TestCaseName is global testCaseName into dataValue
 	
 	log "Returning Data value"
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
