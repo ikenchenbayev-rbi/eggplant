@@ -2,7 +2,7 @@
 ScriptName: Common
 Version 1.0
 Author: Sajeendra Das
-CreatedOn: 4/22/25
+CreatedOn: 4/22/25cd 
 PeerReviewedBy:
 PeerReviewedOn:
 EditedBy: 
@@ -70,7 +70,8 @@ to readDataFromExcel excelColumn
 	// read in spreadsheet to memory
 	put global posPlatformName&".xlsx" into fileName
 	
-	set Spreadsheet to Workbook(ResourcePath(fileName))
+	// Older version of Reading Excel as as File. This code is replaced with using Excel as a Database. Leaving the code in here incase the code needs to be reverted in the future
+	(*	set Spreadsheet to Workbook(ResourcePath(fileName))
 	// read in tab to memory
 	set entryData to Spreadsheet.Worksheet(1)
 	
@@ -91,7 +92,10 @@ to readDataFromExcel excelColumn
 			add 1 to count
 		end if
 		
-	end repeat
+	end repeat*)
+	
+	set myExcelDB to {type:"excel", file:ResourcePath(fileName)} 
+	put the (excelColumn) of the record of myExcelDB where TestCaseName is global testCaseName into dataValue
 	
 	log "Returning Data value"
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)

@@ -65,10 +65,10 @@ to selectDiningOption
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 	// Read the DataFile to get the Column Number which has the Dining Option stored
-	put DataFile().ColumnMapping.(global posPlatformName).DiningOption into excelColumnNumber
+	put DataFile().ColumnMapping.(global posPlatformName).DiningOption into excelColumnName
 	
 	// Read the Excel to get the Data Value for the Dining Option
-	put Common.readDataFromExcel (excelColumnNumber) into diningOption
+	put Common.readDataFromExcel (excelColumnName) into diningOption
 	
 	if diningOption is not empty
 		// Select the Dining Option on the screen
@@ -91,10 +91,10 @@ to selectMainCourse
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	//Select Main Course 
 	// Read the DataFile to get the Column Number which has the Dining Option stored
-	put DataFile().ColumnMapping.(global posPlatformName).MainCourse into excelColumnNumber
+	put DataFile().ColumnMapping.(global posPlatformName).MainCourse into excelColumnName
 	
 	// Read the Excel to get the Data Value for the Main Course
-	put Common.readDataFromExcel (excelColumnNumber) into mainCourse
+	put Common.readDataFromExcel (excelColumnName) into mainCourse
 	
 	if mainCourse is not empty
 		split mainCourse by ","
@@ -126,14 +126,14 @@ to selectMealAndOption
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	//Select Meal  
 	// Read the DataFile to get the Column Number which has the Meal, Meal Option and Display Names stored
-	put DataFile().ColumnMapping.(global posPlatformName).SelectMeal into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into selectMeal
+	put DataFile().ColumnMapping.(global posPlatformName).SelectMeal into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into selectMeal
 	
-	put DataFile().ColumnMapping.(global posPlatformName).SelectMealOption into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into selectMealOption
+	put DataFile().ColumnMapping.(global posPlatformName).SelectMealOption into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into selectMealOption
 	
-	put DataFile().ColumnMapping.(global posPlatformName).MealDisplayName into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into mealDisplayName
+	put DataFile().ColumnMapping.(global posPlatformName).MealDisplayName into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into mealDisplayName
 	
 	// Select Meal
 	if selectMeal is not empty
@@ -181,10 +181,10 @@ to selectFlavors
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 	// Read the DataFile to get the Column Number which has the Flavor Options stored
-	put DataFile().ColumnMapping.(global posPlatformName).Flavors into excelColumnNumber
+	put DataFile().ColumnMapping.(global posPlatformName).Flavors into excelColumnName
 	
 	// Read the Excel to get the Data Value for the Flavors
-	put Common.readDataFromExcel (excelColumnNumber) into flavors
+	put Common.readDataFromExcel (excelColumnName) into flavors
 	
 	if flavors is not empty
 		//Select Flavors on the Orders Section First
@@ -228,10 +228,10 @@ to selectSides
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 	// Read the DataFile to get the Column Number which has the Sides Options stored
-	put DataFile().ColumnMapping.(global posPlatformName).Sides into excelColumnNumber
+	put DataFile().ColumnMapping.(global posPlatformName).Sides into excelColumnName
 	
 	// Read the Excel to get the Data Value for the Sides
-	put Common.readDataFromExcel (excelColumnNumber) into sides
+	put Common.readDataFromExcel (excelColumnName) into sides
 	
 	if sides is not empty
 	(*		
@@ -275,10 +275,10 @@ to selectDrink
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 	// Read the DataFile to get the Column Number which has the Drink Options stored
-	put DataFile().ColumnMapping.(global posPlatformName).Drink into excelColumnNumber
+	put DataFile().ColumnMapping.(global posPlatformName).Drink into excelColumnName
 	
 	// Read the Excel to get the Data Value for the Drink
-	put Common.readDataFromExcel (excelColumnNumber) into drink
+	put Common.readDataFromExcel (excelColumnName) into drink
 	
 	if drink is not empty
 		
@@ -362,6 +362,9 @@ to exactPayment
 	// Validate User is taken back to the New Order screen
 	assert that ImageFound(text:"New Order", waitFor:Config().Waits.(maxWait),SearchRectangle:Config().SearchRectangles.(LeftHalf)) with error "NCR POS Login Validation"
 	
+	// Disconnects from NCR POS
+	Common.disconnectFromNCRPOS
+	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 end exactPayment
 
@@ -377,3 +380,204 @@ to saveOrderID
 	log "Order ID is: "&global orderID
 	return global orderID
 end saveOrderID
+
+
+(**  
+validateNCRReceipt - Handler to open the NCR receipt SUTs accordingly for validation.
+@Version 1.0 7/9/2025
+@ChangeReason Creation
+**)
+to validateNCRReceipt
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	put DataFile().ColumnMapping.(global posPlatformName).MainCourse into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into mainCourse
+	
+	// To launch the NcrProtein SUT
+	if mainCourse is "Wings" or mainCourse is "Chicken"
+		// Connect to the NCRProtein SUT
+		Connect DataFile().SUTNames.NCRProtein, visible: Yes
+		Wait 1
+		
+		// Click to wake up the screen as it will be on sleep mode by default
+		click Config().TextOffsets.(ClickMobileScreenOffset)
+		
+		// Call the receipt validation handler
+		validateProteinReceipt
+		
+		// Launch the NCRSandSidesDesserts SUT
+		Connect DataFile().SUTNames.NCRSandSidesDesserts, visible: Yes
+		
+		// Call the receipt validation handler
+		validateSandSidesDessertsReceipt
+	end if
+	
+	// To launch the NcrSandSidesDesserts SUT
+	if mainCourse is "Sandwiches Seafood" or mainCourse is "Sandwiches Seafood,To Seafood"
+		// Connect to the NCRSandSidesDesserts SUT
+		Connect DataFile().SUTNames.NCRSandSidesDesserts, visible: Yes
+		Wait 1
+		
+		// Click to wake up the screen as it will be on sleep mode by default
+		click Config().TextOffsets.(ClickMobileScreenOffset)
+		
+		// Call the receipt validation handler
+		validateSandSidesDessertsReceipt
+	end if
+	
+	// Call Handler to validate the NCR Expo Receipt
+	validateNCRExpoReceipt
+	
+	// Call Handler to validate the NCR Customer Receipt
+	validateNCRCustomerReceipt
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end validateNCRReceipt
+
+
+(**  
+validateProteinReceipt - Handler to validate the NCR Protein Receipt.
+@Version 1.0 7/9/2025
+@ChangeReason Creation
+**)
+to validateProteinReceipt
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	put DataFile().ColumnMapping.(global posPlatformName).ProteinDisplayName into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into mealDisplayName
+	
+	if mealDisplayName is not empty
+		
+		split mealDisplayName by ","
+		
+		// Validate the Protein Receipt
+		repeat for each item of mealDisplayName
+			// Validate the Order ID is found in the list of receipts
+			Assert that imagefound (text:trim(global orderID), WaitFor:Config().Waits.(midWait), SearchRectangle:Config().SearchRectangles.(LeftHalfMobileReceipt), ignoreSpaces: Yes, ignoreNewLines: Yes) is true with warning "Protein Receipt Order ID"
+			
+			//Creates a rectangle around the item
+			put foundimageinfo().imagerectangle +[-50,-80,300,100] into proteinRect
+			
+			//Validate the items are displayed on the receipt
+			Assert that imagefound (text:trim(mealDisplayName), WaitFor:Config().Waits.(midWait), SearchRectangle:(proteinRect), ignoreSpaces: Yes, ignoreNewLines: Yes) is true with warning "Items Displayed on Receipt"
+		end repeat
+		
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end validateProteinReceipt
+
+
+(**  
+validateSandSidesDessertsReceipt - Handler to validate the NCR Sandwiches, Sides & Desserts Receipt.
+@Version 1.0 7/9/2025
+@ChangeReason Creation
+**)
+to validateSandSidesDessertsReceipt
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	put DataFile().ColumnMapping.(global posPlatformName).SandSidesDessertsDisplayName into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into mealDisplayName
+	
+	if mealDisplayName is not empty
+		
+		split mealDisplayName by ","
+		
+		// Validate the SandSidesDesserts Receipt
+		repeat for each item of mealDisplayName
+			// Validate the Order ID is found in the list of receipts
+			Assert that imagefound (text:trim(global OrderID), WaitFor:Config().Waits.(midWait), SearchRectangle:Config().SearchRectangles.(LeftHalfMobileReceipt), ignoreSpaces: Yes, ignoreNewLines: Yes) is true with warning "Sandwiches/Sides/Desserts Receipt Order ID"
+			
+			//Creates a rectangle around the item
+			put foundimageinfo().imagerectangle +[-50,-80,300,100] into sidesRect
+			
+			//Validate the items are displayed on the receipt
+			Assert that imagefound (text:trim(mealDisplayName), WaitFor:Config().Waits.(midWait), SearchRectangle:(sidesRect), ignoreSpaces: Yes, ignoreNewLines: Yes) is true with warning "Items Displayed on Receipt"
+		end repeat
+		
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end validateSandSidesDessertsReceipt
+
+
+(**  
+validateNCRExpoReceipt - Handler to validate the NCR Expo Receipt.
+@Version 1.0 7/9/2025
+@ChangeReason Creation
+**)
+to validateNCRExpoReceipt
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	put DataFile().ColumnMapping.(global posPlatformName).ExpoLabelDisplayName into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into mealDisplayName
+	
+	// Launch the NCR Expo SUT
+	Connect DataFile().SUTNames.NCRExpo, visible: Yes
+	Wait 1
+	
+	// Click to wake up the screen as it will be on sleep mode by default
+	click Config().TextOffsets.(ClickMobileScreenOffset)
+	
+	if mealDisplayName is not empty
+		
+		split mealDisplayName by ","
+		
+		// Look for bottom of the receipt
+		Assert that imagefound (text:trim(global OrderID), WaitFor:Config().Waits.(midWait), SearchRectangle:Config().SearchRectangles.(LeftHalfMobileReceipt), ignoreSpaces: Yes, ignoreNewLines: Yes) is true with warning "Sandwiches/Sides/Desserts Receipt Order ID"
+		
+		// Create a rectangle
+		put foundimageinfo().imagerectangle's bottomRight-[50,50] into receiptStart
+
+		// Look for bottom of the receipt
+		Assert that imagefound (text:trim(first item of mealDisplayName), WaitFor:Config().Waits.(midWait), SearchRectangle:Config().SearchRectangles.(LeftHalfMobileReceipt), ignoreSpaces: Yes, ignoreNewLines: Yes, DPI:144) is true with warning "Sandwiches/Sides/Desserts Receipt Order ID"
+		put foundimageinfo().imagerectangle's topLeft+[150,50] into receiptEnd
+
+		// Validate Customer receipts for Order ID and Meal Name
+		put [receiptStart, receiptEnd] into receiptRect
+		
+		// Validate the Expo Receipt
+		repeat for each item of mealDisplayName
+			//Validate the items are displayed on the receipt
+			Assert that imagefound (text:trim(mealDisplayName), WaitFor:Config().Waits.(midWait), SearchRectangle:(receiptRect), ignoreSpaces: Yes, ignoreNewLines: Yes, DPI:144) is true with warning "Items Displayed on Receipt"
+		end repeat
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end validateNCRExpoReceipt
+
+
+(**  
+validateNCRCustomerReceipt - Handler to validate the NCR Customer Receipt.
+@Version 1.0 7/9/2025
+@ChangeReason Creation
+**)
+to validateNCRCustomerReceipt
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	put DataFile().ColumnMapping.(global posPlatformName).ReceiptDisplayName into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into mealDisplayName
+	
+	// Launch the NCR Customer Receipt SUT
+	Connect DataFile().SUTNames.NCRCustReceipt, visible: Yes
+	Wait 1
+	
+	// Click to wake up the screen as it will be on sleep mode by default
+	click Config().TextOffsets.(ClickMobileScreenOffset)
+	
+	// Validate that the order ID is displayed on the receipt
+	assert that imageFound(text: global orderID, waitFor:Config().Waits.(minWait), SearchRectangle: mobileReceiptArea, ignoreSpaces: Yes) with warning "Customer Receipt Order ID"
+	
+	if mealDisplayName is not empty
+		
+		split mealDisplayName by ","
+		
+		// Validate the orders on the Customer Receipt
+		repeat for each item of mealDisplayName
+			//Validate the items are displayed on the receipt
+			Assert that imagefound (text:trim(mealDisplayName), WaitFor:Config().Waits.(midWait), SearchRectangle:Config().SearchRectangles.(mobileReceiptArea), Contrast:ON) is true with warning "Items Displayed on Receipt"
+		end repeat
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end validateNCRCustomerReceipt
