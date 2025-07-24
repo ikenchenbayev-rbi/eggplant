@@ -58,7 +58,13 @@ return {
 		SicomOrderID: [521,255,575,280], --area of order ID--
 		SicomNumPad: [322,672,632,899], --area of number pad
 		SicomManagerInfo: [319,261,726,282], --area to determine whether the system has been logged on--
-		
+
+		ReceiptLeftHalf: [2,38,266,699],
+		ReceiptRightHalf: [239,38,479,699],
+		ReceiptCenter: [97,208,377,542],
+		ReceiptTopHalf: [2,38,479,359],
+		ReceiptBottomHalf: [2,355,479,682],
+
 		OracleMainCourseSelectionArea: [4,1,1918,90],
 		OracleItemSelectionArea: [322,91,1920,996],
 		OracleOrderTypeSelectionArea: [320,138,399,549],
@@ -78,13 +84,14 @@ return {
 		OracleKioskOptionsSelectionArea: [0,572,1080,1671],
 		OracleKioskMainCourseSelectionArea: [0,0,302,1829],
 		OracleKioskNameSoftKeyboard: [95,581,988,953],
-	
-	
+
+
 	},
 	TextOffsets:{
 	(* TextOffsets used in the POS system to enable typetext commands*)
 		CommandCenterTextbox:[55,0],
 		RemotePCLoginTextbox: [0,20],
 		ClickScreenOffset: [1900,500],
+		ReceiptCenter: [200,400],
 	},
 }

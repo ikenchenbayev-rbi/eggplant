@@ -339,3 +339,7 @@ Common.switchSicomWindowTo "KDS"
 //KDS
 "DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
 Common.switchSicomWindowTo "POS"
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Sicom"
+Common.setTestCaseName "SHRIMP AND 2 TENDERS COMBO"
+"DAIWrappers/POSSicom".validateSicomReceipt
