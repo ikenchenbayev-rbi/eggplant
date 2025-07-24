@@ -1,13 +1,21 @@
 {
-	"lastmodifieddate": 1749795973.9920001,
-	"ocrcapturestring": "X",
 	"originalcapturelocation": [
 		785,
 		246,
 		86,
 		86
 	],
+	"lastmodifieddate": 1749795973.9920001,
 	"createddate": 1749795848.638,
+	"name": "Icons/KioskCloseReceipt",
+	"lastfounddate": 1753373104.395,
+	"ocrcapturestring": "X",
+	"lastfoundlocation": [
+		798,
+		253,
+		60,
+		73
+	],
 	"testlocationdata": [
 		{
 				"connectionportnum": 3389,
@@ -36,6 +44,5 @@
 				"connectiontype": "RDP",
 				"capturedocrtext": "X"
 			}
-	],
-	"name": "Icons/KioskCloseReceipt"
+	]
 }
