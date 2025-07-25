@@ -59,32 +59,34 @@ return {
 		SicomNumPad: [322,672,632,899], --area of number pad
 		SicomManagerInfo: [319,261,726,282], --area to determine whether the system has been logged on--
 
-		ReceiptLeftHalf: [2,38,266,699],
-		ReceiptRightHalf: [239,38,479,699],
-		ReceiptCenter: [97,208,377,542],
-		ReceiptTopHalf: [2,38,479,359],
-		ReceiptBottomHalf: [2,355,479,682],
-
 		OracleMainCourseSelectionArea: [4,1,1918,90],
 		OracleItemSelectionArea: [322,91,1920,996],
+		OracleMealSelectionArea:[391,144,1270,723],
 		OracleOrderTypeSelectionArea: [320,138,399,549],
 		OracleOrdersArea: [0,131,323,1063],
 		OracleSidesSelectionArea: [397,716,1919,996],
 		OracleChangeDuePopup: [664,314,1257,724],
 		OracleCashPullPopup:[425,446,1496,633],
 		OracleOrderID: [42,113,191,139],
+		OracleFireOrderPopup: [695,443,1227,638],
 		KioskMainWindow: [692,66,1228,1031],
 		KioskItemSelectionArea: [860,91,1223,1021],
 		KioskOptionsSelectionArea: [696,355,1225,970],
 		KioskMainCourseSelectionArea: [696,95,847,1025],
 		KioskNameSoftKeyboard: [743,362,1185,543],
-		KioskOrderID: [338,596,762,769],
+		KioskOrderID:[390,594,693,716],
 		OracleKioskMainWindow: [0,0,1080,1920], 
 		OracleKioskItemSelectionArea: [301,0,1080,1838],
 		OracleKioskOptionsSelectionArea: [0,572,1080,1671],
 		OracleKioskMainCourseSelectionArea: [0,0,302,1829],
 		OracleKioskNameSoftKeyboard: [95,581,988,953],
 
+		MobileReceiptArea:[1,38,477,689],
+		ReceiptLeftHalf: [2,38,266,699],
+		ReceiptRightHalf: [239,38,479,699],
+		ReceiptCenter: [97,208,377,542],
+		ReceiptTopHalf: [2,38,479,359],
+		ReceiptBottomHalf: [2,355,479,682],
 
 	},
 	TextOffsets:{
@@ -92,6 +94,7 @@ return {
 		CommandCenterTextbox:[55,0],
 		RemotePCLoginTextbox: [0,20],
 		ClickScreenOffset: [1900,500],
-		ReceiptCenter: [200,400],
-	},
+		ClickMobileScreenOffset: [200,400],
+
+},
 }

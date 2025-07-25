@@ -8,6 +8,7 @@
 	"lastmodifieddate": 1750029363.487,
 	"createddate": 1747169957.0380001,
 	"name": "Icons/SicomTightVNC",
+<<<<<<< HEAD
 	"lastfounddate": 1750039907.0219998,
 	"ocrcapturestring": "Vnc",
 	"lastfoundlocation": [
@@ -15,6 +16,15 @@
 		406,
 		17,
 		9
+=======
+	"lastfounddate": 1750138193.5900002,
+	"ocrcapturestring": "Vnc",
+	"lastfoundlocation": [
+		518,
+		998,
+		15,
+		11
+>>>>>>> b5c9222c8ac9a275fbb000a6f4880861fd2fa786
 	],
 	"testlocationdata": [
 		{

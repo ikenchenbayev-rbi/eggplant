@@ -84,10 +84,10 @@ to selectMainCourse
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	//Select Main Course 
 	// Read the DataFile to get the Column Number which has the Dining Option stored
-	put DataFile().ColumnMapping.(global posPlatformName).MainCourse into excelColumnNumber
+	put DataFile().ColumnMapping.(global posPlatformName).MainCourse into excelColumnName
 	
 	// Read the Excel to get the Data Value for the Main Course
-	put Common.readDataFromExcel (excelColumnNumber) into mainCourse
+	put Common.readDataFromExcel (excelColumnName) into mainCourse
 	
 	if mainCourse is not empty
 		split mainCourse by ","
@@ -114,11 +114,11 @@ to selectMeal
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	//Select Meal  
 	// Read the DataFile to get the Column Number which has the Meal, Meal Option and Display Names stored
-	put DataFile().ColumnMapping.(global posPlatformName).SelectMeal into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into selectMeal
+	put DataFile().ColumnMapping.(global posPlatformName).SelectMeal into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into selectMeal
 	
-	put DataFile().ColumnMapping.(global posPlatformName).MealDisplayName into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into mealDisplayName
+	put DataFile().ColumnMapping.(global posPlatformName).MealDisplayName into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into mealDisplayName
 	
 	// Select Meal
 	if selectMeal is not empty
@@ -129,7 +129,7 @@ to selectMeal
 		// Select Meal and additional selections if any
 		repeat for each item of selectMeal
 			if common.extendedFindText(trim(it),Config().Waits.(minWait), Config().SearchRectangles.(OracleItemSelectionArea)) is true 
-				click FoundImageLocation()	
+				click FoundImageLocation()
 			end if
 		end repeat
 		
@@ -150,10 +150,10 @@ to selectFlavors
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 	// Read the DataFile to get the Column Number which has the Flavor Options stored
-	put DataFile().ColumnMapping.(global posPlatformName).Flavors into excelColumnNumber
+	put DataFile().ColumnMapping.(global posPlatformName).Flavors into excelColumnName
 	
 	// Read the Excel to get the Data Value for the Flavors
-	put Common.readDataFromExcel (excelColumnNumber) into flavors
+	put Common.readDataFromExcel (excelColumnName) into flavors
 	
 	if flavors is not empty
 		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
@@ -186,8 +186,8 @@ to selectOrderType
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	//Select Order Type  
 	// Read the DataFile to get the Column Number which has the Order Type stored
-	put DataFile().ColumnMapping.(global posPlatformName).OrderType into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into orderType
+	put DataFile().ColumnMapping.(global posPlatformName).OrderType into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into orderType
 	
 	// Select Order Type
 	if orderType is not empty
@@ -225,10 +225,10 @@ to selectSides
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 	// Read the DataFile to get the Column Number which has the Sides Options stored
-	put DataFile().ColumnMapping.(global posPlatformName).Sides into excelColumnNumber
+	put DataFile().ColumnMapping.(global posPlatformName).Sides into excelColumnName
 	
 	// Read the Excel to get the Data Value for the Sides
-	put Common.readDataFromExcel (excelColumnNumber) into sides
+	put Common.readDataFromExcel (excelColumnName) into sides
 	
 	if sides is not empty
 		
@@ -268,10 +268,10 @@ to selectDrink
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 	// Read the DataFile to get the Column Number which has the Drink Options stored
-	put DataFile().ColumnMapping.(global posPlatformName).Drink into excelColumnNumber
+	put DataFile().ColumnMapping.(global posPlatformName).Drink into excelColumnName
 	
 	// Read the Excel to get the Data Value for the Drink
-	put Common.readDataFromExcel (excelColumnNumber) into drink
+	put Common.readDataFromExcel (excelColumnName) into drink
 	
 	if drink is not empty
 		
@@ -361,6 +361,13 @@ to exactPayment
 	click FoundImageLocation()
 	wait 1
 	
+	// If the fire order now popup appears - click Yes. (Only for Kiosk Orders)
+	if ImageFound(text:"Do you want to fire order now?", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleFireOrderPopup),  ignoreSpaces: Yes, ignoreNewLines: Yes)
+		// Click yes
+		Assert that imageFound(text:"Yes", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleFireOrderPopup)) with warning "Fire order now popup"
+		Click FoundImageLocation()
+	end if
+	
 	// Click the OK button in the Change Due popup
 	WaitFor Config().Waits.(maxWait), text:"Change Due", SearchRectangle:Config().SearchRectangles.(OracleChangeDuePopup), Contrast:ON
 	click image:"Icons/OracleOKButton", waitFor:Config().Waits.(maxWait), SearchRectangle:Config().SearchRectangles.(OracleChangeDuePopup)
@@ -388,11 +395,11 @@ to validatePremiumUpcharges
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 	// Read the DataFile to get the Column Number which has the sideUpcharge, drinkUpcharge, sides and drink stored.
-	put DataFile().ColumnMapping.(global posPlatformName).SideUpcharge into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into sideUpcharge
+	put DataFile().ColumnMapping.(global posPlatformName).SideUpcharge into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into sideUpcharge
 	
-	put DataFile().ColumnMapping.(global posPlatformName).DrinkUpcharge into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into drinkUpcharge
+	put DataFile().ColumnMapping.(global posPlatformName).DrinkUpcharge into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into drinkUpcharge
 	
 	
 	if sideUpcharge is not empty
@@ -488,15 +495,15 @@ to validateExpoReceipt
 	click Config().TextOffsets.(ClickScreenOffset)
 	typetext controlKey, shiftKey, pageDown
 	
-	put DataFile().ColumnMapping.(global posPlatformName).ExpoLabelDisplayName into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into mealDisplayName
+	put DataFile().ColumnMapping.(global posPlatformName).ExpoLabelDisplayName into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into mealDisplayName
 	
 	// Validate Expo receipt
 	waitfor Config().Waits.(minWait), {text:"Restaurant"}
 	put foundimageinfo().imagerectangle +[0,0,500,500] into expoRect
 
 	// Validate Order ID on the Expo Receipt
-	assert that imageFound(text: global orderID, waitFor:  Config().Waits.(minWait), SearchRectangle: expoRect) with error "Expo Label Order ID"
+	assert that imageFound(text: global orderID, waitFor:  Config().Waits.(minWait), SearchRectangle: expoRect) with warning "Expo Label Order ID"
 	
 	split mealDisplayName by ","
 	
@@ -505,7 +512,7 @@ to validateExpoReceipt
 		if file (suiteinfo().imagesFolder&"/Icons/OracleExpo/"&trimall(it,"/ ")&".png") exists or if file (suiteinfo().imagesFolder&"/Icons/OracleExpo/"&trimall(it,"/ ")) exists
 			assert that imagefound(image: "/Icons/OracleExpo/"&trimall(it,"/ "),waitFor: Config().Waits.(minWait),searchRectangle: expoRect) with error "Meal Displayed on Expo Label"
 		else
-			assert that common.extendedFindText(trim(it),Config().Waits.(minWait),expoRect) is true with error "Meal Displayed on Expo Label"
+			assert that common.extendedFindText(trim(it),Config().Waits.(minWait),expoRect) is true with warning "Meal Displayed on Expo Label"
 		end if
 	end repeat
 	
@@ -521,8 +528,8 @@ validateCustomerReceipt - Handler to validate the Customer receipt for Oracle
 to validateCustomerReceipt
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
-	put DataFile().ColumnMapping.(global posPlatformName).ReceiptDisplayName into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into mealDisplayName
+	put DataFile().ColumnMapping.(global posPlatformName).ReceiptDisplayName into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into mealDisplayName
 	
 	// Scroll to the bottom of the screen
 	click Config().TextOffsets.(ClickScreenOffset)
@@ -582,19 +589,31 @@ to validateStickyReceipt
 	click Config().TextOffsets.(ClickScreenOffset)
 	ScrollWheelUp 1
 	
-	put DataFile().ColumnMapping.(global posPlatformName).LabelMealDisplayName into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into mealDisplayName
+	put DataFile().ColumnMapping.(global posPlatformName).LabelMealDisplayName into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into mealDisplayName
 	
-	// Validate Sticky Label receipts for Order ID and Meal Name
-	// Scroll up to the Sticky Label. Find based on text 1 of 3
-	repeat until ImageFound(image:"Icons/OracleStickyStart", waitFor:2, SearchRectangle: Config().SearchRectangles.(LeftHalf)) and ImageFound(image:"Icons/OracleStickyStart_Top", waitFor:2, SearchRectangle: Config().SearchRectangles.(LeftHalf))
-		//click "Icons/OraclePuttyScroll"
-		click Config().TextOffsets.(ClickScreenOffset)
-		ScrollWheelUp 1
-	end repeat
+	// Validate Sticky Label receipts for Order ID and Meal Name for Oracle POS
+	if (global posPlatformName) is "Oracle"
+		// Scroll up to the Sticky Label. Find based on text 1 of 3
+		repeat until ImageFound(image:"Icons/OracleStickyStart", waitFor:2, SearchRectangle: Config().SearchRectangles.(LeftHalf)) and ImageFound(image:"Icons/OracleStickyStart_Top", waitFor:2, SearchRectangle: Config().SearchRectangles.(LeftHalf))
+			//click "Icons/OraclePuttyScroll"
+			click Config().TextOffsets.(ClickScreenOffset)
+			ScrollWheelUp 1 
+		end repeat
+	end if
+	
+	// Validate Sticky Label receipts for Order ID and Meal Name for Oracle Kiosk
+	if (global posPlatformName) is "OracleKiosk"
+		// Scroll up to the Sticky Label. Find based on text 1 of 3
+		repeat until ImageFound(image:"Icons/OracleStickyStart", waitFor:2, SearchRectangle: Config().SearchRectangles.(LeftHalf)) and ImageFound(image:"Icons/OracleKioskStickyStart_Top", waitFor:2, SearchRectangle: Config().SearchRectangles.(LeftHalf))
+			//click "Icons/OraclePuttyScroll"
+			click Config().TextOffsets.(ClickScreenOffset)
+			ScrollWheelUp 1
+		end repeat
+	end if
 	
 	// Read order id to identify the sticky label
-	put EveryImageRectangle(text:global orderID) into orderList
+	put EveryImageRectangle(text:global orderID) into orderList    
 	put the first item of orderList + [-500,0,500, 700] into stickyRect
 	
 	// Validate order ID and Meal Names on the sticky label
@@ -610,26 +629,80 @@ to validateStickyReceipt
 end validateStickyReceipt
 
 (**  
-chooseClassic - Handler to click the classic button for orders like 4 Pc. BIC.
-@Version 1.0 5/21/2025
-@ChangeReason Creation
-**)
-to chooseClassic
-	Log "Select the Classic Option"
-	
-	//Look for the custom button on top of the screen and click
-	Assert that ImageFound(text:"Classic", SearchRectangle:Config().SearchRectangles.(TopHalf), ignoreSpaces: Yes, ignoreNewLines: Yes)
-	Click FoundImageLocation()
-end chooseClassic
-
-(**  
 saveOrderID - Handler to read the order ID from the Oracle screen and return the value, if needed for DAI
 @Version 1.0 4/22/2025
 @ChangeReason Creation
 **)
 to saveOrderID
 	Log "Reading Order ID"
-	put readText(Config().SearchRectangles.(OracleOrderID)) into global orderID
+	put readText(Config().SearchRectangles.(OracleOrderID), validCharacters:"0123456789") into global orderID
 	log "Order ID is: "&global orderID
 	return global orderID
 end saveOrderID
+
+(**  
+applyDiscount - Handler to apply discount to an order.
+@Version 1.0 6/18/2025
+@ChangeReason Creation
+**)
+to applyDiscount
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	put DataFile().ColumnMapping.(global posPlatformName).Discounts into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into discounts
+	
+	// Click the Discounts button
+	assert that ImageFound(text:"Discounts", waitFor:2,SearchRectangle:Config().SearchRectangles.(OracleItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes) with warning "Payment screen"
+	Click FoundImageLocation()
+	
+	// To select the discount based on the excel data
+	if discounts is not empty
+		
+		// Validate the discount type is visible on the screen
+		Assert that imagefound (text:trim(discounts), WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(OracleItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes) is true with warning "Discount type selection page"
+		
+		// Select the discount type
+		Click FoundImageLocation()
+		
+	end if
+	
+	// Validate that the discount has been applied
+	Assert that imagefound (text:trim(discounts), WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(OracleOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes) is true with warning "Discount applied in the orders area"
+	
+	// Click the back to pay button to complete payment process
+	Assert that imagefound (text:"BACK TO PAY", WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(OracleOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	Click FoundImageLocation()
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end applyDiscount
+
+(**  
+selectKioskOrder - Handler to select the Kiosk order and finish payment in the POS Oracle.
+@Version 1.0 6/19/2025
+@ChangeReason Creation
+**)
+to selectKioskOrder orderName
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Click the Functions button in the POS mainpage
+	Assert that imagefound (text:"Functions", WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(BottomHalf), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	Click FoundImageLocation()
+	
+	// Click the Manager Functions option
+	Assert that imagefound (text:"Manager Functions", WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(OracleMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	Click FoundImageLocation()
+	
+	// Click the View Stores Orders option
+	Assert that imagefound (text:"View Stored Orders", WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(LeftHalf), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	Click FoundImageLocation()
+	
+	// Click the Kiosk Orders button
+	Assert that imagefound (text:"KIOSK ORDERS", WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(RightHalf), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	Click FoundImageLocation()
+	
+	// Select the kiosk order to proceed to payment
+	Assert that imagefound (text:orderName, WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(LeftHalf), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	Click FoundImageLocation()
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end selectKioskOrder

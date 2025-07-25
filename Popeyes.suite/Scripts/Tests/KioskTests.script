@@ -1,8 +1,9 @@
-﻿// Oracle Kiosk Test Case 1: 6 Pc Boneless Wings Combo
+﻿-------------------------------------------Oracle Kiosk---------------------------------------------------------------
+// Oracle Kiosk Test Case 1: 6 Pc Boneless Wings Combo
 Common.setPlatformName "Kiosk"
 Common.setPOSPlatformName "OracleKiosk"
 Common.setTestCaseName "6 Pc Boneless Wings Combo"
-"DAIWrappers/Kiosk".launchKiosk
+"DAIWrappers/Kiosk".launchKioskSUT
 "DAIWrappers/Kiosk".startKioskOrder
 "DAIWrappers/Kiosk".selectDiningOption
 "DAIWrappers/Kiosk".selectMainCourse
@@ -11,24 +12,95 @@ Common.setTestCaseName "6 Pc Boneless Wings Combo"
 "DAIWrappers/Kiosk".selectSides 
 "DAIWrappers/Kiosk".selectDrink
 "DAIWrappers/Kiosk".selectBiscuit
-"DAIWrappers/Kiosk".addToCart
 "DAIWrappers/Kiosk".viewCart
 "DAIWrappers/Kiosk".proceedToTender
 "DAIWrappers/Kiosk".enterNameOnOrder "Test"
 "DAIWrappers/Kiosk".payAtCounter
 "DAIWrappers/Kiosk".completeOrder
 
+//POS Oracle - to complete payment then order will be moved to KDS.
+"DAIWrappers/Kiosk".payKioskOrder
+
 //KDS
 "DAIWrappers/KDS".connectToKDS
 "DAIWrappers/KDS".bumpOrderIDOnKDS
 "DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
 
 
 // Oracle Kiosk Test Case 2: 1/4 lb Popcorn Shrimp Combo
 Common.setPlatformName "Kiosk"
 Common.setPOSPlatformName "OracleKiosk"
 Common.setTestCaseName "1/4 lb Popcorn Shrimp Combo"
-"DAIWrappers/Kiosk".launchOracleKiosk
+"DAIWrappers/Kiosk".launchKioskSUT
+"DAIWrappers/Kiosk".startKioskOrder
+"DAIWrappers/Kiosk".selectDiningOption
+"DAIWrappers/Kiosk".selectMainCourse 
+"DAIWrappers/Kiosk".selectMealAndSize
+"DAIWrappers/Kiosk".selectFlavors
+"DAIWrappers/Kiosk".selectSides 
+"DAIWrappers/Kiosk".selectDrink
+"DAIWrappers/Kiosk".selectBiscuit
+"DAIWrappers/Kiosk".viewCart
+"DAIWrappers/Kiosk".proceedToTender
+"DAIWrappers/Kiosk".enterNameOnOrder "Test"
+"DAIWrappers/Kiosk".payAtCounter
+"DAIWrappers/Kiosk".completeOrder
+
+// POS Oracle - to complete payment then order will be moved to KDS.
+"DAIWrappers/Kiosk".payKioskOrder
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
+
+
+-------------------------------------------Sicom Kiosk---------------------------------------------------------------
+// Sicom Kiosk Test Case 1: 6 Pc Boneless Wings Combo
+Common.setPlatformName "Kiosk"
+Common.setPOSPlatformName "SicomKiosk"
+Common.setTestCaseName "6 Pc Boneless Wings Combo"
+"DAIWrappers/Kiosk".launchKioskSUT
+"DAIWrappers/Kiosk".startKioskOrder
+"DAIWrappers/Kiosk".selectDiningOption
+"DAIWrappers/Kiosk".selectMainCourse
+"DAIWrappers/Kiosk".selectMealAndSize
+"DAIWrappers/Kiosk".selectFlavors
+"DAIWrappers/Kiosk".selectSides 
+"DAIWrappers/Kiosk".selectDrink
+"DAIWrappers/Kiosk".selectBiscuit
+"DAIWrappers/Kiosk".addToCart
+"DAIWrappers/Kiosk".viewCart
+"DAIWrappers/Kiosk".proceedToTender
+"DAIWrappers/Kiosk".enterNameOnOrder "Test"
+"DAIWrappers/Kiosk".payAtCounter
+"DAIWrappers/Kiosk".completeOrder
+
+// POS Sicom - to complete payment then order will be moved to KDS.
+
+//KDS
+Common.connectToLocalSingleSystem
+Common.launchChrome
+Common.openRemotePC
+Common.openSicomFC
+"DAIWrappers/KDS".launchSicomKDS
+"DAIWrappers/KDS".validateOrderOnSicomKDS
+
+//Validate receipts
+
+
+
+// Sicom Kiosk Test Case 2: 1/4 lb Popcorn Shrimp Combo
+Common.setPlatformName "Kiosk"
+Common.setPOSPlatformName "SicomKiosk"
+Common.setTestCaseName "1/4 lb Popcorn Shrimp Combo"
+"DAIWrappers/Kiosk".launchKioskSUT
 "DAIWrappers/Kiosk".startKioskOrder
 "DAIWrappers/Kiosk".selectDiningOption
 "DAIWrappers/Kiosk".selectMainCourse
@@ -45,6 +117,81 @@ Common.setTestCaseName "1/4 lb Popcorn Shrimp Combo"
 "DAIWrappers/Kiosk".completeOrder
 
 //KDS
-"DAIWrappers/KDS".connectToKDS
-"DAIWrappers/KDS".bumpOrderIDOnKDS
-"DAIWrappers/KDS".disconnectFromKDS
+Common.connectToLocalSingleSystem
+Common.launchChrome
+Common.openRemotePC
+Common.openSicomFC
+"DAIWrappers/KDS".launchSicomKDS
+"DAIWrappers/KDS".validateOrderOnSicomKDS
+
+//Validate receipts
+
+
+
+-------------------------------------------NCR Kiosk---------------------------------------------------------------
+// NCR Kiosk Test Case 1: 6 Pc Boneless Wings Combo
+Common.setPlatformName "Kiosk"
+Common.setPOSPlatformName "NCRKiosk"
+Common.setTestCaseName "6 Pc Boneless Wings Combo"
+"DAIWrappers/Kiosk".launchKioskSUT
+"DAIWrappers/Kiosk".startKioskOrder
+"DAIWrappers/Kiosk".selectDiningOption
+"DAIWrappers/Kiosk".selectMainCourse
+"DAIWrappers/Kiosk".selectMealAndSize
+"DAIWrappers/Kiosk".selectFlavors
+"DAIWrappers/Kiosk".selectSides 
+"DAIWrappers/Kiosk".selectDrink
+"DAIWrappers/Kiosk".selectBiscuit
+"DAIWrappers/Kiosk".addToCart
+"DAIWrappers/Kiosk".viewCart
+"DAIWrappers/Kiosk".proceedToTender
+"DAIWrappers/Kiosk".enterNameOnOrder "Test"
+"DAIWrappers/Kiosk".payAtCounter
+"DAIWrappers/Kiosk".completeOrder
+
+// POS NCR - to complete payment then order will be moved to KDS.
+
+//KDS
+Common.connectToLocalSingleSystem
+Common.launchChrome
+Common.openRemotePC
+Common.openSicomFC
+"DAIWrappers/KDS".launchNCRKDS
+"DAIWrappers/KDS".validateOrderOnNCRKDS
+
+//Validate receipts
+
+
+
+// NCR Kiosk Test Case 2: 1/4 lb Popcorn Shrimp Combo
+Common.setPlatformName "Kiosk"
+Common.setPOSPlatformName "NCRKiosk"
+Common.setTestCaseName "1/4 lb Popcorn Shrimp Combo"
+"DAIWrappers/Kiosk".launchKioskSUT
+"DAIWrappers/Kiosk".startKioskOrder
+"DAIWrappers/Kiosk".selectDiningOption
+"DAIWrappers/Kiosk".selectMainCourse
+"DAIWrappers/Kiosk".selectMealAndSize
+"DAIWrappers/Kiosk".selectFlavors
+"DAIWrappers/Kiosk".selectSides 
+"DAIWrappers/Kiosk".selectDrink
+"DAIWrappers/Kiosk".selectBiscuit
+"DAIWrappers/Kiosk".addToCart
+"DAIWrappers/Kiosk".viewCart
+"DAIWrappers/Kiosk".proceedToTender
+"DAIWrappers/Kiosk".enterNameOnOrder "Test"
+"DAIWrappers/Kiosk".payAtCounter
+"DAIWrappers/Kiosk".completeOrder
+
+// POS NCR - to complete payment then order will be moved to KDS.
+
+//KDS
+Common.connectToLocalSingleSystem
+Common.launchChrome
+Common.openRemotePC
+Common.openSicomFC
+"DAIWrappers/KDS".launchSicomKDS
+"DAIWrappers/KDS".validateOrderOnSicomKDS
+
+//Validate receipts
+

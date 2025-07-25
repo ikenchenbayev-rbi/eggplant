@@ -21,10 +21,11 @@ connectToKDS - Handler to login to the NCR KDS SUT
 @ChangeReason Creation
 **)
 to connectToKDS
-	if (global posPlatformName) is "NCR"
+	// Code for NCR KDS
+	if (global posPlatformName) is "NCR" or (global posPlatformName) is "NCRKiosk"
 		Common.connectToLocalSingleSystem
 		
-		// If Command Center window is already open   ed from previous session, close it
+		// If Command Center window is already opened from previous session, close it
 		if ImageFound(text:"Command Center", waitFor:2, searchRectangle: Config().SearchRectangles.(TopHalf))
 			//Click Command Center window.
 			click FoundImageLocation()
@@ -40,7 +41,8 @@ to connectToKDS
 		Connect {serverID: "127.0.0.1", portNum:5500, Visible: "Yes"} 
 	end if
 	
-	if (global posPlatformName) is "Oracle"
+	// Code for Oracle KDS
+	if (global posPlatformName) is "Oracle" or (global posPlatformName) is "OracleKiosk"
 		Connect DataFile().SUTNames.OracleKDS, visible: Yes
 		
 		// Wait for SUT To be connected
@@ -56,9 +58,7 @@ to connectToKDS
 		
 		// Click to wake up the system, incase it is showing the screen saver
 		click Config().TextOffsets.(ClickScreenOffset)
-		
 	end if
-	
 	
 end connectToKDS
 
@@ -68,9 +68,10 @@ bumpOrderIDOnKDS - Handler to Bump the order ID on the KDS SUT
 @ChangeReason Creation
 **)
 to bumpOrderIDOnKDS
-	if (global posPlatformName) is "NCR"
+	// Code for NCR KDS
+	if (global posPlatformName) is "NCR" or (global posPlatformName) is "NCRKiosk"
 		// Look for the Order ID on the KDS screen
-		repeat until ImageFound(text: global orderID, waitFor:Config().Waits.(minWait), contrast: on, DPI: 144)
+		repeat until ImageFound(text: global orderID, waitFor:Config().Waits.(midWait), contrast: on, DPI: 144)
 			click image: "Icons/KDSNext",  SearchRectangle: Config().SearchRectangles.(BottomHalf)
 		end repeat
 		
@@ -81,8 +82,8 @@ to bumpOrderIDOnKDS
 		put orderRect +[-200,-200,600,600] into displayRect
 
 		// Ensure meal display name is shown on the KDS for the order ID
-		put DataFile().ColumnMapping.(global posPlatformName).MealDisplayName into excelColumnNumber
-		put Common.readDataFromExcel (excelColumnNumber) into mealDisplayName
+		put DataFile().ColumnMapping.(global posPlatformName).MealDisplayName into excelColumnName
+		put Common.readDataFromExcel (excelColumnName) into mealDisplayName
 		
 		//assert that ImageFound(text:mealDisplayName, waitFor:Config().Waits.(minWait),SearchRectangle: displayRect)
 		assert that common.extendedFindText(mealDisplayName,Config().Waits.(minWait), displayRect) is true with error "Meal Present in KDS"
@@ -97,9 +98,10 @@ to bumpOrderIDOnKDS
 		assert that not imageFound(text:global orderID, waitFor:Config().Waits.(minWait))
 	end if
 	
-	if (global posPlatformName) is "Oracle"
+	// Code for Oracle KDS
+	if (global posPlatformName) is "Oracle" or (global posPlatformName) is "OracleKiosk"
 		// Look for the Order ID on the KDS screen
-		repeat until ImageFound(text: global orderID, waitFor:Config().Waits.(minWait))
+		repeat until ImageFound(text: global orderID, waitFor:Config().Waits.(midWait))
 			click Text: "Next Page",  SearchRectangle: Config().SearchRectangles.(BottomHalf)
 		end repeat
 		
@@ -110,8 +112,8 @@ to bumpOrderIDOnKDS
 		put orderRect +[-250,-20,150,350] into displayRect
 
 		// Ensure meal display name is shown on the KDS for the order ID
-		put DataFile().ColumnMapping.(global posPlatformName).KDSMealDisplayName into excelColumnNumber
-		put Common.readDataFromExcel (excelColumnNumber) into mealDisplayName
+		put DataFile().ColumnMapping.(global posPlatformName).KDSMealDisplayName into excelColumnName
+		put Common.readDataFromExcel (excelColumnName) into mealDisplayName
 		
 		//assert that ImageFound(text:mealDisplayName, waitFor:Config().Waits.(minWait),SearchRectangle: displayRect)
 		assert that common.extendedFindText(mealDisplayName,Config().Waits.(minWait), displayRect) is true with error "Meal Present in KDS"
@@ -154,12 +156,100 @@ disconnectFromKDS - Handler to Disconnect from the KDS SUT
 @ChangeReason Creation
 **)
 to disconnectFromKDS
-	if (global posPlatformName) is "NCR"
+	// Code for NCR KDS
+	if (global posPlatformName) is "NCR" or (global posPlatformName) is "NCRKiosk"
 		Disconnect {serverID: "127.0.0.1", portNum:5500, Visible: "Yes"}
 	end if
 	
-	if (global posPlatformName) is "Oracle"
+	// Code for Oracle KDS
+	if (global posPlatformName) is "Oracle" or (global posPlatformName) is "OracleKiosk"
 		Disconnect DataFile().SUTNames.OracleKDS
 	end if
 end disconnectFromKDS
+
+
+(**  
+launchSicomKDS - Internal Handler to launch the Sicom KDS on Egde
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to launchSicomKDS
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0),
+	
+	// Validate if the Sicom KDS is open, else launch Edge browser and continue next steps.
+	If imagefound (Text:"Support Terminal", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(LeftHalf))
+		LogSuccess "Sicom KDS is open."
+	else
+		// Open Edge application from taskbar
+		waitFor Config().Waits.(minWait), {image:"Icons/EdgeBrowser", SearchRectangle: Config().SearchRectangles.(BottomHalf)}
+		click FoundImageLocation()
+		wait 2
+		
+		// Wait for Edge window to open and open the webpage
+		waitFor Config().Waits.(minWait), {text:"MGRNG Login", SearchRectangle: Config().SearchRectangles.(TopHalf) }
+		click FoundImageLocation()
+		wait 2
+		
+		// Wait for login window and enter credentials
+		waitFor Config().Waits.(minWait), {text:"User Name", SearchRectangle: Config().SearchRectangles.(TopHalf) }
+		click FoundImageLocation()+ Config().TextOffsets.(CommandCenterTextbox)
+		typetext DataFile().Logins.SicomVNC.KDSUsername, tabKey
+		wait 1
+		typetext DataFile().Logins.SicomVNC.KDSPassword, returnKey
+		
+		// Wait for Page to Load. Click on System
+		waitFor Config().Waits.(minWait), {text:"System Maintenance", SearchRectangle: Config().SearchRectangles.(LeftHalf) }
+		click FoundImageLocation()
+		
+		// Click on Tools
+		waitFor Config().Waits.(minWait), {text:"Tools", SearchRectangle: Config().SearchRectangles.(TopHalf), caseSensitive: Yes }
+		click FoundImageLocation()
+		
+		// Click on Remote View
+		waitFor Config().Waits.(minWait), {text:"Remote View", SearchRectangle: Config().SearchRectangles.(TopHalf) }
+		click FoundImageLocation()
+		
+		// Wait for the kitchen screens selection window to open up
+		waitFor Config().Waits.(minWait), {text:"Kitchen screens", SearchRectangle: Config().SearchRectangles.(TopHalf)}
+
+		// Select checkboxes for KDS screens
+		waitFor Config().Waits.(minWait), {text:"000:ks001", SearchRectangle: Config().SearchRectangles.(LeftHalf) }
+		click FoundImageLocation()
+		waitFor Config().Waits.(minWait), {text:"000:ks002", SearchRectangle: Config().SearchRectangles.(LeftHalf) }
+		click FoundImageLocation()
+		
+		// Set Refresh Rate
+		waitFor Config().Waits.(minWait), {text:"Refresh Rate", SearchRectangle: Config().SearchRectangles.(LeftHalf) }
+		click FoundImageLocation() + [200,0]
+		TypeText "5", returnKey
+	End If
+	
+	// Validate Sicom KDS opened successfully
+	assert that imagefound (Text:"Terminal & Screen", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(LeftHalf)) with warning "Sicom KDS launch"
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end launchSicomKDS
+
+
+(**  
+validateOrderOnSicomKDS - Validates the order is found on the Sicom KDS.
+@Version 1.0 6/17/2025
+@ChangeReason Creation
+**)
+to validateOrderOnSicomKDS
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Validate Order ID on the Sicom KDS
+	If imageFound(text: global orderID, waitFor: Config().Waits.(minWait), SearchRectangle:LeftHalf)
+		LogSuccess "Order is found."
+	else
+		// If Order ID not found, scroll down to view the In Progress section.
+		Typetext endKey
+		Assert that imageFound(text: global orderID, waitFor:Config().Waits.(minWait), SearchRectangle:LeftHalf)
+	End If
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end validateOrderOnSicomKDS
+
+
 
