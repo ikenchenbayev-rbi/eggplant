@@ -518,7 +518,7 @@ to validateSicomReceipt
 		repeat with each item of selectMeal
 			log selectMeal
 			//to launch the SicomProtein SUT
-			if selectMeal is "WINGS" or selectMeal is "CHICKEN"
+			if it is "WINGS" or it is "CHICKEN"
 				log "hehe"
 				//Connect to SicomProtein SUT
 				Connect DataFile().SUTNames.SicomProtein, visible: True
@@ -528,7 +528,7 @@ to validateSicomReceipt
 				//Call the receipt validation handler
 				validateProteinReceipt
 				//the sides of the order combo will go into SicomSandSides receipt
-				if (selectMealOption) is "SANDWICH ONLY" or (selectMealOption) is "A LA CARTE" or (selectMealOption) is "12P WINGS"
+				if it is "SANDWICH ONLY" or it is "A LA CARTE" or it is "12P WINGS"
 					log "No sides are tendered for a la carte menu"
 				else
 					//Connect to SicomSandSidesDessert SUT to validate if 
@@ -542,7 +542,7 @@ to validateSicomReceipt
 			end if
 			
 			//To launch the SicomSandSidesDesserts SUT
-			IF selectMeal is "SANDWICHES & SEAFOOD" or selectMeal is "TO SEAFOOD"
+			IF it is "SANDWICHES & SEAFOOD" or it is "TO SEAFOOD"
 				log "huhu"
 				//Connect to SicomSandSidesDessert SUT
 				Connect DataFile().SUTNames.SicomSandSides, visible: True
