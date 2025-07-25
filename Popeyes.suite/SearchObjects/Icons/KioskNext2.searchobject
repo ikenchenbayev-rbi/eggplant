@@ -1,19 +1,19 @@
 {
-	"lastmodifieddate": 1751428220.513,
+	"lastmodifieddate": 1751428206.5409999,
 	"lastfoundlocation": [
-		824,
-		1734,
-		108,
-		58
+		821,
+		1718,
+		117,
+		64
 	],
 	"originalcapturelocation": [
-		824,
-		1734,
-		108,
-		58
+		821,
+		1718,
+		117,
+		64
 	],
-	"createddate": 1749627318.336,
-	"lastfounddate": 1751426357.776,
+	"createddate": 1751427475.7410002,
+	"lastfounddate": 1753373093.125,
 	"testlocationdata": [
 		{
 				"connectionportnum": 3389,
@@ -21,7 +21,7 @@
 					"CropRectangle": "[0,0,0,0]",
 					"Rotate": 0,
 					"Scale": "    1",
-					"HotSpot": "[54,29]",
+					"HotSpot": "[58,32]",
 					"Tolerance": "_45",
 					"Discrepancy": "_0",
 					"SearchType": "Tolerant of Background"
@@ -29,18 +29,18 @@
 				"sutinfo": {
 					"type": "Unknown RDP"
 				},
-				"name": "Icons/KioskNextButtons/SicomNext.png",
+				"name": "Icons/KioskNextButtons/OracleNext.png",
 				"connectionname": "OracleKiosk",
 				"type": 1,
 				"capturerect": [
-					824,
-					1734,
-					108,
-					58
+					821,
+					1718,
+					117,
+					64
 				],
 				"connectiontype": "RDP",
 				"connectionserverid": "192.168.7.4"
 			}
 	],
-	"name": "Icons/KioskNext"
+	"name": "Icons/KioskNext2"
 }

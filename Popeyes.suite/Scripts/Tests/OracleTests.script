@@ -1,5 +1,4 @@
-﻿
-(*=================================*)
+﻿(*=================================*)
 // Oracle Test Case 1: Popcorn Shrimp & Tender ALC
 Common.setPlatformName "POS"
 Common.setPOSPlatformName "Oracle"
@@ -22,6 +21,7 @@ Common.launchOraclePOS
 
 //Validate Receipts
 "DAIWrappers/POSOracle".validateReceipt
+
 
 
 (*=================================*)
@@ -387,6 +387,57 @@ Common.launchOraclePOS
 "DAIWrappers/POSOracle".selectDrink
 "DAIWrappers/POSOracle".validatePremiumUpcharges
 "DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
+
+(*=================================*)
+// Oracle Test Case 17: Kids Tender Meal Combo
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Oracle"
+Common.setTestCaseName "Kids Tender Meal Combo"
+Common.launchOraclePOS
+"DAIWrappers/POSOracle".loginToOraclePOS
+"DAIWrappers/POSOracle".selectMainCourse
+"DAIWrappers/POSOracle".selectMeal
+"DAIWrappers/POSOracle".selectFlavors
+"DAIWrappers/POSOracle".selectOrderType
+"DAIWrappers/POSOracle".selectSides 
+"DAIWrappers/POSOracle".selectDrink
+"DAIWrappers/POSOracle".validatePremiumUpcharges
+"DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
+
+(*=================================*)
+// Oracle Test Case 18: X% Off Discount
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Oracle"
+Common.setTestCaseName "X% Off Discount"
+Common.launchOraclePOS
+"DAIWrappers/POSOracle".loginToOraclePOS
+"DAIWrappers/POSOracle".selectMainCourse
+"DAIWrappers/POSOracle".selectMeal
+"DAIWrappers/POSOracle".selectFlavors
+"DAIWrappers/POSOracle".selectOrderType
+"DAIWrappers/POSOracle".selectSides 
+"DAIWrappers/POSOracle".selectDrink
+"DAIWrappers/POSOracle".validatePremiumUpcharges
+"DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".applyDiscount
 "DAIWrappers/POSOracle".exactPayment
 
 //KDS
