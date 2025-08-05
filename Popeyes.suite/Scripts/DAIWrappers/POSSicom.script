@@ -423,8 +423,9 @@ logOn - Handler to log on the POS system
 **)
 to logOnSicomPOS
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
 	//check if the system has been logged on or not
-	if ImageFound(text:"MANAGER", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomManagerInfo)) or ImageFound(text:"Delivery", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomManagerInfo))
+	if ImageFound(text:"MANAGER", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomManagerInfo), validWords: "Manager") or ImageFound(text:"Delivery", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomManagerInfo))
 		LogSuccess "POS system has been log on"
 	else
 		
@@ -473,7 +474,7 @@ to logOnSicomPOS
 	end if
 	
 end logOnSicomPOS
-logOnSicomPOS
+
 (**  
 enterCustomerName - Handler to click enter whenver a pop-up to enter the customer name appeared
 @Version 1.0 6/18/2025
@@ -496,69 +497,56 @@ validateReceipt - Handler to open the Sicom receiptSUTs accordings for validatio
 to validateSicomReceipt
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
-	//saving the order id to be used as refernce
+	//saving the order id to be used as reference
 	saveOrderID
-	//Disconnect DataFile().SUTNames.LocalSingleSystem
 	
-	Common.setPlatformName "POS"
-	Common.setPOSPlatformName "Sicom"
-	Common.setTestCaseName "SHRIMP AND 2 TENDERS COMBO"
+	//Run a dummy order to push the receipt
+	sendDummyPOSOrder
 	
-	put DataFile().ColumnMapping.(global posPlatformName).SelectMealOption into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into selectMealOption
+	// Read the Protein and Sides Validation toggles from the Excel file
+	put DataFile().ColumnMapping.(global posPlatformName).SidesValidation into excelColumnNumber
+	put Common.readDataFromExcel (excelColumnNumber) into sidesValidation
 	
-	put DataFile().ColumnMapping.(global posPlatformName).SelectMeal into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into selectMeal
+	put DataFile().ColumnMapping.(global posPlatformName).ProteinValidation into excelColumnNumber
+	put Common.readDataFromExcel (excelColumnNumber) into proteinValidation
 	
-	if selectMeal is not empty
+	// To launch the SicomProtein SUT
+	if proteinValidation is "YES"
+		// Connect to the SicomProtein SUT
+		Log "Launching the SicomProtein SUT"
+		Connect DataFile().SUTNames.SicomProtein, visible: Yes
+		Wait 1
+		// Click to wake up the screen as it will be on sleep mode by default
+		click Config().TextOffsets.(ClickMobileScreenOffset)
+		Wait 2
 		
-		split selectMeal by ","
-		log selectMeal
-		//return selectMeal
-		repeat with each item of selectMeal
-			log selectMeal
-			//to launch the SicomProtein SUT
-			if it is "WINGS" or it is "CHICKEN"
-				log "hehe"
-				//Connect to SicomProtein SUT
-				Connect DataFile().SUTNames.SicomProtein, visible: True
-				//Click to wake up the screen if it is in sleep mode by default
-				click Config().TextOffsets.(ReceiptCenter)
-				
-				//Call the receipt validation handler
-				validateProteinReceipt
-				//the sides of the order combo will go into SicomSandSides receipt
-				if it is "SANDWICH ONLY" or it is "A LA CARTE" or it is "12P WINGS"
-					log "No sides are tendered for a la carte menu"
-				else
-					//Connect to SicomSandSidesDessert SUT to validate if 
-					Connect DataFile().SUTNames.SicomSandSides, visible: True
-					//click to wake up the screen from default sleep mode
-					click Config().TextOffsets.(ReceiptCenter)
-					
-					//call the receipt validation handler
-					validateSandSidesDessertsReceipt
-				end if
-			end if
-			
-			//To launch the SicomSandSidesDesserts SUT
-			IF it is "SANDWICHES & SEAFOOD" or it is "TO SEAFOOD"
-				log "huhu"
-				//Connect to SicomSandSidesDessert SUT
-				Connect DataFile().SUTNames.SicomSandSides, visible: True
-				//click to wake up the screen from default sleep mode
-				click Config().TextOffsets.(ReceiptCenter)
-				
-				//call the receipt validation handler
-				validateSandSidesDessertsReceipt
-			END IF
-		end repeat
+		// Call the receipt validation handler
+		validateProteinReceipt
+	else
+		Log "This order does not have protein."
 	end if
-	//call handler to validate the Sicom Expo Receipt
+	
+	// To launch the SicomSandSidesDesserts SUT
+	if sidesValidation is "YES"
+	// Connect to the SicomSandSidesDesserts SUT
+		Log "Launching the SicomSandSidesDesserts SUT"
+		Connect DataFile().SUTNames.SicomSandSidesDesserts, visible: Yes
+		Wait 1
+		// Click to wake up the screen as it will be on sleep mode by default
+		click Config().TextOffsets.(ClickMobileScreenOffset)
+		Wait 2
+		
+		// Call the receipt validation handler
+		validateSandSidesDessertsReceipt
+	else
+		Log "This order does not have sandwiches/sides/desserts."
+	end if
+	
+	// Call handler to validate the Sicom Expo Receipt. Expo receipt is currently not working as Auto-Bump is not implemented for this and is not printing. Code to be fixed once auto-bump for Expo is implemented
 	//validateSicomExpoReceipt
 	
-	//Call handler to validate the Sicom Customer Receipt
-	validateSicomCustomerRecipt
+	// Call handler to validate the Sicom Customer Receipt. Currently not validating due to the inability to keep the customer receipt within the view of the mobile SUT
+	//validateSicomCustomerReceipt
 	
 	Log "End of Script:"&item 1 delimited by ".script" of my name &"."&param(0)
 end validateSicomReceipt
@@ -574,26 +562,15 @@ to validateProteinReceipt
 	put DataFile().ColumnMapping.(global posPlatformName).ProteinDisplayName into excelColumnNumber
 	put Common.readDataFromExcel (excelColumnNumber) into proteinDisplayName
 	
-	//Connect to SicomSandSidesDessert SUT
-	Connect DataFile().SUTNames.SicomCustReceipt, visible: True
-	//click to wake up the screen from default sleep mode
-	click Config().SearchRectangles.(ReceiptCenter)
+	assert that common.extendedFindText(global orderID,Config().Waits.(midWait),Config().SearchRectangles.(MobileReceiptArea)) with warning "Protein Menu Receipt"
 	
-	if ImageFound(text: global orderID, waitFor:Config().Waits.(minWait) ,SearchRectangle:Config().SearchRectangles.(SicomPOSInterfaceArea))
-		if proteinDisplayName is not empty
-			split proteinDisplayName by ","
-			
-			// Select Main Course and additional selections if any
-			repeat for each item of proteinDisplayName
-				if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
-					click FoundImageLocation() 
-					wait 2
-				else if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomPOSInterfaceArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
-					click FoundImageLocation()
-					wait 2
-				end if
-			end repeat
-		end if
+	if proteinDisplayName is not empty
+		split proteinDisplayName by ","
+		
+		// Select Main Course and additional selections if any
+		repeat for each item of proteinDisplayName
+			assert that common.extendedFindText(trim(it),Config().Waits.(midWait),Config().SearchRectangles.(MobileReceiptArea)) with warning "Protein Menu Receipt"
+		end repeat
 	end if
 	
 	Log "End of Script:"&item 1 delimited by ".script" of my name &"."&param(0)
@@ -610,24 +587,19 @@ to validateSandSidesDessertsReceipt
 	put DataFile().ColumnMapping.(global posPlatformName).SandSidesDessertsDisplayName into excelColumnNumber
 	put Common.readDataFromExcel (excelColumnNumber) into sandSidesDessertsDisplayName
 	
-	if ImageFound(text: global orderID, waitFor:Config().Waits.(minWait) ,SearchRectangle:Config().SearchRectangles.(SicomPOSInterfaceArea))
-		if sandSidesDessertsDisplayName is not empty
-			split sandSidesDessertsDisplayName by ","
-			
-			// Select Main Course and additional selections if any
-			repeat for each item of sandSidesDessertsDisplayName
-				if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
-					click FoundImageLocation() 
-					wait 2
-				else if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomPOSInterfaceArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
-				click FoundImageLocation()
-				wait 2
-			end if
+	assert that common.extendedFindText(global orderID,Config().Waits.(midWait),Config().SearchRectangles.(MobileReceiptArea)) with warning "Sides Menu Receipt"
+	
+	if sandSidesDessertsDisplayName is not empty
+		split sandSidesDessertsDisplayName by ","
+		
+		// Select Main Course and additional selections if any
+		repeat for each item of sandSidesDessertsDisplayName
+			assert that common.extendedFindText(trim(it),Config().Waits.(midWait),Config().SearchRectangles.(MobileReceiptArea)) with warning "Sides Menu Receipt"
 		end repeat
 	end if
-end if
-
-Log "End of Script:"&item 1 delimited by ".script" of my name &"."&param(0)
+	
+	
+	Log "End of Script:"&item 1 delimited by ".script" of my name &"."&param(0)
 end validateSandSidesDessertsReceipt
 
 (**  
@@ -635,7 +607,7 @@ validateSicomCustomerRecipt - Handler to open the Sicom receiptSUTs accordings f
 @Version 1.0 7/9/2025
 @ChangeReason Creation
 **)
-to validateSicomCustomerRecipt
+to validateSicomCustomerReceipt
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 	put DataFile().ColumnMapping.(global posPlatformName).ReceiptDisplayName into excelColumnNumber
@@ -644,18 +616,18 @@ to validateSicomCustomerRecipt
 	//Connect to SicomSandSidesDessert SUT
 	Connect DataFile().SUTNames.SicomCustReceipt, visible: True
 	//click to wake up the screen from default sleep mode
-	click Config().TextOffsets.(ReceiptCenter)
+	click Config().TextOffsets.(ClickMobileScreenOffset)
 	
-	if ImageFound(text: global orderID, waitFor:Config().Waits.(minWait) ,SearchRectangle:Config().SearchRectangles.(SicomPOSInterfaceArea))
+	if ImageFound(text: global orderID, waitFor:Config().Waits.(minWait) ,SearchRectangle:Config().SearchRectangles.(MobileReceiptArea))
 		if receiptDisplayName is not empty
 			split receiptDisplayName by ","
 			
 			// Select Main Course and additional selections if any
 			repeat for each item of receiptDisplayName
-				if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+				if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(MobileReceiptArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
 					click FoundImageLocation() 
 					wait 2
-				else if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomPOSInterfaceArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+				else if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(MobileReceiptArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
 					click FoundImageLocation()
 					wait 2
 				end if
@@ -664,14 +636,114 @@ to validateSicomCustomerRecipt
 	end if
 	
 	Log "End of Script:"&item 1 delimited by ".script" of my name &"."&param(0)
-end validateSicomCustomerRecipt
+end validateSicomCustomerReceipt
+
+(**
+sendDummyPOSOrder - Handler to send another order into the POS System to push the receipts up for validation
+@Version 1.0 7/30/2025
+@ChangeReason Creation
+**)
+to sendDummyPOSOrder
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Validate Sicom POS is open
+	if imagefound (Text:"Request", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf))
+		Log "POS Is open already"
+	else
+		Common.switchSicomWindowTo "POS"
+	end if
+	
+	// Select Chicken Menu
+	assert that ImageFound(text:"CHICKEN", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomMealSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	click FoundImageLocation() 
+	wait 1
+	
+	// Go to Tenders Menu. Click SicomQty3 button and add item
+	assert that ImageFound(text:"TO TENDERS", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	click FoundImageLocation() 
+	wait 1
+	//click MORE TENDERS to access ala carte item
+	assert that ImageFound(text:"MORE TENDERS", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	click FoundImageLocation() 
+	wait 1
+	
+	// Add 3 Qty Tenders ALC
+	// Click 3 for Qty selection
+	assert that ImageFound(imageName:"Icons/SicomQty3", waitFor:Config().Waits.(minWait))
+	click FoundImageLocation() 
+	wait 1
+	
+	// Click Classic Tenders
+	assert that ImageFound(text:"CLASSIC", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	click FoundImageLocation() 
+	wait 1
+	
+	// If Loyalty prompt shows up, click Not Today
+	if ImageFound(text:"Scanned Loyalty", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea),  ignoreSpaces: Yes, ignoreNewLines: Yes,)
+		click FoundImageLocation() 
+		wait 5
+	end if
+	
+	// Add 3 Qty Mash & Gravy side
+	// Go to Sides menu. Click SicomQty3 button and add Mash & Gravy
+	assert that ImageFound(text:"SIDES", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomMealSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	click FoundImageLocation() 
+	wait 1
+	// Add 3 Qty Mash & Gravy side
+	// Click 3 for Qty selection
+	assert that ImageFound(imageName:"Icons/SicomQty3", waitFor:Config().Waits.(minWait))
+	click FoundImageLocation() 
+	wait 1
+	
+	assert that ImageFound(text:"MASH", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	click FoundImageLocation() 
+	wait 1
+	
+	// Complete Order
+	// Click Total button on the Orders Section First
+	WaitFor Config().Waits.(maxWait), text:"TOTAL", SearchRectangle:Config().SearchRectangles.(SicomOrdersAreaOptions), ignoreSpaces: Yes, ignoreNewLines: Yes
+	click FoundImageLocation()
+	wait 1
+	// If Loyalty prompt shows up, click Not Today
+	if ImageFound(text:"Not Today", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea),  ignoreSpaces: Yes, ignoreNewLines: Yes,)
+		click FoundImageLocation() 
+		wait 1
+	end if
+	
+	//if customer name pop-up, validate the pop-up to enter the customer name has appeared
+	enterCustomerName
+	
+	// Validate Tender screen has opened
+	assert that ImageFound(text:"EXACT CHANGE", waitFor:2,SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Tenders Screen"
+	"DAIWrappers/POSSicom".exactPayment
+	
+	// Save Order ID in a dummyOrderID variable
+	Log "Reading Order ID"
+	put readText(Config().SearchRectangles.(SicomOrderID)) into dummyOrderID
+	log dummyOrderID
+	
+	// Switch to KDS. Validate Auto-Bump of dummyOrderID
+	Common.switchSicomWindowTo "KDS"
+	
+	//Wait for about 3.5 minutes for the order to auto-bump from KDS
+	wait Config().Waits.(SicomKDSWait)+15
+	//waitForNotFound Config().Waits.(SicomKDSWait), {text: dummyOrderID, searchRectangle: Config().SearchRectangles.(LeftHalf)}
+	
+	// Validate that the order is bumped and is not showing on the KDS anymore
+	assert that not imageFound(text:dummyOrderID)
+	
+	// Switch back to POS
+	Common.switchSicomWindowTo "POS"
+	
+	Log "End of Script:"&item 1 delimited by ".script" of my name &"."&param(0)
+end sendDummyPOSOrder
 
 (**  
 validateSicomExpoReceipt - Handler to open the Sicom receiptSUTs accordings for validation
 @Version 1.0 7/9/2025
 @ChangeReason Creation
 **)
-(*to validateSicomExpoReceipt
+to validateSicomExpoReceipt
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 	put DataFile().ColumnMapping.(global posPlatformName).ExpoLabelDisplayName into excelColumnNumber
@@ -700,6 +772,5 @@ validateSicomExpoReceipt - Handler to open the Sicom receiptSUTs accordings for 
 	end if
 	
 	Log "End of Script:"&item 1 delimited by ".script" of my name &"."&param(0)
-end validateSicomExpoReceipt*)
+end validateSicomExpoReceipt
 
-assert that ImageFound(text: "Classic Boneless", waitFor:Config().Waits.(minWait))

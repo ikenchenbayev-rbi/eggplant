@@ -60,6 +60,11 @@ to connectToKDS
 		click Config().TextOffsets.(ClickScreenOffset)
 	end if
 	
+	// Code for Sicom KDS
+	if (global posPlatformName) is "Sicom"
+		Common.switchSicomWindowTo "KDS"
+	end if
+	
 end connectToKDS
 
 (**  
@@ -142,8 +147,10 @@ to bumpOrderIDOnKDS
 		
 		//assert that ImageFound(text:mealDisplayName, waitFor:Config().Waits.(minWait),SearchRectangle: displayRect)
 		assert that common.extendedFindText(mealDisplayName,Config().Waits.(minWait), displayRect) is true with error "Meal Present in KDS"
+		
 		//wait until the order has disappeared
 		waitForNotFound Config().Waits.(SicomKDSWait), {text: global orderID, searchRectangle: displayRect}
+
 		// Validate that the order is bumped and is not showing on the KDS anymore
 		assert that not imageFound(text:global orderID)
 	end if
@@ -164,6 +171,11 @@ to disconnectFromKDS
 	// Code for Oracle KDS
 	if (global posPlatformName) is "Oracle" or (global posPlatformName) is "OracleKiosk"
 		Disconnect DataFile().SUTNames.OracleKDS
+	end if
+	
+	// Code for Sicom KDS
+	if (global posPlatformName) is "Sicom"
+		Common.switchSicomWindowTo "POS"
 	end if
 end disconnectFromKDS
 

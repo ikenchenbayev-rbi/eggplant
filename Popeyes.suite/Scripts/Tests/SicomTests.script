@@ -7,13 +7,19 @@ Common.setTestCaseName "12P WINGS"
 "DAIWrappers/POSSicom".selectDiningOption
 "DAIWrappers/POSSicom".selectMealAndOption
 "DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".selectSide
+"DAIWrappers/POSSicom".selectDrink
+"DAIWrappers/POSSicom".selectFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
-Common.switchSicomWindowTo "KDS"
 
 //KDS
-"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
-Common.switchSicomWindowTo "POS"
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Receipt
+"DAIWrappers/POSSicom".validateSicomReceipt
 
 (*=================================*)
 
@@ -27,14 +33,18 @@ Common.setTestCaseName "12P WINGS DINNER"
 "DAIWrappers/POSSicom".selectMealAndOption
 "DAIWrappers/POSSicom".selectMainCourse
 "DAIWrappers/POSSicom".selectSide
+"DAIWrappers/POSSicom".selectDrink
 "DAIWrappers/POSSicom".selectFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
-Common.switchSicomWindowTo "KDS"
 
 //KDS
-"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
-Common.switchSicomWindowTo "POS"
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Receipt
+"DAIWrappers/POSSicom".validateSicomReceipt
 
 (*=================================*)
 
@@ -52,11 +62,14 @@ Common.setTestCaseName "12P WINGS COMBO"
 "DAIWrappers/POSSicom".selectFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
-Common.switchSicomWindowTo "KDS"
 
 //KDS
-"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
-Common.switchSicomWindowTo "POS"
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Receipt
+"DAIWrappers/POSSicom".validateSicomReceipt
 
 (*=================================*)
 
@@ -73,13 +86,15 @@ Common.setTestCaseName "12P WINGS LARGE COMBO"
 "DAIWrappers/POSSicom".selectDrink
 "DAIWrappers/POSSicom".selectFlavors
 "DAIWrappers/POSSicom".proceedToTender
-"DAIWrappers/POSSicom".enterCustomerName
 "DAIWrappers/POSSicom".exactPayment
-Common.switchSicomWindowTo "KDS"
 
 //KDS
-"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
-Common.switchSicomWindowTo "POS"
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Receipt
+"DAIWrappers/POSSicom".validateSicomReceipt
 
 (*=================================*)
 
@@ -92,13 +107,19 @@ Common.setTestCaseName "SPICY CHICKEN SANDWICH ALA CARTE"
 "DAIWrappers/POSSicom".selectDiningOption
 "DAIWrappers/POSSicom".selectMealAndOption
 "DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".selectSide
+"DAIWrappers/POSSicom".selectDrink
+"DAIWrappers/POSSicom".selectFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
-Common.switchSicomWindowTo "KDS"
 
 //KDS
-"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
-Common.switchSicomWindowTo "POS"
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Receipt
+"DAIWrappers/POSSicom".validateSicomReceipt
 
 (*=================================*)
 
@@ -112,13 +133,18 @@ Common.setTestCaseName "SPICY CHICKEN SANDWICH DINNER"
 "DAIWrappers/POSSicom".selectMealAndOption
 "DAIWrappers/POSSicom".selectMainCourse
 "DAIWrappers/POSSicom".selectSide
+"DAIWrappers/POSSicom".selectDrink
+"DAIWrappers/POSSicom".selectFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
-Common.switchSicomWindowTo "KDS"
 
 //KDS
-"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
-Common.switchSicomWindowTo "POS"
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Receipt
+"DAIWrappers/POSSicom".validateSicomReceipt
 
 (*=================================*)
 
@@ -133,13 +159,17 @@ Common.setTestCaseName "SPICY CHICKEN SANDWICH COMBO"
 "DAIWrappers/POSSicom".selectMainCourse
 "DAIWrappers/POSSicom".selectSide
 "DAIWrappers/POSSicom".selectDrink
+"DAIWrappers/POSSicom".selectFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
-Common.switchSicomWindowTo "KDS"
 
 //KDS
-"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
-Common.switchSicomWindowTo "POS"
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Receipt
+"DAIWrappers/POSSicom".validateSicomReceipt
 
 (*=================================*)
 
@@ -152,14 +182,19 @@ Common.setTestCaseName "SPICY CHICKEN SANDWICH LARGE COMBO"
 "DAIWrappers/POSSicom".selectDiningOption
 "DAIWrappers/POSSicom".selectMealAndOption
 "DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".selectSide
+"DAIWrappers/POSSicom".selectDrink
+"DAIWrappers/POSSicom".selectFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
-"DAIWrappers/POSSicom".saveOrderID
-Common.switchSicomWindowTo "KDS"
 
 //KDS
-"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
-Common.switchSicomWindowTo "POS"
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Receipt
+"DAIWrappers/POSSicom".validateSicomReceipt
 
 (*=================================*)
 
@@ -173,13 +208,18 @@ Common.setTestCaseName "4PC BIC DINNER"
 "DAIWrappers/POSSicom".selectMealAndOption
 "DAIWrappers/POSSicom".selectMainCourse
 "DAIWrappers/POSSicom".selectSide
+"DAIWrappers/POSSicom".selectDrink
+"DAIWrappers/POSSicom".selectFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
-Common.switchSicomWindowTo "KDS"
 
 //KDS
-"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
-Common.switchSicomWindowTo "POS"
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Receipt
+"DAIWrappers/POSSicom".validateSicomReceipt
 
 (*=================================*)
 
@@ -194,13 +234,17 @@ Common.setTestCaseName "4PC BIC COMBO"
 "DAIWrappers/POSSicom".selectMainCourse
 "DAIWrappers/POSSicom".selectSide
 "DAIWrappers/POSSicom".selectDrink
+"DAIWrappers/POSSicom".selectFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
-Common.switchSicomWindowTo "KDS"
 
 //KDS
-"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
-Common.switchSicomWindowTo "POS"
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Receipt
+"DAIWrappers/POSSicom".validateSicomReceipt
 
 (*=================================*)
 
@@ -213,13 +257,19 @@ Common.setTestCaseName "4PC BIC LARGE COMBO"
 "DAIWrappers/POSSicom".selectDiningOption
 "DAIWrappers/POSSicom".selectMealAndOption
 "DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".selectSide
+"DAIWrappers/POSSicom".selectDrink
+"DAIWrappers/POSSicom".selectFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
-Common.switchSicomWindowTo "KDS"
 
 //KDS
-"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
-Common.switchSicomWindowTo "POS"
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Receipt
+"DAIWrappers/POSSicom".validateSicomReceipt
 
 (*=================================*)
 
@@ -232,13 +282,19 @@ Common.setTestCaseName "SHRIMP AND 2 TENDERS ALA CARTE CUST"
 "DAIWrappers/POSSicom".selectDiningOption
 "DAIWrappers/POSSicom".selectMealAndOption
 "DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".selectSide
+"DAIWrappers/POSSicom".selectDrink
+"DAIWrappers/POSSicom".selectFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
-Common.switchSicomWindowTo "KDS"
 
 //KDS
-"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
-Common.switchSicomWindowTo "POS"
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Receipt
+"DAIWrappers/POSSicom".validateSicomReceipt
 
 (*=================================*)
 
@@ -252,14 +308,18 @@ Common.setTestCaseName "SHRIMP AND 2 TENDERS DINNER CUST"
 "DAIWrappers/POSSicom".selectMealAndOption
 "DAIWrappers/POSSicom".selectMainCourse
 "DAIWrappers/POSSicom".selectSide
+"DAIWrappers/POSSicom".selectDrink
 "DAIWrappers/POSSicom".selectFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
-Common.switchSicomWindowTo "KDS"
 
 //KDS
-"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
-Common.switchSicomWindowTo "POS"
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Receipt
+"DAIWrappers/POSSicom".validateSicomReceipt
 
 (*=================================*)
 
@@ -277,11 +337,14 @@ Common.setTestCaseName "SHRIMP AND 2 TENDERS COMBO CUST"
 "DAIWrappers/POSSicom".selectFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
-Common.switchSicomWindowTo "KDS"
 
 //KDS
-"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
-Common.switchSicomWindowTo "POS"
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Receipt
+"DAIWrappers/POSSicom".validateSicomReceipt
 
 (*=================================*)
 
@@ -294,13 +357,19 @@ Common.setTestCaseName "SHRIMP AND 2 TENDERS ALA CARTE"
 "DAIWrappers/POSSicom".selectDiningOption
 "DAIWrappers/POSSicom".selectMealAndOption
 "DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".selectSide
+"DAIWrappers/POSSicom".selectDrink
+"DAIWrappers/POSSicom".selectFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
-Common.switchSicomWindowTo "KDS"
 
 //KDS
-"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
-Common.switchSicomWindowTo "POS"
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Receipt
+"DAIWrappers/POSSicom".validateSicomReceipt
 
 (*=================================*)
 
@@ -313,17 +382,23 @@ Common.setTestCaseName "SHRIMP AND 2 TENDERS DINNER"
 "DAIWrappers/POSSicom".selectDiningOption
 "DAIWrappers/POSSicom".selectMealAndOption
 "DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".selectSide
+"DAIWrappers/POSSicom".selectDrink
+"DAIWrappers/POSSicom".selectFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
-Common.switchSicomWindowTo "KDS"
 
 //KDS
-"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
-Common.switchSicomWindowTo "POS"
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Receipt
+"DAIWrappers/POSSicom".validateSicomReceipt
 
 (*=================================*)
 
-//Sicom Test Case 5: 1/4lb shrimp and 2 tenders combo default
+//Sicom Test Case 17: 1/4lb shrimp and 2 tenders combo default
 Common.launchSicomPOS
 Common.setPlatformName "POS"
 Common.setPOSPlatformName "Sicom"
@@ -332,14 +407,16 @@ Common.setTestCaseName "SHRIMP AND 2 TENDERS COMBO"
 "DAIWrappers/POSSicom".selectDiningOption
 "DAIWrappers/POSSicom".selectMealAndOption
 "DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".selectSide
+"DAIWrappers/POSSicom".selectDrink
+"DAIWrappers/POSSicom".selectFlavors
 "DAIWrappers/POSSicom".proceedToTender
 "DAIWrappers/POSSicom".exactPayment
-Common.switchSicomWindowTo "KDS"
 
 //KDS
-"DAIWrappers/POSSicom".bumpOrderIDOnSicomKDS
-Common.switchSicomWindowTo "POS"
-Common.setPlatformName "POS"
-Common.setPOSPlatformName "Sicom"
-Common.setTestCaseName "SHRIMP AND 2 TENDERS COMBO"
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Receipt
 "DAIWrappers/POSSicom".validateSicomReceipt

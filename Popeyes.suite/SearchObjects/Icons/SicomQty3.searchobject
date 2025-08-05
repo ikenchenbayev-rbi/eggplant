@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		562,
+		685,
+		40,
+		39
+	],
+	"lastmodifieddate": 1753906265.3400002,
+	"createddate": 1753906265.3400002,
+	"name": "Icons/SicomQty3",
+	"lastfounddate": 1754288984.8070002,
+	"ocrcapturestring": "3",
+	"lastfoundlocation": [
+		562,
+		685,
+		40,
+		39
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 50586,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[20,19]",
+					"Tolerance": "_45",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/SicomQty3.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					562,
+					685,
+					40,
+					39
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "3"
+			}
+	]
+}
