@@ -1,45 +1,48 @@
 {
-	"lastmodifieddate": 1754275116.279,
-	"lastfoundlocation": [
-		478,
-		993,
-		16,
-		12
-	],
 	"originalcapturelocation": [
-		203,
-		994,
+		518,
+		998,
 		16,
 		12
 	],
-	"createddate": 1747245159.6069999,
-	"lastfounddate": 1754637259.849,
+	"lastmodifieddate": 1754275013.3239999,
+	"createddate": 1750239526.586,
+	"name": "Icons/SicomTaskbarPOS2",
+	"lastfounddate": 1754637486.2950001,
+	"ocrcapturestring": "V*",
+	"lastfoundlocation": [
+		635,
+		998,
+		16,
+		12
+	],
 	"testlocationdata": [
 		{
-				"connectionportnum": 54820,
+				"connectionportnum": 52507,
 				"properties": {
 					"CropRectangle": "[0,0,0,0]",
 					"Rotate": 0,
 					"Scale": "    1",
 					"HotSpot": "[8,6]",
-					"Tolerance": "_45",
+					"Tolerance": 100,
 					"Discrepancy": "_0",
 					"SearchType": "Tolerant of Background"
 				},
 				"sutinfo": {
 					"type": "Unknown VNC"
 				},
-				"name": "Icons/SicomTaskbarKDS.png",
+				"name": "Icons/SicomTaskbarPOS.png",
 				"connectionname": "MyLocalTrainingPC",
 				"type": 1,
+				"connectionserverid": "127.0.0.1",
 				"capturerect": [
-					203,
-					994,
+					518,
+					998,
 					16,
 					12
 				],
 				"connectiontype": "Single System",
-				"connectionserverid": "127.0.0.1"
+				"capturedocrtext": "V*"
 			},
 		{
 				"connectionportnum": 63630,
@@ -48,25 +51,25 @@
 					"Rotate": 0,
 					"Scale": "    1",
 					"HotSpot": "[8,6]",
-					"Tolerance": "_57",
+					"Tolerance": "_73",
 					"Discrepancy": "_0",
 					"SearchType": "Smoothed for Text"
 				},
 				"sutinfo": {
 					"type": "Unknown VNC"
 				},
-				"name": "Icons/SicomTaskbarKDS.png",
+				"name": "Icons/SicomTaskbarPOS.png",
 				"connectionname": "MyLocalTrainingPC",
 				"type": 1,
+				"connectionserverid": "127.0.0.1",
 				"capturerect": [
-					203,
-					994,
+					518,
+					998,
 					16,
 					12
 				],
 				"connectiontype": "Single System",
-				"connectionserverid": "127.0.0.1"
+				"capturedocrtext": "V*"
 			}
-	],
-	"name": "Icons/SicomTaskbarKDS"
+	]
 }

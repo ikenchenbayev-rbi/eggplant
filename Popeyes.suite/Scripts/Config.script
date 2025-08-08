@@ -22,6 +22,9 @@ return {
 		minWait:10,
 		midWait: 30,
 		maxWait: 60,
+		SicomKDSWait: 180,
+
+
 	},
 	SearchRectangles: {
 	(* SearchRectangles to be used inside the POS SUT. Screens are divided into sections to make it easy for the OCR engine to work*)
@@ -45,6 +48,17 @@ return {
 		NCROrdersAreaOptions: [4,772,534,1036],
 		NCROrderID: [48,200,121,232],
 		OracleSoftKeypadLogin: [931,82,1589,847],
+
+		SicomPOSInterfaceArea: [294,159,1623,909], --full interface of SICOM POS (not fullscreen)--
+		SicomMealSelectionArea: [321,193,1598,251], --area of the meal section (SANDWICHES, CHICKEN tect), not fulllscreen--
+		SicomMainCourseSelectionArea: [709,230,1623,826], --area of menu selection, not fullscreen--
+		SicomRequestPOSArea: [716,742,1363,826], --area of route selection-, not fullscreen--
+		SicomOrdersArea: [296,231,700,903], --area of selected menu display, not fullscreen--
+		SicomDineOptionArea: [713,828,1390,897], --area for dining option selection, not fullscreen--
+		SicomOrderID: [521,255,575,280], --area of order ID--
+		SicomNumPad: [322,672,632,899], --area of number pad
+		SicomManagerInfo: [319,261,726,282], --area to determine whether the system has been logged on--
+
 		OracleMainCourseSelectionArea: [4,1,1918,90],
 		OracleItemSelectionArea: [322,91,1920,996],
 		OracleMealSelectionArea:[391,144,1270,723],
@@ -66,8 +80,14 @@ return {
 		OracleKioskOptionsSelectionArea: [0,572,1080,1671],
 		OracleKioskMainCourseSelectionArea: [0,0,302,1829],
 		OracleKioskNameSoftKeyboard: [95,581,988,953],
+
 		MobileReceiptArea:[1,38,477,689],
-		LeftHalfMobileReceipt:[0,42,228,679],
+		ReceiptLeftHalf: [2,38,266,699],
+		ReceiptRightHalf: [239,38,479,699],
+		ReceiptCenter: [97,208,377,542],
+		ReceiptTopHalf: [2,38,479,359],
+		ReceiptBottomHalf: [2,355,479,682],
+
 	},
 	TextOffsets:{
 	(* TextOffsets used in the POS system to enable typetext commands*)
@@ -76,5 +96,5 @@ return {
 		ClickScreenOffset: [1900,500],
 		ClickMobileScreenOffset: [200,400],
 
-	},
+},
 }
