@@ -159,8 +159,7 @@ to selectMealAndOption
 			click text: "No", waitFor:Config().Waits.(minWait),SearchRectangle:clickArea
 		end if
 		
-		// Click Meal Option on screen
-		//Click text:selectMealOption, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes
+		
 		
 	end if
 	
@@ -391,10 +390,6 @@ bumpOrderIDOnSicomKDS - Handler to Bump the order ID on the NCR KDS SUT
 @ChangeReason Creation
 **)
 to bumpOrderIDOnSicomKDS
-	// Look for the Order ID on the KDS screen
-	(*repeat until ImageFound(text: global orderID, waitFor:Config().Waits.(minWait), contrast: on, DPI: 144)
-		click image: "Icons/KDSNext",  SearchRectangle: Config().SearchRectangles.(BottomHalf)
-	end repeat*)
 	
 	// Pick the first instance of order ID on screen and create a search rectangle
 	put EveryImageRectangle(text:global orderID, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(LeftHalf)) into orderList
@@ -528,7 +523,7 @@ to validateSicomReceipt
 	
 	// To launch the SicomSandSidesDesserts SUT
 	if sidesValidation is "YES"
-	// Connect to the SicomSandSidesDesserts SUT
+		// Connect to the SicomSandSidesDesserts SUT
 		Log "Launching the SicomSandSidesDesserts SUT"
 		Connect DataFile().SUTNames.SicomSandSidesDesserts, visible: Yes
 		Wait 1
@@ -558,18 +553,18 @@ validateProteinReceipt - Handler to open the Sicom receiptSUTs accordings for va
 **)
 to validateProteinReceipt
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
-	
+	//Read the data for protein display name on the receipt  from Excel
 	put DataFile().ColumnMapping.(global posPlatformName).ProteinDisplayName into excelColumnNumber
 	put Common.readDataFromExcel (excelColumnNumber) into proteinDisplayName
-	
-	assert that common.extendedFindText(global orderID,Config().Waits.(midWait),Config().SearchRectangles.(MobileReceiptArea)) with warning "Protein Menu Receipt"
-	
+	//validate that the ID is present
+	assert that common.extendedFindText(global orderID,Config().Waits.(midWait),Config().SearchRectangles.(MobileReceiptArea)) with error "Protein Menu Receipt"
+	//validate the Protein menu is present
 	if proteinDisplayName is not empty
 		split proteinDisplayName by ","
 		
 		// Select Main Course and additional selections if any
 		repeat for each item of proteinDisplayName
-			assert that common.extendedFindText(trim(it),Config().Waits.(midWait),Config().SearchRectangles.(MobileReceiptArea)) with warning "Protein Menu Receipt"
+			assert that common.extendedFindText(trim(it),Config().Waits.(midWait),Config().SearchRectangles.(MobileReceiptArea)) with error "Protein Menu Receipt"
 		end repeat
 	end if
 	
@@ -583,18 +578,18 @@ validateSandSidesDessertsReceipt - Handler to open the Sicom receiptSUTs accordi
 **)
 to validateSandSidesDessertsReceipt
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
-	
+	//Read the data for Sides display name from Excel
 	put DataFile().ColumnMapping.(global posPlatformName).SandSidesDessertsDisplayName into excelColumnNumber
 	put Common.readDataFromExcel (excelColumnNumber) into sandSidesDessertsDisplayName
-	
-	assert that common.extendedFindText(global orderID,Config().Waits.(midWait),Config().SearchRectangles.(MobileReceiptArea)) with warning "Sides Menu Receipt"
-	
+	//validate that the ID is present
+	assert that common.extendedFindText(global orderID,Config().Waits.(midWait),Config().SearchRectangles.(MobileReceiptArea)) with error "Sides Menu Receipt"
+	//validate that the Sides menu is present
 	if sandSidesDessertsDisplayName is not empty
 		split sandSidesDessertsDisplayName by ","
 		
 		// Select Main Course and additional selections if any
 		repeat for each item of sandSidesDessertsDisplayName
-			assert that common.extendedFindText(trim(it),Config().Waits.(midWait),Config().SearchRectangles.(MobileReceiptArea)) with warning "Sides Menu Receipt"
+			assert that common.extendedFindText(trim(it),Config().Waits.(midWait),Config().SearchRectangles.(MobileReceiptArea)) with error "Sides Menu Receipt"
 		end repeat
 	end if
 	
@@ -609,7 +604,7 @@ validateSicomCustomerRecipt - Handler to open the Sicom receiptSUTs accordings f
 **)
 to validateSicomCustomerReceipt
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
-	
+	//read the data from Excel ofr Customer receipt
 	put DataFile().ColumnMapping.(global posPlatformName).ReceiptDisplayName into excelColumnNumber
 	put Common.readDataFromExcel (excelColumnNumber) into receiptDisplayName
 	
@@ -745,7 +740,7 @@ validateSicomExpoReceipt - Handler to open the Sicom receiptSUTs accordings for 
 **)
 to validateSicomExpoReceipt
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
-	
+	//Read the data for Expo receipt from Excel
 	put DataFile().ColumnMapping.(global posPlatformName).ExpoLabelDisplayName into excelColumnNumber
 	put Common.readDataFromExcel (excelColumnNumber) into expoLabelDisplayName
 	
