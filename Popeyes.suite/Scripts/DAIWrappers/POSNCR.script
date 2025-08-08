@@ -248,13 +248,14 @@ to selectSides
 			// IF Flavors text is found in the orders area, click it
 			if imagefound (text:"Sides", WaitFor: Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(NCROrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
 				click FoundImageLocation()
-				wait 1
+				wait 2
 			end if
 			
-			if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+			if Common.extendedFindText(trim(it),Config().Waits.(minWait),Config().SearchRectangles.(NCRItemSelectionArea)) is true
 				click FoundImageLocation() 
-				wait 1
+				wait 5
 			end if
+			
 		end repeat
 		
 		// Validate Sides are added, by ensuring "Sides" text is not found in Orders area
@@ -290,11 +291,10 @@ to selectDrink
 		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
 		split drink by ","
 		
-		
 		// Select Drink by clicking the image of the drink
 		repeat for each item of drink
 			// IF an Image of Drink exists, click Image. If not, do an OCR search for the Drink
-			if file (suiteinfo().imagesFolder&"/Icons/Drinks/"&it&".png") exists or if file (suiteinfo().imagesFolder&"/"&it) exists
+			if file (suiteinfo().imagesFolder&"/Icons/Drinks/"&it&".png") exists or if file (suiteinfo().imagesFolder&"/Icons/Drinks/"&it) exists
 				if ImageFound(image:"Icons/Drinks/"&trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea))
 					click FoundImageLocation() 
 					wait 1
@@ -302,7 +302,7 @@ to selectDrink
 			else
 				if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
 					click FoundImageLocation() 
-					wait 1
+					wait 5
 				end if
 			end if
 			
@@ -362,6 +362,9 @@ to exactPayment
 	// Validate User is taken back to the New Order screen
 	assert that ImageFound(text:"New Order", waitFor:Config().Waits.(maxWait),SearchRectangle:Config().SearchRectangles.(LeftHalf)) with error "NCR POS Login Validation"
 	
+	// Before executing the receipt validation, send a dummy POS order with 6 Wings and 4 Sides to push the receipts up into frame
+	sendDummyPOSOrder
+	
 	// Disconnects from NCR POS
 	Common.disconnectFromNCRPOS
 	
@@ -390,46 +393,51 @@ validateNCRReceipt - Handler to open the NCR receipt SUTs accordingly for valida
 to validateNCRReceipt
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
-	put DataFile().ColumnMapping.(global posPlatformName).MainCourse into excelColumnName
-	put Common.readDataFromExcel (excelColumnName) into mainCourse
+	put DataFile().ColumnMapping.(global posPlatformName).SidesValidation into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into sidesValidation
+	
+	put DataFile().ColumnMapping.(global posPlatformName).ProteinValidation into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into proteinValidation
 	
 	// To launch the NcrProtein SUT
-	if mainCourse is "Wings" or mainCourse is "Chicken"
+	if proteinValidation is "YES"
 		// Connect to the NCRProtein SUT
+		Log "Launching the NCRProtein SUT"
 		Connect DataFile().SUTNames.NCRProtein, visible: Yes
 		Wait 1
 		
 		// Click to wake up the screen as it will be on sleep mode by default
 		click Config().TextOffsets.(ClickMobileScreenOffset)
+		Wait 2
 		
 		// Call the receipt validation handler
 		validateProteinReceipt
-		
-		// Launch the NCRSandSidesDesserts SUT
-		Connect DataFile().SUTNames.NCRSandSidesDesserts, visible: Yes
-		
-		// Call the receipt validation handler
-		validateSandSidesDessertsReceipt
+	else if proteinValidation is "NO"
+		Log "This order does not have protein."
 	end if
 	
 	// To launch the NcrSandSidesDesserts SUT
-	if mainCourse is "Sandwiches Seafood" or mainCourse is "Sandwiches Seafood,To Seafood"
+	if sidesValidation is "YES"
 		// Connect to the NCRSandSidesDesserts SUT
+		Log "Launching the NCRSandSidesDesserts SUT"
 		Connect DataFile().SUTNames.NCRSandSidesDesserts, visible: Yes
 		Wait 1
 		
 		// Click to wake up the screen as it will be on sleep mode by default
 		click Config().TextOffsets.(ClickMobileScreenOffset)
+		Wait 2
 		
 		// Call the receipt validation handler
 		validateSandSidesDessertsReceipt
+	else if sidesValidation is "NO"
+		Log "This order does not have sandwiches/sides/desserts."
 	end if
 	
 	// Call Handler to validate the NCR Expo Receipt
 	validateNCRExpoReceipt
 	
-	// Call Handler to validate the NCR Customer Receipt
-	validateNCRCustomerReceipt
+	// Call Handler to validate the NCR Customer Receipt. Commenting this out as per Customer's instruction. Validating Customer receipt is challenging as the receipt gets cut off and goes not stay in the view of the camera currently.
+	//validateNCRCustomerReceipt
 	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 end validateNCRReceipt
@@ -446,23 +454,25 @@ to validateProteinReceipt
 	put DataFile().ColumnMapping.(global posPlatformName).ProteinDisplayName into excelColumnName
 	put Common.readDataFromExcel (excelColumnName) into mealDisplayName
 	
+	// Validate the Order ID is found in the list of receipts
+	Assert that common.extendedFindText(global orderID, Config().Waits.(minWait), Config().SearchRectangles.(MobileReceiptArea)) is true with error "Protein Receipt Order ID"
+	
 	if mealDisplayName is not empty
 		
 		split mealDisplayName by ","
 		
 		// Validate the Protein Receipt
 		repeat for each item of mealDisplayName
-			// Validate the Order ID is found in the list of receipts
-			Assert that imagefound (text:trim(global orderID), WaitFor:Config().Waits.(midWait), SearchRectangle:Config().SearchRectangles.(LeftHalfMobileReceipt), ignoreSpaces: Yes, ignoreNewLines: Yes) is true with warning "Protein Receipt Order ID"
-			
-			//Creates a rectangle around the item
-			put foundimageinfo().imagerectangle +[-50,-80,300,100] into proteinRect
 			
 			//Validate the items are displayed on the receipt
-			Assert that imagefound (text:trim(mealDisplayName), WaitFor:Config().Waits.(midWait), SearchRectangle:(proteinRect), ignoreSpaces: Yes, ignoreNewLines: Yes) is true with warning "Items Displayed on Receipt"
+			assert that common.extendedFindText(trim(it),Config().Waits.(minWait),Config().SearchRectangles.(MobileReceiptArea)) is true with error "Items Displayed on Receipt"
+			
 		end repeat
 		
 	end if
+	
+	// Disconnect Mobile SUT
+	disconnect DataFile().SUTNames.NCRProtein
 	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 end validateProteinReceipt
@@ -479,23 +489,25 @@ to validateSandSidesDessertsReceipt
 	put DataFile().ColumnMapping.(global posPlatformName).SandSidesDessertsDisplayName into excelColumnName
 	put Common.readDataFromExcel (excelColumnName) into mealDisplayName
 	
+	// Validate the Order ID is found in the list of receipts
+	Assert that common.extendedFindText(global orderID, Config().Waits.(minWait),Config().SearchRectangles.(MobileReceiptArea)) is true with error "Sandwiches/Sides/Desserts Receipt Order ID"
+	
 	if mealDisplayName is not empty
 		
 		split mealDisplayName by ","
 		
 		// Validate the SandSidesDesserts Receipt
 		repeat for each item of mealDisplayName
-			// Validate the Order ID is found in the list of receipts
-			Assert that imagefound (text:trim(global OrderID), WaitFor:Config().Waits.(midWait), SearchRectangle:Config().SearchRectangles.(LeftHalfMobileReceipt), ignoreSpaces: Yes, ignoreNewLines: Yes) is true with warning "Sandwiches/Sides/Desserts Receipt Order ID"
-			
-			//Creates a rectangle around the item
-			put foundimageinfo().imagerectangle +[-50,-80,300,100] into sidesRect
 			
 			//Validate the items are displayed on the receipt
-			Assert that imagefound (text:trim(mealDisplayName), WaitFor:Config().Waits.(midWait), SearchRectangle:(sidesRect), ignoreSpaces: Yes, ignoreNewLines: Yes) is true with warning "Items Displayed on Receipt"
+			assert that common.extendedFindText(trim(it),Config().Waits.(minWait),Config().SearchRectangles.(MobileReceiptArea)) is true with error "Items Displayed on Receipt"
+			
 		end repeat
 		
 	end if
+	
+	// Disconnect Mobile SUT
+	disconnect DataFile().SUTNames.NCRSandSidesDesserts
 	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 end validateSandSidesDessertsReceipt
@@ -518,30 +530,27 @@ to validateNCRExpoReceipt
 	
 	// Click to wake up the screen as it will be on sleep mode by default
 	click Config().TextOffsets.(ClickMobileScreenOffset)
+	Wait 1
+	
+	// Validate the Order ID is found in the list of receipts
+	Assert that common.extendedFindText(global orderID, Config().Waits.(minWait),Config().SearchRectangles.(MobileReceiptArea)) is true with error "Order ID present on the receipt."
 	
 	if mealDisplayName is not empty
 		
 		split mealDisplayName by ","
 		
-		// Look for bottom of the receipt
-		Assert that imagefound (text:trim(global OrderID), WaitFor:Config().Waits.(midWait), SearchRectangle:Config().SearchRectangles.(LeftHalfMobileReceipt), ignoreSpaces: Yes, ignoreNewLines: Yes) is true with warning "Sandwiches/Sides/Desserts Receipt Order ID"
-		
-		// Create a rectangle
-		put foundimageinfo().imagerectangle's bottomRight-[50,50] into receiptStart
-
-		// Look for bottom of the receipt
-		Assert that imagefound (text:trim(first item of mealDisplayName), WaitFor:Config().Waits.(midWait), SearchRectangle:Config().SearchRectangles.(LeftHalfMobileReceipt), ignoreSpaces: Yes, ignoreNewLines: Yes, DPI:144) is true with warning "Sandwiches/Sides/Desserts Receipt Order ID"
-		put foundimageinfo().imagerectangle's topLeft+[150,50] into receiptEnd
-
-		// Validate Customer receipts for Order ID and Meal Name
-		put [receiptStart, receiptEnd] into receiptRect
-		
 		// Validate the Expo Receipt
 		repeat for each item of mealDisplayName
+			
 			//Validate the items are displayed on the receipt
-			Assert that imagefound (text:trim(mealDisplayName), WaitFor:Config().Waits.(midWait), SearchRectangle:(receiptRect), ignoreSpaces: Yes, ignoreNewLines: Yes, DPI:144) is true with warning "Items Displayed on Receipt"
+			assert that common.extendedFindText(trim(it),Config().Waits.(minWait),Config().SearchRectangles.(MobileReceiptArea)) is true with error "Items Displayed on Receipt"
+			
 		end repeat
+		
 	end if
+	
+	// Disconnect Mobile SUT
+	disconnect DataFile().SUTNames.NCRExpo
 	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 end validateNCRExpoReceipt
@@ -566,7 +575,7 @@ to validateNCRCustomerReceipt
 	click Config().TextOffsets.(ClickMobileScreenOffset)
 	
 	// Validate that the order ID is displayed on the receipt
-	assert that imageFound(text: global orderID, waitFor:Config().Waits.(minWait), SearchRectangle: mobileReceiptArea, ignoreSpaces: Yes) with warning "Customer Receipt Order ID"
+	assert that imageFound(text: global orderID, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(ReceiptTopHalf), ignoreSpaces: Yes) with warning "Customer Receipt Order ID"
 	
 	if mealDisplayName is not empty
 		
@@ -575,9 +584,113 @@ to validateNCRCustomerReceipt
 		// Validate the orders on the Customer Receipt
 		repeat for each item of mealDisplayName
 			//Validate the items are displayed on the receipt
-			Assert that imagefound (text:trim(mealDisplayName), WaitFor:Config().Waits.(midWait), SearchRectangle:Config().SearchRectangles.(mobileReceiptArea), Contrast:ON) is true with warning "Items Displayed on Receipt"
+			assert that common.extendedFindText(trim(it),Config().Waits.(midWait),Config().SearchRectangles.(MobileReceiptArea)) with warning "Items Displayed on Receipt"
 		end repeat
 	end if
 	
+	// Disconnect Mobile SUT
+	disconnect DataFile().SUTNames.NCRCustReceipt
+	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 end validateNCRCustomerReceipt
+
+
+(**  
+sendDummyPOSOrder - Handler to send another order into the POS System to push the receipts up for validation
+@Version 1.0 7/28/2025
+@ChangeReason Creation
+**)
+to sendDummyPOSOrder
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Code assumes that this handler is called immediately after a regular order is bumped. So, the KDS window is ready to interact with
+	(*	// Launch POS
+	Common.launchNCRPOS
+	loginToNCRPOS*)
+	
+	// Select Order and Complete it
+	// Select Dine In
+	Click text:"Dine In", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea)
+	assert that ImageFound(text:"Repeat", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea)) with error "Dining Option Selection"
+	
+	// Select Chicken and then 4 Boneless Wings
+	Click text:"Chicken", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCRMainCourseSelectionArea)
+	wait 1
+	Click imageName:"Icons/NCRQty4", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea)
+	
+	Click text:"1 BONELESS WING", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes
+	wait 1
+	
+	// Select Desserts Sides and then 5 Cole Slaw
+	Click text:"Sides", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCRMainCourseSelectionArea)
+	wait 1
+	Click imageName:"Icons/NCRQty5", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea)
+	
+	Click text:"COLE SLAW", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes
+	wait 1
+	
+	// Proceed to Tender. Save order ID in a different Order and Complete Order
+	WaitFor Config().Waits.(maxWait), text:"Total", SearchRectangle:Config().SearchRectangles.(NCROrdersAreaOptions), ignoreSpaces: Yes, ignoreNewLines: Yes
+	click FoundImageLocation()
+	wait 1
+	
+	// If Loyalty prompt shows up, click Not Today
+	if ImageFound(text:"Not Today", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea),  ignoreSpaces: Yes, ignoreNewLines: Yes,)
+		click FoundImageLocation() 
+		wait 1
+	end if
+	
+	// Validate Tenders screen has opened. Complete Payment
+	assert that ImageFound(text:"Payments", waitFor:2,SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Tenders Screen"
+	put readText(Config().SearchRectangles.(NCROrderID)) into global dummyOrderID
+	
+	// Click Exact button on the Order First
+	WaitFor Config().Waits.(maxWait), text:"Exact", SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes
+	click FoundImageLocation()
+	wait 1
+	
+	// Validate User is taken back to the New Order screen
+	assert that ImageFound(text:"New Order", waitFor:Config().Waits.(maxWait),SearchRectangle:Config().SearchRectangles.(LeftHalf)) with error "NCR POS Login Validation"
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end sendDummyPOSOrder
+
+(**  
+bumpDummyPOSOrder - Handler to Bump the Dummy POS Order to push the receipts up for validation
+@Version 1.0 7/28/2025
+@ChangeReason Creation
+**)
+to bumpDummyPOSOrder
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Code assumes that this handler is called immediately after a regular order is bumped. So, the KDS window is ready to interact with
+	(*	// Launch KDS
+	Common.connectToLocalSingleSystem
+	
+	// If Command Center window is already opened from previous session, close it
+	if ImageFound(text:"Command Center", waitFor:2, searchRectangle: Config().SearchRectangles.(TopHalf))
+		//Click Command Center window.
+		click FoundImageLocation()
+		wait 1
+	end if
+	wait 1
+	// Use Handler to open VNC connection for  FC EXPO
+	Common.launchNCRVNC "FCExpo"
+	// Bring SUT into focus
+	Connect {serverID: "127.0.0.1", portNum:5500, Visible: "Yes"} *)
+	
+	// Bump
+	put EveryImageRectangle(text:global dummyOrderID, waitFor:Config().Waits.(minWait), contrast: on, DPI: 144) into orderList	
+	put the first item of orderList into orderRect
+	put orderRect +[-200,-200,600,600] into displayRect
+	
+	click the center of orderRect
+	WaitFor Config().Waits.(minWait), text:"Bump Order", SearchRectangle:displayRect
+	click FoundImageLocation()
+	wait 5
+	
+	// Disconnect from KDs
+	Disconnect {serverID: "127.0.0.1", portNum:5500, Visible: "Yes"}
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end bumpDummyPOSOrder

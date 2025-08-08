@@ -1,2 +1,4 @@
 ﻿Script,Last Status,Runs,Fails,First Run,Last Run,Avg Time(Success)
+DAIWrappers/KDS,Success,2,0,2025-07-31 02:37:42 -0400,2025-08-05 13:52:23 -0400,0:00:00
+Tests/NCRTests,Failure,1,1,2025-08-05 09:38:19 -0400,2025-08-05 09:38:19 -0400,0:00:00
 Tests/KioskTests,Failure,2,2,2025-06-06 01:58:00 -0400,2025-06-10 01:36:18 -0400,0:00:00

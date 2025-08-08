@@ -70,7 +70,7 @@ bumpOrderIDOnKDS - Handler to Bump the order ID on the KDS SUT
 to bumpOrderIDOnKDS
 	// Code for NCR KDS
 	if (global posPlatformName) is "NCR" or (global posPlatformName) is "NCRKiosk"
-	// Look for the Order ID on the KDS screen
+		// Look for the Order ID on the KDS screen
 		repeat until ImageFound(text: global orderID, waitFor:Config().Waits.(midWait), contrast: on, DPI: 144)
 			click image: "Icons/KDSNext",  SearchRectangle: Config().SearchRectangles.(BottomHalf)
 		end repeat
@@ -96,6 +96,9 @@ to bumpOrderIDOnKDS
 		
 		// Validate that the order is bumped and is not showing on the KDS anymore
 		assert that not imageFound(text:global orderID, waitFor:Config().Waits.(minWait))
+		
+		// Before executing the receipt validation, Bump the dummy POS order with 6 Wings and 4 Sides to push the receipts up into frame
+		"DAIWrappers/POSNCR".bumpDummyPOSOrder
 	end if
 	
 	// Code for Oracle KDS

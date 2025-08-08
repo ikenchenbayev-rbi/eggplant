@@ -1,5 +1,11 @@
 {
 	"lastmodifieddate": 1746547877.089,
+	"lastfoundlocation": [
+		1018,
+		907,
+		63,
+		34
+	],
 	"originalcapturelocation": [
 		1018,
 		907,
@@ -7,15 +13,16 @@
 		34
 	],
 	"createddate": 1746547877.089,
+	"lastfounddate": 1754533500.9099998,
 	"testlocationdata": [
 		{
 				"connectionportnum": 5500,
 				"properties": {
 					"CropRectangle": "[0,0,0,0]",
 					"Rotate": 0,
-					"Tolerance": "_45",
-					"HotSpot": "[31,17]",
 					"Scale": "    1",
+					"HotSpot": "[31,17]",
+					"Tolerance": "_45",
 					"Discrepancy": "_0",
 					"SearchType": "Tolerant of Background"
 				},

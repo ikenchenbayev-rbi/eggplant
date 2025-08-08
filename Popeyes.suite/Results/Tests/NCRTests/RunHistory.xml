@@ -24,4 +24,53 @@
   <ReturnValue></ReturnValue>
   <ErrorMessage></ErrorMessage>
  </run>
+ <run>
+  <RunDate>2025-08-05 09:33:47.144 -0400</RunDate>
+  <Status>Aborted</Status>
+  <Duration>111.381000</Duration>
+  <Errors>1</Errors>
+  <Warnings>0</Warnings>
+  <Exceptions>0</Exceptions>
+  <Successes>0</Successes>
+  <LogFile>20250805_093347.144/LogFile.txt</LogFile>
+  <ReturnValue></ReturnValue>
+  <ErrorMessage></ErrorMessage>
+ </run>
+ <run>
+  <RunDate>2025-08-05 09:36:11.843 -0400</RunDate>
+  <Status>Aborted</Status>
+  <Duration>82.172000</Duration>
+  <Errors>1</Errors>
+  <Warnings>0</Warnings>
+  <Exceptions>0</Exceptions>
+  <Successes>0</Successes>
+  <LogFile>20250805_093611.843/LogFile.txt</LogFile>
+  <ReturnValue></ReturnValue>
+  <ErrorMessage></ErrorMessage>
+ </run>
+ <run>
+  <RunDate>2025-08-05 09:38:19.622 -0400</RunDate>
+  <Status>Failure</Status>
+  <Duration>128.769000</Duration>
+  <Errors>2</Errors>
+  <Warnings>0</Warnings>
+  <Exceptions>1</Exceptions>
+  <Successes>0</Successes>
+  <LogFile>20250805_093819.622/LogFile.txt</LogFile>
+  <ReturnValue></ReturnValue>
+  <ErrorMessage>Image Not Found -- click Error - No Text Found On Screen: &quot;(TEXT:&quot;Dine In&quot;)&quot;. Text not found.  Restricted Search Rectangle ((536,98),(1920,1041))
+</ErrorMessage>
+ </run>
+ <run>
+  <RunDate>2025-08-05 12:50:52.933 -0400</RunDate>
+  <Status>Aborted</Status>
+  <Duration>0.827000</Duration>
+  <Errors>1</Errors>
+  <Warnings>0</Warnings>
+  <Exceptions>0</Exceptions>
+  <Successes>0</Successes>
+  <LogFile>20250805_125052.933/LogFile.txt</LogFile>
+  <ReturnValue></ReturnValue>
+  <ErrorMessage></ErrorMessage>
+ </run>
 </runHistory>

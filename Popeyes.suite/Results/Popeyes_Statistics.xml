@@ -1,5 +1,21 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <statistics>
+ <script name="DAIWrappers/KDS">
+  <LastStatus>Success</LastStatus>
+  <NumberOfRuns>2</NumberOfRuns>
+  <NumberOfFails>0</NumberOfFails>
+  <FirstRun>2025-07-31 02:37:42 -0400</FirstRun>
+  <LastRun>2025-08-05 13:52:23 -0400</LastRun>
+  <TotalTimeOnSuccess>0.346000</TotalTimeOnSuccess>
+ </script>
+ <script name="Tests/NCRTests">
+  <LastStatus>Failure</LastStatus>
+  <NumberOfRuns>1</NumberOfRuns>
+  <NumberOfFails>1</NumberOfFails>
+  <FirstRun>2025-08-05 09:38:19 -0400</FirstRun>
+  <LastRun>2025-08-05 09:38:19 -0400</LastRun>
+  <TotalTimeOnSuccess>0.000000</TotalTimeOnSuccess>
+ </script>
  <script name="Tests/KioskTests">
   <LastStatus>Failure</LastStatus>
   <NumberOfRuns>2</NumberOfRuns>

@@ -66,8 +66,13 @@ return {
 		OracleKioskOptionsSelectionArea: [0,572,1080,1671],
 		OracleKioskMainCourseSelectionArea: [0,0,302,1829],
 		OracleKioskNameSoftKeyboard: [95,581,988,953],
+		
 		MobileReceiptArea:[1,38,477,689],
-		LeftHalfMobileReceipt:[0,42,228,679],
+		ReceiptLeftHalf: [2,38,266,699],
+		ReceiptRightHalf: [239,38,479,699],
+		ReceiptCenter: [97,208,377,542],
+		ReceiptTopHalf: [2,38,479,359],
+		ReceiptBottomHalf: [2,355,479,682],
 	},
 	TextOffsets:{
 	(* TextOffsets used in the POS system to enable typetext commands*)

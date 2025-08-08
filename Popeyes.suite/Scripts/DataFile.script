@@ -75,6 +75,8 @@ return {
 			ReceiptDisplayName: "ReceiptDisplayName",
 			SandSidesDessertsDisplayName: "SandSidesDessertsDisplayName",
 			ProteinDisplayName: "ProteinDisplayName",
+			SidesValidation:"SidesValidation",
+			ProteinValidation:"ProteinValidation",
 		},
 		NCRKiosk: {
 			TestCaseName: "TestCaseName",
@@ -132,6 +134,7 @@ return {
 			ReceiptDisplayName: "ReceiptDisplayName",
 			LabelMealDisplayName: "LabelMealDisplayName",
 			Discounts: "Discounts",
+			Coupons: "Coupons",
 		},
 	},
 	
