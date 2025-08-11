@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
-<runHistory script="Test">
+<runHistory script="Tests/NCRTests">
  <run>
   <RunDate>2025-05-06 11:57:01.765 -0400</RunDate>
   <Status>Aborted</Status>
-  <Duration>0.898000</Duration>
+  <Duration>0.000000</Duration>
   <Errors>1</Errors>
   <Warnings>0</Warnings>
   <Exceptions>0</Exceptions>
@@ -13,14 +13,75 @@
   <ErrorMessage></ErrorMessage>
  </run>
  <run>
+  <RunDate>2025-05-15 23:43:27.489 -0400</RunDate>
+  <Status>Aborted</Status>
+  <Duration>7.000000</Duration>
+  <Errors>1</Errors>
+  <Warnings>0</Warnings>
+  <Exceptions>0</Exceptions>
+  <Successes>0</Successes>
+  <LogFile>20250515_234327.489/LogFile.txt</LogFile>
+  <ReturnValue></ReturnValue>
+  <ErrorMessage></ErrorMessage>
+ </run>
+ <run>
   <RunDate>2025-07-17 03:21:11.605 -0400</RunDate>
   <Status>Aborted</Status>
-  <Duration>1.094000</Duration>
+  <Duration>1.000000</Duration>
   <Errors>1</Errors>
   <Warnings>0</Warnings>
   <Exceptions>0</Exceptions>
   <Successes>0</Successes>
   <LogFile>20250717_032111.605/LogFile.txt</LogFile>
+  <ReturnValue></ReturnValue>
+  <ErrorMessage></ErrorMessage>
+ </run>
+ <run>
+  <RunDate>2025-08-05 09:33:47.144 -0400</RunDate>
+  <Status>Aborted</Status>
+  <Duration>111.381000</Duration>
+  <Errors>1</Errors>
+  <Warnings>0</Warnings>
+  <Exceptions>0</Exceptions>
+  <Successes>0</Successes>
+  <LogFile>20250805_093347.144/LogFile.txt</LogFile>
+  <ReturnValue></ReturnValue>
+  <ErrorMessage></ErrorMessage>
+ </run>
+ <run>
+  <RunDate>2025-08-05 09:36:11.843 -0400</RunDate>
+  <Status>Aborted</Status>
+  <Duration>82.172000</Duration>
+  <Errors>1</Errors>
+  <Warnings>0</Warnings>
+  <Exceptions>0</Exceptions>
+  <Successes>0</Successes>
+  <LogFile>20250805_093611.843/LogFile.txt</LogFile>
+  <ReturnValue></ReturnValue>
+  <ErrorMessage></ErrorMessage>
+ </run>
+ <run>
+  <RunDate>2025-08-05 09:38:19.622 -0400</RunDate>
+  <Status>Failure</Status>
+  <Duration>128.769000</Duration>
+  <Errors>2</Errors>
+  <Warnings>0</Warnings>
+  <Exceptions>1</Exceptions>
+  <Successes>0</Successes>
+  <LogFile>20250805_093819.622/LogFile.txt</LogFile>
+  <ReturnValue></ReturnValue>
+  <ErrorMessage>Image Not Found -- click Error - No Text Found On Screen: &quot;(TEXT:&quot;Dine In&quot;)&quot;. Text not found.  Restricted Search Rectangle ((536,98),(1920,1041))
+</ErrorMessage>
+ </run>
+ <run>
+  <RunDate>2025-08-05 12:50:52.933 -0400</RunDate>
+  <Status>Aborted</Status>
+  <Duration>0.827000</Duration>
+  <Errors>1</Errors>
+  <Warnings>0</Warnings>
+  <Exceptions>0</Exceptions>
+  <Successes>0</Successes>
+  <LogFile>20250805_125052.933/LogFile.txt</LogFile>
   <ReturnValue></ReturnValue>
   <ErrorMessage></ErrorMessage>
  </run>

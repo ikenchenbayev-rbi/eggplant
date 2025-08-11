@@ -1,4 +1,56 @@
-﻿(*=================================*)
+﻿// NCR Test Case 2: Classic Chicken Sandwich Combo (Tested by Engineers)
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "NCR"
+Common.setTestCaseName "Classic Chicken Sandwich Combo"
+Common.launchNCRPOS
+"DAIWrappers/POSNCR".loginToNCRPOS
+"DAIWrappers/POSNCR".selectDiningOption
+"DAIWrappers/POSNCR".selectMainCourse
+"DAIWrappers/POSNCR".selectMealAndOption
+"DAIWrappers/POSNCR".selectFlavors
+"DAIWrappers/POSNCR".selectSides 
+"DAIWrappers/POSNCR".selectDrink
+"DAIWrappers/POSNCR".proceedToTender
+"DAIWrappers/POSNCR".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSNCR".validateNCRReceipt
+
+--------------------------------------------------------------------------------------------------------------------
+
+// NCR Test Case 3: Classic Chicken Sandwich Dinner (Tested by Engineers)
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "NCR"
+Common.setTestCaseName "Classic Chicken Sandwich Dinner"
+Common.launchNCRPOS
+"DAIWrappers/POSNCR".loginToNCRPOS
+"DAIWrappers/POSNCR".selectDiningOption
+"DAIWrappers/POSNCR".selectMainCourse
+"DAIWrappers/POSNCR".selectMealAndOption
+"DAIWrappers/POSNCR".selectFlavors
+"DAIWrappers/POSNCR".selectSides 
+"DAIWrappers/POSNCR".selectDrink
+"DAIWrappers/POSNCR".proceedToTender
+"DAIWrappers/POSNCR".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSNCR".validateNCRReceipt
+
+
+
+
+
+(*=================================*)
 // NCR Test Case 1: Butterfly Shrimp & Tender Combo
 Common.setPlatformName "POS"
 Common.setPOSPlatformName "NCR"
@@ -63,7 +115,6 @@ Common.launchNCRPOS
 "DAIWrappers/POSNCR".selectDrink
 "DAIWrappers/POSNCR".proceedToTender
 "DAIWrappers/POSNCR".exactPayment
-Common.disconnectFromNCRPOS
 
 //KDS
 "DAIWrappers/KDS".connectToKDS
@@ -89,7 +140,6 @@ Common.launchNCRPOS
 "DAIWrappers/POSNCR".selectDrink
 "DAIWrappers/POSNCR".proceedToTender
 "DAIWrappers/POSNCR".exactPayment
-Common.disconnectFromNCRPOS
 
 //KDS
 "DAIWrappers/KDS".connectToKDS
@@ -104,7 +154,7 @@ Common.disconnectFromNCRPOS
 // NCR Test Case 5: Classic Chicken Sandwich ALC
 Common.setPlatformName "POS"
 Common.setPOSPlatformName "NCR"
-Common.setTestCaseName "Classic Chicken Sandwich Combo"
+Common.setTestCaseName "Classic Chicken Sandwich ALC"
 Common.launchNCRPOS
 "DAIWrappers/POSNCR".loginToNCRPOS
 "DAIWrappers/POSNCR".selectDiningOption
@@ -115,7 +165,6 @@ Common.launchNCRPOS
 "DAIWrappers/POSNCR".selectDrink
 "DAIWrappers/POSNCR".proceedToTender
 "DAIWrappers/POSNCR".exactPayment
-Common.disconnectFromNCRPOS
 
 //KDS
 "DAIWrappers/KDS".connectToKDS
@@ -141,7 +190,6 @@ Common.launchNCRPOS
 "DAIWrappers/POSNCR".selectDrink
 "DAIWrappers/POSNCR".proceedToTender
 "DAIWrappers/POSNCR".exactPayment
-Common.disconnectFromNCRPOS
 
 //KDS
 "DAIWrappers/KDS".connectToKDS
@@ -153,33 +201,7 @@ Common.disconnectFromNCRPOS
 
 
 (*=================================*)
-// NCR Test Case 7: 12 PC Wings Dinner
-Common.setPlatformName "POS"
-Common.setPOSPlatformName "NCR"
-Common.setTestCaseName "12 PC Wings Dinner"
-Common.launchNCRPOS
-"DAIWrappers/POSNCR".loginToNCRPOS
-"DAIWrappers/POSNCR".selectDiningOption
-"DAIWrappers/POSNCR".selectMainCourse
-"DAIWrappers/POSNCR".selectMealAndOption
-"DAIWrappers/POSNCR".selectFlavors
-"DAIWrappers/POSNCR".selectSides 
-"DAIWrappers/POSNCR".selectDrink
-"DAIWrappers/POSNCR".proceedToTender
-"DAIWrappers/POSNCR".exactPayment
-Common.disconnectFromNCRPOS
-
-//KDS
-"DAIWrappers/KDS".connectToKDS
-"DAIWrappers/KDS".bumpOrderIDOnKDS
-"DAIWrappers/KDS".disconnectFromKDS
-
-//Validate Receipts
-"DAIWrappers/POSNCR".validateNCRReceipt
-
-
-(*=================================*)
-// NCR Test Case 8: 12 PC Wings Lg Combo
+// NCR Test Case 7: 12 PC Wings Lg Combo
 Common.setPlatformName "POS"
 Common.setPOSPlatformName "NCR"
 Common.setTestCaseName "12 PC Wings Lg Combo"
@@ -193,7 +215,6 @@ Common.launchNCRPOS
 "DAIWrappers/POSNCR".selectDrink
 "DAIWrappers/POSNCR".proceedToTender
 "DAIWrappers/POSNCR".exactPayment
-Common.disconnectFromNCRPOS
 
 //KDS
 "DAIWrappers/KDS".connectToKDS
@@ -205,10 +226,10 @@ Common.disconnectFromNCRPOS
 
 
 (*=================================*)
-// NCR Test Case 9: 12 PC Wings ALC
+// NCR Test Case 8: 12 PC Wings ALC
 Common.setPlatformName "POS"
 Common.setPOSPlatformName "NCR"
-Common.setTestCaseName "12 PC Wings Combo"
+Common.setTestCaseName "12 PC Wings ALC"
 Common.launchNCRPOS
 "DAIWrappers/POSNCR".loginToNCRPOS
 "DAIWrappers/POSNCR".selectDiningOption
@@ -219,7 +240,6 @@ Common.launchNCRPOS
 "DAIWrappers/POSNCR".selectDrink
 "DAIWrappers/POSNCR".proceedToTender
 "DAIWrappers/POSNCR".exactPayment
-Common.disconnectFromNCRPOS
 
 //KDS
 "DAIWrappers/KDS".connectToKDS
@@ -231,7 +251,7 @@ Common.disconnectFromNCRPOS
 
 
 (*=================================*)
-// NCR Test Case 10: 4 PC BIC Combo
+// NCR Test Case 9: 4 PC BIC Combo
 Common.setPlatformName "POS"
 Common.setPOSPlatformName "NCR"
 Common.setTestCaseName "4 PC BIC Combo"
@@ -245,7 +265,6 @@ Common.launchNCRPOS
 "DAIWrappers/POSNCR".selectDrink
 "DAIWrappers/POSNCR".proceedToTender
 "DAIWrappers/POSNCR".exactPayment
-Common.disconnectFromNCRPOS
 
 //KDS
 "DAIWrappers/KDS".connectToKDS
@@ -257,7 +276,7 @@ Common.disconnectFromNCRPOS
 
 
 (*=================================*)
-// NCR Test Case 11: 4 PC BIC Dinner
+// NCR Test Case 10: 4 PC BIC Dinner
 Common.setPlatformName "POS"
 Common.setPOSPlatformName "NCR"
 Common.setTestCaseName "4 PC BIC Dinner"
@@ -271,7 +290,6 @@ Common.launchNCRPOS
 "DAIWrappers/POSNCR".selectDrink
 "DAIWrappers/POSNCR".proceedToTender
 "DAIWrappers/POSNCR".exactPayment
-Common.disconnectFromNCRPOS
 
 //KDS
 "DAIWrappers/KDS".connectToKDS
@@ -283,7 +301,7 @@ Common.disconnectFromNCRPOS
 
 
 (*=================================*)
-// NCR Test Case 12: 4 PC BIC Lg Combo
+// NCR Test Case 11: 4 PC BIC Lg Combo
 Common.setPlatformName "POS"
 Common.setPOSPlatformName "NCR"
 Common.setTestCaseName "4 PC BIC Lg Combo"
@@ -297,7 +315,6 @@ Common.launchNCRPOS
 "DAIWrappers/POSNCR".selectDrink
 "DAIWrappers/POSNCR".proceedToTender
 "DAIWrappers/POSNCR".exactPayment
-Common.disconnectFromNCRPOS
 
 //KDS
 "DAIWrappers/KDS".connectToKDS
@@ -309,7 +326,7 @@ Common.disconnectFromNCRPOS
 
 
 (*=================================*)
-// NCR Test Case 13: 4 PC BIC ALC
+// NCR Test Case 12: 4 PC BIC ALC
 Common.setPlatformName "POS"
 Common.setPOSPlatformName "NCR"
 Common.setTestCaseName "4 PC BIC ALC"
@@ -323,7 +340,6 @@ Common.launchNCRPOS
 "DAIWrappers/POSNCR".selectDrink
 "DAIWrappers/POSNCR".proceedToTender
 "DAIWrappers/POSNCR".exactPayment
-Common.disconnectFromNCRPOS
 
 //KDS
 "DAIWrappers/KDS".connectToKDS

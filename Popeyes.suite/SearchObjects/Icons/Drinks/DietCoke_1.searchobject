@@ -1,0 +1,47 @@
+{
+	"originalcapturelocation": [
+		653,
+		834,
+		64,
+		37
+	],
+	"lastmodifieddate": 1754060587.1009998,
+	"createddate": 1754060543.3930001,
+	"name": "Icons/Drinks/DietCoke_1",
+	"lastfounddate": 1754605774.8629999,
+	"ocrcapturestring": ":«>ke",
+	"lastfoundlocation": [
+		653,
+		834,
+		64,
+		37
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 5500,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[32,18]",
+					"Tolerance": "_45",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/Drinks/DietCoke/DietCoke_1.png",
+				"connectionname": "127.0.0.1",
+				"type": 1,
+				"capturerect": [
+					653,
+					834,
+					64,
+					37
+				],
+				"connectionserverid": "127.0.0.1",
+				"capturedocrtext": ":«>ke"
+			}
+	]
+}
