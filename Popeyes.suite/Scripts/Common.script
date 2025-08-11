@@ -74,9 +74,9 @@ to readDataFromExcel excelColumn
 	(*	set Spreadsheet to Workbook(ResourcePath(fileName))
 	// read in tab to memory
 	set entryData to Spreadsheet.Worksheet(1)
-	
+
 	put 2 into count
-	
+
 	// When we get to the end of the spreadsheet, then exit the repeat
 	repeat until eof_flag is "true"
 		if entryData.Cell("A"&(count)) is empty
@@ -84,14 +84,12 @@ to readDataFromExcel excelColumn
 		else
 			// If the global test case name matches excel test case name, read corresponding row and column value
 			put entryData.Cell("B"&(count)) into excelTestCaseName
-			
 			if excelTestCaseName is equal to global testCaseName ignoring case
 				put entryData.Cell(excelColumn&(count)) into dataValue
 				exit repeat
 			end if
 			add 1 to count
 		end if
-		
 	end repeat*)
 	
 	set myExcelDB to {type:"excel", file:ResourcePath(fileName)} 
@@ -607,10 +605,13 @@ to launchSicomPOS
 	log "Performing steps to launch Remote PC and Sicom POS"
 	connectToLocalSingleSystem
 	
+	
 	// If POS window or KDS is already opened, do nothing. Else perform putty steps to open windows
 	if imagefound (Text:"Request", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf)) or if imagefound (Text:"Support Terminal", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf))
 		LogSuccess "Sicom POS already launched"
 	else
+		
+		
 		// Open Chrome
 		launchChrome
 		
@@ -619,10 +620,13 @@ to launchSicomPOS
 		
 		// Open the Sicom remotePC Connection for FC
 		openSicomFC
+		launchSicomKDS
+		switchSicomWindowTo "POS"
 	end if
-	
-	
-	
+	//log on to the system
+	"DAIWrappers/POSSicom".logOnSicomPOS
+	//cliking the required route 3 for POS system
+	"DAIWrappers/POSSicom".clickRoute
 	// Click to wake up the system, incase it is showing the screen saver
 	click Config().TextOffsets.(ClickScreenOffset)
 	
@@ -686,7 +690,7 @@ to openSicomFC
 	connectToRemotePCMachine sicomFCName
 	
 	// If POS window or KDS is already opened, do nothing. Else perform putty steps to open windows
-	if imagefound (Text:"Request", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf)) or if imagefound (Text:"Support Terminal", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf))
+	if imagefound (Text:"REQUEST", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf)) or if imagefound (Text:"Support Terminal", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf))
 		LogSuccess "Sicom POS already launched"
 	else
 		// Write Code to open Putty and Launch Sicom POS, if Required in the future

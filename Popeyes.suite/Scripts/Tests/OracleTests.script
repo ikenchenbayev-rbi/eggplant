@@ -462,8 +462,8 @@ Common.launchOraclePOS
 "DAIWrappers/POSOracle".selectSides 
 "DAIWrappers/POSOracle".selectDrink
 "DAIWrappers/POSOracle".validatePremiumUpcharges
-"DAIWrappers/POSOracle".proceedToTender
 "DAIWrappers/POSOracle".applyCoupon
+"DAIWrappers/POSOracle".proceedToTender
 "DAIWrappers/POSOracle".exactPayment
 
 //KDS

@@ -118,7 +118,7 @@ to selectMainCourse
 end selectMainCourse
 
 (**  
-selectMainCourse - Handler to select the Meal like, BFLY SHRIMP, PopCorn Shrimp etc. And meal option like Combo, Regular etc.
+selectMealAndOption - Handler to select the Meal like, BFLY SHRIMP, PopCorn Shrimp etc. And meal option like Combo, Regular etc.
 @Version 1.0 4/22/2025
 @ChangeReason Creation
 **)

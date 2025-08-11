@@ -16,7 +16,7 @@ Description:  DataFile contains return value for the config data used in POS tes
 **) 
 
 return { 
-	(* Login Information to be used inside the POS system, for Oracle, NCR and SiCOM*)
+(* Login Information to be used inside the POS system, for Oracle, NCR and SiCOM*)
 	Logins:{
 		NCRPOS:{
 			employeeCode:"100",
@@ -49,6 +49,10 @@ return {
 			vncUser: "x11vnc",
 			KDSUsername: "RBI",
 			KDSPassword: "sicom1234",
+		},
+		SicomPOS:{
+			ManagerID:["1","2","3","4","5"],
+			CashierID: ["1","0","1"],
 		},
 
 	},
@@ -90,6 +94,7 @@ return {
 			Biscuit: "Biscuit",
 			MealDisplayName: "MealDisplayName",
 		},
+		
 		OracleKiosk: {
 			TestCaseName: "TestCaseName",
 			DiningOption: "DineOption",
@@ -136,6 +141,25 @@ return {
 			Discounts: "Discounts",
 			Coupons: "Coupons",
 		},
+		Sicom: {
+			TestCaseName: "TestCaseName",
+			DineOption: "DineOption",
+			MainCourse: "MainCourse",
+			SelectMeal: "SelectMeal",
+			SelectMealOption: "SelectMealOption",
+			MealDisplayName: "MealDisplayName",
+			Flavors: "Flavors",
+			Sides: "Sides",
+			Drink: "Drink",
+			KDSMealDisplayName: "KDSMealDisplayName",
+			ExpoLabelDisplayName: "ExpoLabelDisplayName",
+			ReceiptDisplayName: "ReceiptDisplayName",
+			SandSidesDessertsDisplayName: "SandSidesDessertsDisplayName",
+			ProteinDisplayName: "ProteinDisplayName",
+			SidesValidation: "SidesValidation",
+			ProteinValidation: "ProteinValidation",
+		},
+
 	},
 	
 	(* SUT Names to be used to in the code to connect to platforrms under test*)
@@ -157,7 +181,7 @@ return {
 		SicomCustReceipt: "SicomCustReceipt",
 		SicomSandSidesDesserts: "SicomSandSidesDesserts",
 		SicomProtein: "SicomProtein",
-		SicomExpo: "SicomProtein",
+		SicomExpo: "SicomExpo",
 	},
 
 
