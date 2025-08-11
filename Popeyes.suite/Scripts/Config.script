@@ -96,5 +96,5 @@ return {
 		ClickScreenOffset: [1900,500],
 		ClickMobileScreenOffset: [200,400],
 
-},
+	},
 }

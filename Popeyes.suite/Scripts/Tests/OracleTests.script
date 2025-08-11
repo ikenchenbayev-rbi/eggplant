@@ -23,7 +23,6 @@ Common.launchOraclePOS
 "DAIWrappers/POSOracle".validateReceipt
 
 
-
 (*=================================*)
 // Oracle Test Case 2: Popcorn Shrimp & Tender Dinner
 Common.setPlatformName "POS"
@@ -447,4 +446,32 @@ Common.launchOraclePOS
 
 //Validate Receipts
 "DAIWrappers/POSOracle".validateReceipt
+
+
+(*=================================*)
+// Oracle Test Case 19: PLU Lookup
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Oracle"
+Common.setTestCaseName "PLU Lookup"
+Common.launchOraclePOS
+"DAIWrappers/POSOracle".loginToOraclePOS
+"DAIWrappers/POSOracle".selectMainCourse
+"DAIWrappers/POSOracle".selectMeal
+"DAIWrappers/POSOracle".selectFlavors
+"DAIWrappers/POSOracle".selectOrderType
+"DAIWrappers/POSOracle".selectSides 
+"DAIWrappers/POSOracle".selectDrink
+"DAIWrappers/POSOracle".validatePremiumUpcharges
+"DAIWrappers/POSOracle".applyCoupon
+"DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
+
 
