@@ -349,3 +349,55 @@ Common.launchNCRPOS
 //Validate Receipts
 "DAIWrappers/POSNCR".validateNCRReceipt
 
+
+(*=================================*)
+// NCR Test Case 13: PLU Lookup
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "NCR"
+Common.setTestCaseName "PLU Lookup"
+Common.launchNCRPOS
+"DAIWrappers/POSNCR".loginToNCRPOS
+"DAIWrappers/POSNCR".selectDiningOption
+"DAIWrappers/POSNCR".selectMainCourse
+"DAIWrappers/POSNCR".applyCoupon
+"DAIWrappers/POSNCR".selectMealAndOption
+"DAIWrappers/POSNCR".selectFlavors
+"DAIWrappers/POSNCR".selectSides 
+"DAIWrappers/POSNCR".selectDrink
+"DAIWrappers/POSNCR".proceedToTender
+"DAIWrappers/POSNCR".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSNCR".validateNCRReceipt
+
+
+(*=================================*)
+// NCR Test Case 14: X% Off
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "NCR"
+Common.setTestCaseName "X% Off"
+Common.launchNCRPOS
+"DAIWrappers/POSNCR".loginToNCRPOS
+"DAIWrappers/POSNCR".selectDiningOption
+"DAIWrappers/POSNCR".selectMainCourse
+"DAIWrappers/POSNCR".selectMealAndOption
+"DAIWrappers/POSNCR".selectFlavors
+"DAIWrappers/POSNCR".selectSides 
+"DAIWrappers/POSNCR".selectDrink
+"DAIWrappers/POSNCR".applyDiscount
+"DAIWrappers/POSNCR".proceedToTender
+"DAIWrappers/POSNCR".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSNCR".validateNCRReceipt
+

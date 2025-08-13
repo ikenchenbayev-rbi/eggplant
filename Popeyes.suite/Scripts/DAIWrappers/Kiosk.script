@@ -629,7 +629,7 @@ payKioskOrder - Handler to complete the payment for Kiosk order through POS.
 **)
 to payKioskOrder
 	
-	// To launch POS
+	// To launch Oracle POS
 	if (global posPlatformName) is "OracleKiosk"
 		// Launches and logs into Oracle POS
 		Common.launchOraclePOS
@@ -640,6 +640,19 @@ to payKioskOrder
 		
 		// Complete payment
 		"DAIWrappers/POSOracle".exactPayment
+	end if
+	
+	// To launch NCR POS
+	if (global posPlatformName) is "NCRKiosk"
+		// Launches and logs into Oracle POS
+		Common.launchNCRPOS
+		"DAIWrappers/POSNCR".loginToNCRPOS
+		
+		// Select Kiosk Order
+		"DAIWrappers/POSNCR".selectKioskOrder "Test"
+		
+		// Complete payment
+		"DAIWrappers/POSNCR".exactPayment
 	end if
 	
 end payKioskOrder

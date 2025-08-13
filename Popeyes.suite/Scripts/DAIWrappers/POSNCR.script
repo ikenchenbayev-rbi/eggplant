@@ -142,10 +142,12 @@ to selectMealAndOption
 		
 		// Select Meal and additional selections if any
 		repeat for each item of selectMeal
-			if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
-				click FoundImageLocation() 
-				wait 1
-			end if
+			assert that common.extendedFindText(trim(it),Config().Waits.(minWait),Config().SearchRectangles.(NCRItemSelectionArea)) is true with error "Item found"
+			
+			//if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+			click FoundImageLocation() 
+			wait 1
+			//end if
 		end repeat
 	end if
 	
@@ -694,3 +696,102 @@ to bumpDummyPOSOrder
 	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 end bumpDummyPOSOrder
+
+
+(**  
+applyCoupon - Handler to make an order using coupon (PLU Lookup).
+@Version 1.0 8/12/2025
+@ChangeReason Creation
+**)
+to applyCoupon
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	put DataFile().ColumnMapping.(global posPlatformName).Coupons into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into coupons
+	
+	// To select the discount based on the excel data
+	if coupons is not empty
+		// Enter the coupon code
+		repeat for each character in coupons
+			click text:it, SearchRectangle: Config().SearchRectangles.(NCRPLUSoftKeypad), waitFor: 1
+			wait 1
+		end repeat
+		
+		// Click the Add To Check button
+		WaitFor Config().Waits.(minWait), text:"Add To Check", SearchRectangle:Config().SearchRectangles.(NCRPLUSoftKeypad), ignoreSpaces: Yes, ignoreNewLines: Yes
+		click FoundImageLocation()
+		wait 1
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end applyCoupon
+
+
+(**  
+applyDiscount - Handler to apply discount to an order.
+@Version 1.0 8/13/2025
+@ChangeReason Creation
+**)
+to applyDiscount
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	put DataFile().ColumnMapping.(global posPlatformName).Discounts into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into discounts
+	
+	// To select the discount based on the excel data
+	if discounts is not empty
+		// Click the Coupons Discounts tab
+		WaitFor Config().Waits.(minWait), text:"Coupons Discounts", SearchRectangle:Config().SearchRectangles.(NCRMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes
+		click FoundImageLocation()
+		
+		// Click the Discounts/Comps button
+		WaitFor Config().Waits.(maxWait), text:"DISCOUNTS/COMPS", SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes
+		click FoundImageLocation()
+		
+		// Select the discount tye
+		WaitFor Config().Waits.(maxWait), text:discounts, SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes
+		click FoundImageLocation()
+		
+		// Validate that the discount has been applied
+		assert that ImageFound(text:discounts, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCROrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes) with warning "Discount added to order."
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end applyDiscount
+
+
+(**  
+selectKioskOrder - Handler to select the Kiosk order and finish payment in POS NCR.
+@Version 1.0 6/19/2025
+@ChangeReason Creation
+**)
+to selectKioskOrder orderName
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Click the Kiosk button on the Orders Section First
+	WaitFor Config().Waits.(maxWait), text:"Kiosk", SearchRectangle:Config().SearchRectangles.(NCROrdersAreaOptions), ignoreSpaces: Yes, ignoreNewLines: Yes
+	click FoundImageLocation()
+	wait 1
+	
+	// Click the Kiosk option
+	Assert that imagefound (text:"Kiosk", WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(TopHalf), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	Click FoundImageLocation()
+	
+	// Click the OK button
+	Assert that imagefound (text:"OK", WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(BottomHalf), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	Click FoundImageLocation()
+	Wait 1
+	
+	// Select the kiosk order to proceed to payment
+	Assert that imagefound (text:orderName, WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(TopHalf), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	Click FoundImageLocation()
+	
+	// Click the View Stores Orders option
+	Assert that imagefound (text:"OK", WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(BottomHalf), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	Click FoundImageLocation()
+	Wait 1
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end selectKioskOrder

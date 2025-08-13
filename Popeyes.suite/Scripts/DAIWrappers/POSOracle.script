@@ -718,20 +718,22 @@ to applyCoupon
 	put DataFile().ColumnMapping.(global posPlatformName).Coupons into excelColumnName
 	put Common.readDataFromExcel (excelColumnName) into coupons
 	
-	// Click the Discounts button
-	assert that ImageFound(text:"Coupons", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(BottomHalf), ignoreSpaces: Yes, ignoreNewLines: Yes) with warning "Payment screen"
-	Click FoundImageLocation()
-	Wait 1
-	
 	// To select the discount based on the excel data
 	if coupons is not empty
+		
+		// Click the Discounts button
+		assert that ImageFound(text:"Coupons", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(BottomHalf), ignoreSpaces: Yes, ignoreNewLines: Yes) with warning "Payment screen"
+		Click FoundImageLocation()
+		Wait 1
+		
+		// Enter the coupon code
 		Typetext coupons
 		Wait 1	
+		
+		// Click the back to pay button to complete payment process
+		Assert that imagefound (text:"OK", WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(bottomHalf), ignoreSpaces: Yes, ignoreNewLines: Yes)
+		Click FoundImageLocation()
 	end if
-	
-	// Click the back to pay button to complete payment process
-	Assert that imagefound (text:"OK", WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(bottomHalf), ignoreSpaces: Yes, ignoreNewLines: Yes)
-	Click FoundImageLocation()
 	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 end applyCoupon

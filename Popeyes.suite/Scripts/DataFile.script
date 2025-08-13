@@ -16,7 +16,7 @@ Description:  DataFile contains return value for the config data used in POS tes
 **) 
 
 return { 
-(* Login Information to be used inside the POS system, for Oracle, NCR and SiCOM*)
+	(* Login Information to be used inside the POS system, for Oracle, NCR and SiCOM*)
 	Logins:{
 		NCRPOS:{
 			employeeCode:"100",
@@ -81,6 +81,7 @@ return {
 			ProteinDisplayName: "ProteinDisplayName",
 			SidesValidation:"SidesValidation",
 			ProteinValidation:"ProteinValidation",
+			Coupons:"Coupons",
 		},
 		NCRKiosk: {
 			TestCaseName: "TestCaseName",
