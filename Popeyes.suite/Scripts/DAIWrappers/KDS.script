@@ -42,7 +42,7 @@ to connectToKDS
 	end if
 	
 	// Code for Oracle KDS
-	if (global posPlatformName) is "Oracle" or (global posPlatformName) is "OracleKiosk"
+	if (global posPlatformName) is "Oracle" or (global posPlatformName) is "OracleKiosk" or (global posPlatformName) is "OracleAppDelivery"  or (global posPlatformName) is "OracleAppPickup"
 		Connect DataFile().SUTNames.OracleKDS, visible: Yes
 		
 		// Wait for SUT To be connected
@@ -154,6 +154,44 @@ to bumpOrderIDOnKDS
 		// Validate that the order is bumped and is not showing on the KDS anymore
 		assert that not imageFound(text:global orderID)
 	end if
+	
+	// Code for Oracle KDS. If the platformName is App Delivery or App Pickup
+	if (global posPlatformName) is "OracleAppDelivery" or (global posPlatformName) is "OracleAppPickup"
+		
+		// Read Order Type from the Input file
+		put DataFile().ColumnMapping.(global posPlatformName).OrderType into excelColumnName
+		put Common.readDataFromExcel (excelColumnName) into orderType
+		
+		if orderType is "Delivery" ignoring case
+			// Look for the DY text on the KDS that signifies Delivery order
+			WaitFor Config().Waits.(minWait), text:"DY"
+			put FoundImageInfo().imageRectangle +[-100,-100,400,300] into orderRect
+		end if
+		
+		if orderType is "Pickup" ignoring case
+			// Look for the PLK App TO text on the KDS that signifies Pickup order
+			WaitFor Config().Waits.(minWait), text:"PLK App TO"
+			put FoundImageInfo().imageRectangle +[-100,-100,350,300] into orderRect
+		end if
+		
+		// Validate Meal Display Name on KDS
+		put DataFile().ColumnMapping.(global posPlatformName).KDSMealDisplayName into excelColumnName
+		put Common.readDataFromExcel (excelColumnName) into mealDisplayName
+		
+		WaitFor Config().Waits.(minWait), text:mealDisplayName, searchRectangle: orderRect
+		
+		// Read Order ID next to text CHK within the rectangle
+		WaitFor Config().Waits.(minWait), text:"CHK", caseSensitive: yes, searchRectangle: orderRect
+		put FoundImageInfo().imageRectangle +[60,0,80,0] into orderIDRect
+		put readtext(orderIDRect) into global orderID
+		
+		// Bump the Order
+		click the center of orderIDRect
+		WaitFor Config().Waits.(minWait), text:"Bump", SearchRectangle:Config().SearchRectangles.(BottomHalf)
+		click FoundImageLocation()
+		wait 2
+	end if
+	
 end bumpOrderIDOnKDS
 
 
@@ -169,7 +207,7 @@ to disconnectFromKDS
 	end if
 	
 	// Code for Oracle KDS
-	if (global posPlatformName) is "Oracle" or (global posPlatformName) is "OracleKiosk"
+	if (global posPlatformName) is "Oracle" or (global posPlatformName) is "OracleKiosk" or (global posPlatformName) is "OracleAppDelivery"  or (global posPlatformName) is "OracleAppPickup"
 		Disconnect DataFile().SUTNames.OracleKDS
 	end if
 	

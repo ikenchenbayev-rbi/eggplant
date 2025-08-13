@@ -1,0 +1,24 @@
+﻿-------------------------------------------Oracle App Pickup---------------------------------------------------------------
+// Oracle App Pickup Test Case 1:
+Common.setPlatformName "App Delivery"
+Common.setPOSPlatformName "OracleAppPickup"
+Common.setTestCaseName "spicysand"
+"DAIWrappers/AppDeliveryAndPickup".launchSeleniumSUT
+"DAIWrappers/AppDeliveryAndPickup".triggerSeleniumScript
+
+//KDS
+Common.setPlatformName "App Delivery"
+Common.setPOSPlatformName "OracleAppPickup"
+Common.setTestCaseName "spicysand"
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+Common.setPlatformName "App Delivery"
+Common.setPOSPlatformName "OracleAppPickup"
+Common.setTestCaseName "spicysand"
+put "8468" into global orderID
+"DAIWrappers/POSOracle".validateReceipt
+
+

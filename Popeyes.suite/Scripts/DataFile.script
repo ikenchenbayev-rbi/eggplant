@@ -53,6 +53,11 @@ return {
 		SicomPOS:{
 			ManagerID:["1","2","3","4","5"],
 			CashierID: ["1","0","1"],
+			PLUCoupon:["5","0","6","0","0"],
+		},
+		App: {
+			directoryCommand: "cd ~/IdeaProjects/QA_AUTOMATION",
+			executionCommand: "./run_profile.sh ",
 		},
 
 	},
@@ -156,6 +161,16 @@ return {
 			SidesValidation: "SidesValidation",
 			ProteinValidation: "ProteinValidation",
 		},
+		OracleAppPickup: {
+			TestCaseName: "TestCaseName",
+			LabName: "LabName",
+			OrderType: "OrderType",
+			KDSMealDisplayName: "KDSMealDisplayName",
+			ExpoLabelDisplayName: "ExpoLabelDisplayName",
+			ReceiptDisplayName: "ReceiptDisplayName",
+			LabelMealDisplayName: "LabelMealDisplayName",
+		},
+
 
 	},
 	
@@ -177,8 +192,9 @@ return {
 		SicomKiosk: "SicomKiosk",
 		SicomCustReceipt: "SicomCustReceipt",
 		SicomSandSidesDesserts: "SicomSandSidesDesserts",
-SicomProtein: "SicomProtein",
+		SicomProtein: "SicomProtein",
 SicomExpo: "SicomExpo",
+SeleniumSUT: "SeleniumNUK",
 },
 
 
