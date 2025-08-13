@@ -16,7 +16,7 @@ Description:  DataFile contains return value for the config data used in POS tes
 **) 
 
 return { 
-(* Login Information to be used inside the POS system, for Oracle, NCR and SiCOM*)
+	(* Login Information to be used inside the POS system, for Oracle, NCR and SiCOM*)
 	Logins:{
 		NCRPOS:{
 			employeeCode:"100",
@@ -53,6 +53,11 @@ return {
 		SicomPOS:{
 			ManagerID:["1","2","3","4","5"],
 			CashierID: ["1","0","1"],
+			PLUCoupon:["5","0","6","0","0"],
+		},
+		App: {
+			directoryCommand: "cd ~/IdeaProjects/QA_AUTOMATION",
+			executionCommand: "./run_profile.sh ",
 		},
 
 	},
@@ -159,6 +164,17 @@ return {
 			SidesValidation: "SidesValidation",
 			ProteinValidation: "ProteinValidation",
 		},
+		OracleApp: {
+			TestCaseName: "TestCaseName",
+			ProfileName: "ProfileName",
+			LabName: "LabName",
+			OrderType: "OrderType",
+			KDSMealDisplayName: "KDSMealDisplayName",
+			ExpoLabelDisplayName: "ExpoLabelDisplayName",
+			ReceiptDisplayName: "ReceiptDisplayName",
+			LabelMealDisplayName: "LabelMealDisplayName",
+		},
+
 
 	},
 	
@@ -181,8 +197,8 @@ return {
 		SicomCustReceipt: "SicomCustReceipt",
 		SicomSandSidesDesserts: "SicomSandSidesDesserts",
 		SicomProtein: "SicomProtein",
-		SicomExpo: "SicomExpo",
-	},
-
+SicomExpo: "SicomExpo",
+SeleniumSUT: "SeleniumNUK",
+},
 
 }

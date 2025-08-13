@@ -1,31 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <statistics>
-<<<<<<< HEAD
- <script name="DAIWrappers/KDS">
-  <LastStatus>Success</LastStatus>
-  <NumberOfRuns>2</NumberOfRuns>
-  <NumberOfFails>0</NumberOfFails>
-  <FirstRun>2025-07-31 02:37:42 -0400</FirstRun>
-  <LastRun>2025-08-05 13:52:23 -0400</LastRun>
-  <TotalTimeOnSuccess>0.346000</TotalTimeOnSuccess>
- </script>
- <script name="Tests/NCRTests">
-  <LastStatus>Failure</LastStatus>
-  <NumberOfRuns>1</NumberOfRuns>
-  <NumberOfFails>1</NumberOfFails>
-  <FirstRun>2025-08-05 09:38:19 -0400</FirstRun>
-  <LastRun>2025-08-05 09:38:19 -0400</LastRun>
-  <TotalTimeOnSuccess>0.000000</TotalTimeOnSuccess>
-=======
- <script name="DAIWrappers/POSSicom">
-  <LastStatus>Success</LastStatus>
-  <NumberOfRuns>3</NumberOfRuns>
-  <NumberOfFails>0</NumberOfFails>
-  <FirstRun>2025-07-01 02:04:34 -0400</FirstRun>
-  <LastRun>2025-07-24 07:50:02 -0400</LastRun>
-  <TotalTimeOnSuccess>0.311000</TotalTimeOnSuccess>
->>>>>>> aa9508d0b589e1f95ea74207650dc352f71381b3
- </script>
  <script name="Tests/KioskTests">
   <LastStatus>Failure</LastStatus>
   <NumberOfRuns>2</NumberOfRuns>
@@ -33,5 +7,29 @@
   <FirstRun>2025-06-06 01:58:00 -0400</FirstRun>
   <LastRun>2025-06-10 01:36:18 -0400</LastRun>
   <TotalTimeOnSuccess>0.000000</TotalTimeOnSuccess>
+ </script>
+ <script name="DAIWrappers/POSSicom">
+  <LastStatus>Success</LastStatus>
+  <NumberOfRuns>3</NumberOfRuns>
+  <NumberOfFails>0</NumberOfFails>
+  <FirstRun>2025-07-01 02:04:34 -0400</FirstRun>
+  <LastRun>2025-07-24 07:50:02 -0400</LastRun>
+  <TotalTimeOnSuccess>0.311000</TotalTimeOnSuccess>
+ </script>
+ <script name="DAIWrappers/AppDeliveryAndPickup">
+  <LastStatus>Success</LastStatus>
+  <NumberOfRuns>1</NumberOfRuns>
+  <NumberOfFails>0</NumberOfFails>
+  <FirstRun>2025-08-13 16:55:29 -0400</FirstRun>
+  <LastRun>2025-08-13 16:55:29 -0400</LastRun>
+  <TotalTimeOnSuccess>0.106000</TotalTimeOnSuccess>
+ </script>
+ <script name="Tests/AppTests">
+  <LastStatus>Success</LastStatus>
+  <NumberOfRuns>3</NumberOfRuns>
+  <NumberOfFails>2</NumberOfFails>
+  <FirstRun>2025-08-12 15:15:59 -0400</FirstRun>
+  <LastRun>2025-08-12 17:48:18 -0400</LastRun>
+  <TotalTimeOnSuccess>177.185000</TotalTimeOnSuccess>
  </script>
 </statistics>

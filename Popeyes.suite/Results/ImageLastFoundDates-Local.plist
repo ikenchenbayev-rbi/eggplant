@@ -1,3 +1,27 @@
+<<<<<<< HEAD
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Icons/ChromeIcon.png</key>
+    <string>2025-07-30 19:47 +0000</string>
+    <key>Icons/ChromeRefreshIcon.png</key>
+    <string>2025-08-13 10:23 +0000</string>
+    <key>Icons/EdgeBrowser.png</key>
+    <string>2025-08-06 15:45 +0000</string>
+    <key>Icons/SicomPOSCouponLookUp.png</key>
+    <string>2025-08-13 12:36 +0000</string>
+    <key>Icons/SicomQty3.png</key>
+    <string>2025-08-13 12:39 +0000</string>
+    <key>Icons/SicomTaskbarKDS.png</key>
+    <string>2025-08-13 12:40 +0000</string>
+    <key>Icons/SicomTaskbarPOS.png</key>
+    <string>2025-08-13 12:38 +0000</string>
+    <key>Icons/SicomTightVNC.png</key>
+    <string>2025-07-30 19:51 +0000</string>
+</dict>
+</plist>
+=======
 {
     "Icons/ChromeRefreshIcon.png" = "2025-08-08 20:46 +0000";
     "Icons/EdgeBrowser.png" = "2025-08-08 20:48 +0000";
@@ -20,3 +44,4 @@
     "[Character_Collections]/ExpoFont/lower_s.png" = "2025-08-11 01:35 +0000";
     "[Character_Collections]/ExpoFont/upper_C.png" = "2025-08-11 01:35 +0000";
 }
+>>>>>>> 489167eec92d45817033c83bbe43ad733dd436f3

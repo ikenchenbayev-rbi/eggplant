@@ -420,3 +420,55 @@ Common.setTestCaseName "Shrimp and 2 Tenders Combo"
 
 //Receipt
 "DAIWrappers/POSSicom".validateSicomReceipt
+
+(*=================================*)
+
+//Sicom test case 18: PLU Coupon Lookup
+Common.launchSicomPOS
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Sicom"
+Common.setTestCaseName "Coupon Look Up"
+//POS
+"DAIWrappers/POSSicom".selectDiningOption
+"DAIWrappers/POSSicom".selectMealAndOption
+"DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".selectSide
+"DAIWrappers/POSSicom".selectDrink
+"DAIWrappers/POSSicom".selectFlavors
+"DAIWrappers/POSSicom".PLULookup
+"DAIWrappers/POSSicom".proceedToTender
+"DAIWrappers/POSSicom".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Receipt
+"DAIWrappers/POSSicom".validateSicomReceipt
+
+(*=================================*)
+
+//Sicom test case 19: X% Off
+Common.launchSicomPOS
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Sicom"
+Common.setTestCaseName "X Off"
+//POS
+"DAIWrappers/POSSicom".selectDiningOption
+"DAIWrappers/POSSicom".selectMealAndOption
+"DAIWrappers/POSSicom".selectMainCourse
+"DAIWrappers/POSSicom".selectSide
+"DAIWrappers/POSSicom".selectDrink
+"DAIWrappers/POSSicom".selectFlavors
+"DAIWrappers/POSSicom".XPercentOff
+"DAIWrappers/POSSicom".proceedToTender
+"DAIWrappers/POSSicom".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Receipt
+"DAIWrappers/POSSicom".validateSicomReceipt
