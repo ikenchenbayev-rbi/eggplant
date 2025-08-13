@@ -16,7 +16,7 @@ Description:  Handlers specific to the POS Operations on the Sicom POS platform.
 
 
 (**  
-selectDiningOption - Handler to select the Route 3 POS system that activates expected printer to print item label.
+clickRoute - Handler to select the Route 3 POS system that activates expected printer to print item label.
 @Version 1.0 5/21/2025
 @ChangeReason Creation
 **)
@@ -24,7 +24,7 @@ to clickRoute
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 	if ImageFound(text:"REQUEST", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomMealSelectionArea))
-		//click on the Reuqest button
+		//click on the Request button
 		click FoundImageLocation()
 		//validate that Route 3 button is available
 		assert that ImageFound(text:"3", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomRequestPOSArea), Contrast: OFF)
@@ -45,11 +45,11 @@ to selectDiningOption
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 	// Read the DataFile to get the Column Number which has the Dining Option stored
-	put DataFile().ColumnMapping.(global posPlatformName).DineOption into excelColumnNumber
-	log excelColumnNumber
+	put DataFile().ColumnMapping.(global posPlatformName).DineOption into excelColumnName
+	
 	// Read the Excel to get the Data Value for the Dining Option
-	put Common.readDataFromExcel (excelColumnNumber) into diningOption
-	log diningOption
+	put Common.readDataFromExcel (excelColumnName) into diningOption
+	
 	if diningOption is not empty
 		// Select the Dining Option on the screen
 		Click text:diningOption, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomDineOptionArea), textDifference: 1
@@ -71,15 +71,15 @@ to selectMainCourse
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	//Select Main Course 
 	// Read the DataFile to get the Column Number which has the Dining Option stored
-	put DataFile().ColumnMapping.(global posPlatformName).MainCourse into excelColumnNumber
+	put DataFile().ColumnMapping.(global posPlatformName).MainCourse into excelColumnName
 	// Read the Excel to get the Data Value for the Main Course
-	put Common.readDataFromExcel (excelColumnNumber) into mainCourse
-	log mainCourse
-	put DataFile().ColumnMapping.(global posPlatformName).SelectMealOption into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into selectMealOption
+	put Common.readDataFromExcel (excelColumnName) into mainCourse
 	
-	put DataFile().ColumnMapping.(global posPlatformName).MealDisplayName into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into mealDisplayName
+	put DataFile().ColumnMapping.(global posPlatformName).SelectMealOption into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into selectMealOption
+	
+	put DataFile().ColumnMapping.(global posPlatformName).MealDisplayName into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into mealDisplayName
 	
 	
 	if mainCourse is not empty
@@ -96,15 +96,11 @@ to selectMainCourse
 			end if
 		end repeat
 	end if
+	
 	// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
 	if ImageFound(text:"WOULD YOU LIKE TO MAKE IT A LARGE COMBO", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomPOSInterfaceArea))
 		put FoundImageInfo().imagerectangle +[0,0,200,200] into clickArea
 		click text: "No", waitFor:Config().Waits.(minWait),SearchRectangle:clickArea
-	end if
-	
-	if selectMeal is not empty or selectMealOption is not empty
-		// Validate that Meal gets added to the order
-		//assert that common.extendedFindText(mealDisplayName,Config().Waits.(minWait), Config().SearchRectangles.(SicomOrdersArea)) is true with error "Meal Added to Order"
 	end if
 	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
@@ -112,7 +108,7 @@ to selectMainCourse
 end selectMainCourse
 
 (**  
-selectMainCourse - Handler to select the Meal like, BFLY SHRIMP, PopCorn Shrimp etc. And meal option like Combo, Regular etc.
+selectMealAndOption - Handler to select the Meal like, BFLY SHRIMP, PopCorn Shrimp etc. And meal option like Combo, Regular etc.
 @Version 1.0 4/22/2025
 @ChangeReason Creation
 **)
@@ -120,15 +116,15 @@ to selectMealAndOption
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	//Select Meal  
 	// Read the DataFile to get the Column Number which has the Meal, Meal Option and Display Names stored
-	put DataFile().ColumnMapping.(global posPlatformName).SelectMeal into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into selectMeal
-	log selectMeal
-	put DataFile().ColumnMapping.(global posPlatformName).SelectMealOption into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into selectMealOption
-	log selectMealOption
-	put DataFile().ColumnMapping.(global posPlatformName).MealDisplayName into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into mealDisplayName
-	log mealDisplayName
+	put DataFile().ColumnMapping.(global posPlatformName).SelectMeal into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into selectMeal
+	
+	put DataFile().ColumnMapping.(global posPlatformName).SelectMealOption into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into selectMealOption
+	
+	put DataFile().ColumnMapping.(global posPlatformName).MealDisplayName into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into mealDisplayName
+	
 	// Select Meal
 	if selectMeal is not empty
 		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
@@ -159,8 +155,6 @@ to selectMealAndOption
 			click text: "No", waitFor:Config().Waits.(minWait),SearchRectangle:clickArea
 		end if
 		
-		
-		
 	end if
 	
 	
@@ -177,10 +171,10 @@ to selectSide
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 	// Read the DataFile to get the Column Number which has the Sides Options stored
-	put DataFile().ColumnMapping.(global posPlatformName).Sides into excelColumnNumber
+	put DataFile().ColumnMapping.(global posPlatformName).Sides into excelColumnName
 	
 	// Read the Excel to get the Data Value for the Sides
-	put Common.readDataFromExcel (excelColumnNumber) into sides
+	put Common.readDataFromExcel (excelColumnName) into sides
 	
 	if sides is not empty
 		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
@@ -221,10 +215,10 @@ to selectDrink
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 	// Read the DataFile to get the Column Number which has the Drink Options stored
-	put DataFile().ColumnMapping.(global posPlatformName).Drink into excelColumnNumber
+	put DataFile().ColumnMapping.(global posPlatformName).Drink into excelColumnName
 	
 	// Read the Excel to get the Data Value for the Drink
-	put Common.readDataFromExcel (excelColumnNumber) into drink
+	put Common.readDataFromExcel (excelColumnName) into drink
 	
 	if drink is not empty
 		
@@ -270,10 +264,10 @@ to selectFlavors
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 	// Read the DataFile to get the Column Number which has the Flavor Options stored
-	put DataFile().ColumnMapping.(global posPlatformName).Flavors into excelColumnNumber
+	put DataFile().ColumnMapping.(global posPlatformName).Flavors into excelColumnName
 	
 	// Read the Excel to get the Data Value for the Flavors
-	put Common.readDataFromExcel (excelColumnNumber) into flavors
+	put Common.readDataFromExcel (excelColumnName) into flavors
 	
 	if flavors is not empty
 		
@@ -367,7 +361,7 @@ to exactPayment
 	wait 1
 	
 	// Validate User is taken back to the New Order screen
-	assert that ImageFound(text:"New Order", waitFor:Config().Waits.(maxWait),SearchRectangle:Config().SearchRectangles.(BottomHalf),  ignoreSpaces: Yes, ignoreNewLines: Yes) with error "Sicom POS Login Validation"
+	assert that ImageFound(text:"0.00", waitFor:Config().Waits.(maxWait),SearchRectangle:Config().SearchRectangles.(BottomHalf),  ignoreSpaces: Yes, ignoreNewLines: Yes) with error "Sicom POS Login Validation"
 	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 end exactPayment
@@ -384,35 +378,9 @@ to saveOrderID
 	return global orderID
 end saveOrderID
 
-(**  
-bumpOrderIDOnSicomKDS - Handler to Bump the order ID on the NCR KDS SUT
-@Version 1.0 4/22/2025
-@ChangeReason Creation
-**)
-to bumpOrderIDOnSicomKDS
-	
-	// Pick the first instance of order ID on screen and create a search rectangle
-	put EveryImageRectangle(text:global orderID, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(LeftHalf)) into orderList
-	
-	put the first item of orderList into orderRect
-	log orderRect
-	put orderRect +[-200,-200,600,600] into displayRect
-
-	// Ensure meal display name is shown on the KDS for the order ID
-	put DataFile().ColumnMapping.(global posPlatformName).MealDisplayName into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into mealDisplayName
-	
-	//assert that ImageFound(text:mealDisplayName, waitFor:Config().Waits.(minWait),SearchRectangle: displayRect)
-	assert that common.extendedFindText(mealDisplayName,Config().Waits.(minWait), displayRect) is true with error "Meal Present in KDS"
-	//wait until the order has disappeared
-	waitForNotFound Config().Waits.(SicomKDSWait), {text: global orderID, searchRectangle: displayRect}
-	// Validate that the order is bumped and is not showing on the KDS anymore
-	assert that not imageFound(text:global orderID)
-	
-end bumpOrderIDOnSicomKDS
 
 (**  
-logOn - Handler to log on the POS system
+logOnSicomPOS - Handler to log on the POS system
 @Version 1.0 5/21/2025
 @ChangeReason Creation
 **)
@@ -485,7 +453,7 @@ to enterCustomerName
 end enterCustomerName
 
 (**  
-validateReceipt - Handler to open the Sicom receiptSUTs accordings for validation
+validateSicomReceipt - Handler to open the Sicom receiptSUTs accordings for validation
 @Version 1.0 7/9/2025
 @ChangeReason Creation
 **)
@@ -499,11 +467,11 @@ to validateSicomReceipt
 	sendDummyPOSOrder
 	
 	// Read the Protein and Sides Validation toggles from the Excel file
-	put DataFile().ColumnMapping.(global posPlatformName).SidesValidation into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into sidesValidation
+	put DataFile().ColumnMapping.(global posPlatformName).SidesValidation into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into sidesValidation
 	
-	put DataFile().ColumnMapping.(global posPlatformName).ProteinValidation into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into proteinValidation
+	put DataFile().ColumnMapping.(global posPlatformName).ProteinValidation into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into proteinValidation
 	
 	// To launch the SicomProtein SUT
 	if proteinValidation is "YES"
@@ -554,8 +522,8 @@ validateProteinReceipt - Handler to open the Sicom receiptSUTs accordings for va
 to validateProteinReceipt
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	//Read the data for protein display name on the receipt  from Excel
-	put DataFile().ColumnMapping.(global posPlatformName).ProteinDisplayName into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into proteinDisplayName
+	put DataFile().ColumnMapping.(global posPlatformName).ProteinDisplayName into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into proteinDisplayName
 	//validate that the ID is present
 	assert that common.extendedFindText(global orderID,Config().Waits.(midWait),Config().SearchRectangles.(MobileReceiptArea)) with error "Protein Menu Receipt"
 	//validate the Protein menu is present
@@ -568,6 +536,9 @@ to validateProteinReceipt
 		end repeat
 	end if
 	
+	// Disconnect Mobile SUT
+	disconnect DataFile().SUTNames.SicomProtein
+	
 	Log "End of Script:"&item 1 delimited by ".script" of my name &"."&param(0)
 end validateProteinReceipt
 
@@ -579,8 +550,8 @@ validateSandSidesDessertsReceipt - Handler to open the Sicom receiptSUTs accordi
 to validateSandSidesDessertsReceipt
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	//Read the data for Sides display name from Excel
-	put DataFile().ColumnMapping.(global posPlatformName).SandSidesDessertsDisplayName into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into sandSidesDessertsDisplayName
+	put DataFile().ColumnMapping.(global posPlatformName).SandSidesDessertsDisplayName into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into sandSidesDessertsDisplayName
 	//validate that the ID is present
 	assert that common.extendedFindText(global orderID,Config().Waits.(midWait),Config().SearchRectangles.(MobileReceiptArea)) with error "Sides Menu Receipt"
 	//validate that the Sides menu is present
@@ -593,6 +564,8 @@ to validateSandSidesDessertsReceipt
 		end repeat
 	end if
 	
+	// Disconnect Mobile SUT
+	disconnect DataFile().SUTNames.SicomSandSidesDesserts
 	
 	Log "End of Script:"&item 1 delimited by ".script" of my name &"."&param(0)
 end validateSandSidesDessertsReceipt
@@ -605,8 +578,8 @@ validateSicomCustomerRecipt - Handler to open the Sicom receiptSUTs accordings f
 to validateSicomCustomerReceipt
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	//read the data from Excel ofr Customer receipt
-	put DataFile().ColumnMapping.(global posPlatformName).ReceiptDisplayName into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into receiptDisplayName
+	put DataFile().ColumnMapping.(global posPlatformName).ReceiptDisplayName into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into receiptDisplayName
 	
 	//Connect to SicomSandSidesDessert SUT
 	Connect DataFile().SUTNames.SicomCustReceipt, visible: True
@@ -630,8 +603,51 @@ to validateSicomCustomerReceipt
 		end if
 	end if
 	
+	// Disconnect Mobile SUT
+	disconnect DataFile().SUTNames.SicomCustReceipt
+	
 	Log "End of Script:"&item 1 delimited by ".script" of my name &"."&param(0)
 end validateSicomCustomerReceipt
+
+(**  
+validateSicomExpoReceipt - Handler to open the Sicom receiptSUTs accordings for validation
+@Version 1.0 7/9/2025
+@ChangeReason Creation
+**)
+to validateSicomExpoReceipt
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	//Read the data for Expo receipt from Excel
+	put DataFile().ColumnMapping.(global posPlatformName).ExpoLabelDisplayName into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into expoLabelDisplayName
+	
+	//Connect to SicomSandSidesDessert SUT
+	Connect DataFile().SUTNames.SicomExpo, visible: True
+	//click to wake up the screen from default sleep mode
+	click Config().TextOffsets.(ReceiptCenter)
+	
+	if ImageFound(text: global orderID, waitFor:Config().Waits.(minWait) ,SearchRectangle:Config().SearchRectangles.(SicomPOSInterfaceArea))
+		if expoLabelDisplayName is not empty
+			split expoLabelDisplayName by ","
+			
+			// Select Main Course and additional selections if any
+			repeat for each item of expoLabelDisplayName
+				if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+					click FoundImageLocation() 
+					wait 2
+				else if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomPOSInterfaceArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+					click FoundImageLocation()
+					wait 2
+				end if
+			end repeat
+		end if
+	end if
+	
+	// Disconnect Mobile SUT
+	disconnect DataFile().SUTNames.SicomExpo
+	
+	Log "End of Script:"&item 1 delimited by ".script" of my name &"."&param(0)
+end validateSicomExpoReceipt
+
 
 (**
 sendDummyPOSOrder - Handler to send another order into the POS System to push the receipts up for validation
@@ -733,41 +749,7 @@ to sendDummyPOSOrder
 	Log "End of Script:"&item 1 delimited by ".script" of my name &"."&param(0)
 end sendDummyPOSOrder
 
-(**  
-validateSicomExpoReceipt - Handler to open the Sicom receiptSUTs accordings for validation
-@Version 1.0 7/9/2025
-@ChangeReason Creation
-**)
-to validateSicomExpoReceipt
-	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
-	//Read the data for Expo receipt from Excel
-	put DataFile().ColumnMapping.(global posPlatformName).ExpoLabelDisplayName into excelColumnNumber
-	put Common.readDataFromExcel (excelColumnNumber) into expoLabelDisplayName
-	
-	//Connect to SicomSandSidesDessert SUT
-	Connect DataFile().SUTNames.SicomExpo, visible: True
-	//click to wake up the screen from default sleep mode
-	click Config().TextOffsets.(ReceiptCenter)
-	
-	if ImageFound(text: global orderID, waitFor:Config().Waits.(minWait) ,SearchRectangle:Config().SearchRectangles.(SicomPOSInterfaceArea))
-		if expoLabelDisplayName is not empty
-			split expoLabelDisplayName by ","
-			
-			// Select Main Course and additional selections if any
-			repeat for each item of expoLabelDisplayName
-				if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
-					click FoundImageLocation() 
-					wait 2
-				else if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomPOSInterfaceArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
-					click FoundImageLocation()
-					wait 2
-				end if
-			end repeat
-		end if
-	end if
-	
-	Log "End of Script:"&item 1 delimited by ".script" of my name &"."&param(0)
-end validateSicomExpoReceipt
+
 
 (**  
 PLULookup- Handler to key in a coupon code

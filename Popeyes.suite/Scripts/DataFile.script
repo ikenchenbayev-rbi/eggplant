@@ -84,6 +84,8 @@ return {
 			ReceiptDisplayName: "ReceiptDisplayName",
 			SandSidesDessertsDisplayName: "SandSidesDessertsDisplayName",
 			ProteinDisplayName: "ProteinDisplayName",
+			SidesValidation:"SidesValidation",
+			ProteinValidation:"ProteinValidation",
 		},
 		NCRKiosk: {
 			TestCaseName: "TestCaseName",
@@ -142,6 +144,7 @@ return {
 			ReceiptDisplayName: "ReceiptDisplayName",
 			LabelMealDisplayName: "LabelMealDisplayName",
 			Discounts: "Discounts",
+			Coupons: "Coupons",
 		},
 		Sicom: {
 			TestCaseName: "TestCaseName",
@@ -161,8 +164,9 @@ return {
 			SidesValidation: "SidesValidation",
 			ProteinValidation: "ProteinValidation",
 		},
-		OracleAppPickup: {
+		OracleApp: {
 			TestCaseName: "TestCaseName",
+			ProfileName: "ProfileName",
 			LabName: "LabName",
 			OrderType: "OrderType",
 			KDSMealDisplayName: "KDSMealDisplayName",
@@ -196,6 +200,5 @@ return {
 SicomExpo: "SicomExpo",
 SeleniumSUT: "SeleniumNUK",
 },
-
 
 }

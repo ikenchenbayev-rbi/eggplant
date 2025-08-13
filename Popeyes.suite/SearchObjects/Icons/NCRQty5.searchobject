@@ -1,19 +1,21 @@
 {
-	"lastmodifieddate": 1745518237.175,
-	"lastfoundlocation": [
-		610,
-		233,
-		78,
-		43
-	],
 	"originalcapturelocation": [
-		610,
-		233,
-		78,
-		43
+		1092,
+		129,
+		25,
+		20
 	],
-	"createddate": 1745518237.175,
-	"lastfounddate": 1754272213.1210001,
+	"lastmodifieddate": 1754510627.3990002,
+	"createddate": 1754510627.3990002,
+	"name": "Icons/NCRQty5",
+	"lastfounddate": 1754606192.309,
+	"ocrcapturestring": "5",
+	"lastfoundlocation": [
+		1092,
+		129,
+		25,
+		20
+	],
 	"testlocationdata": [
 		{
 				"connectionportnum": 5500,
@@ -21,7 +23,7 @@
 					"CropRectangle": "[0,0,0,0]",
 					"Rotate": 0,
 					"Scale": "    1",
-					"HotSpot": "[39,21]",
+					"HotSpot": "[12,10]",
 					"Tolerance": "_45",
 					"Discrepancy": "_0",
 					"SearchType": "Tolerant of Background"
@@ -29,17 +31,17 @@
 				"sutinfo": {
 					"type": "Unknown VNC"
 				},
-				"name": "Icons/Drinks/CocaCola.png",
+				"name": "Icons/NCRQty5.png",
 				"connectionname": "127.0.0.1",
 				"type": 1,
 				"capturerect": [
-					610,
-					233,
-					78,
-					43
+					1092,
+					129,
+					25,
+					20
 				],
-				"connectionserverid": "127.0.0.1"
+				"connectionserverid": "127.0.0.1",
+				"capturedocrtext": "5"
 			}
-	],
-	"name": "Icons/Drinks/CocaCola"
+	]
 }

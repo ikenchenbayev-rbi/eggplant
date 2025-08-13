@@ -1,20 +1,20 @@
 {
 	"originalcapturelocation": [
-		927,
-		985,
-		68,
-		32
+		1064,
+		227,
+		97,
+		59
 	],
-	"lastmodifieddate": 1754060587.036,
-	"createddate": 1745938439.9330001,
-	"name": "Icons/Drinks/DietCoke",
-	"lastfounddate": 1754532157.915,
-	"ocrcapturestring": "□Ke",
+	"lastmodifieddate": 1754447150.3870001,
+	"createddate": 1754447084.925,
+	"name": "Icons/Drinks/DietCoke/DietCoke_2",
+	"lastfounddate": 1754606158.622,
+	"ocrcapturestring": "Co®",
 	"lastfoundlocation": [
-		927,
-		985,
-		68,
-		32
+		1067,
+		229,
+		90,
+		53
 	],
 	"testlocationdata": [
 		{
@@ -23,7 +23,7 @@
 					"CropRectangle": "[0,0,0,0]",
 					"Rotate": 0,
 					"Scale": "    1",
-					"HotSpot": "[34,16]",
+					"HotSpot": "[51,27]",
 					"Tolerance": "_45",
 					"Discrepancy": "_0",
 					"SearchType": "Tolerant of Background"
@@ -31,17 +31,17 @@
 				"sutinfo": {
 					"type": "Unknown VNC"
 				},
-				"name": "Icons/Drinks/DietCoke/DietCoke.png",
+				"name": "Icons/Drinks/DietCoke/DietCoke_2.png",
 				"connectionname": "127.0.0.1",
 				"type": 1,
 				"capturerect": [
-					927,
-					985,
-					68,
-					32
+					1064,
+					227,
+					97,
+					59
 				],
 				"connectionserverid": "127.0.0.1",
-				"capturedocrtext": "□Ke"
+				"capturedocrtext": "Colle"
 			}
 	]
 }
