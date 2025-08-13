@@ -22,8 +22,8 @@ return {
 		minWait:10,
 		midWait: 30,
 		maxWait: 60,
-		SicomKDSWait: 180,
-
+		SicomKDSWait: 65,
+		seleniumWait: 300,
 
 	},
 	SearchRectangles: {

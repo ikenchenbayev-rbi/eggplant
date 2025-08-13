@@ -46,10 +46,10 @@ to selectDiningOption
 	
 	// Read the DataFile to get the Column Number which has the Dining Option stored
 	put DataFile().ColumnMapping.(global posPlatformName).DineOption into excelColumnName
-
+	
 	// Read the Excel to get the Data Value for the Dining Option
 	put Common.readDataFromExcel (excelColumnName) into diningOption
-
+	
 	if diningOption is not empty
 		// Select the Dining Option on the screen
 		Click text:diningOption, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomDineOptionArea), textDifference: 1
@@ -118,13 +118,13 @@ to selectMealAndOption
 	// Read the DataFile to get the Column Number which has the Meal, Meal Option and Display Names stored
 	put DataFile().ColumnMapping.(global posPlatformName).SelectMeal into excelColumnName
 	put Common.readDataFromExcel (excelColumnName) into selectMeal
-
+	
 	put DataFile().ColumnMapping.(global posPlatformName).SelectMealOption into excelColumnName
 	put Common.readDataFromExcel (excelColumnName) into selectMealOption
-
+	
 	put DataFile().ColumnMapping.(global posPlatformName).MealDisplayName into excelColumnName
 	put Common.readDataFromExcel (excelColumnName) into mealDisplayName
-
+	
 	// Select Meal
 	if selectMeal is not empty
 		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
@@ -751,3 +751,67 @@ end sendDummyPOSOrder
 
 
 
+(**  
+PLULookup- Handler to key in a coupon code
+@Version 1.0 8/11/2025
+@ChangeReason Creation
+**)
+to PLULookup
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	//click on the Coupons & Discount section
+	assert that ImageFound(text:"COUPONS", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomMealSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	click FoundImageLocation()
+	//input the coupon code using the cashier number pad
+	put DataFile().Logins.SicomPOS.PLUCoupon into PLUCoupon
+	repeat with each item numID of PLUCoupon
+		assert that ImageFound(text: numID, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomNumPad), ignoreSpaces: Yes, ignoreNewLines: Yes)
+		click FoundImageLocation()
+		wait 1
+	end repeat
+	//click on Coupon Look Up button
+	assert that common.extendedFindText("COUPON LOOK",Config().Waits.(midWait),Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes) or ImageFound(ImageName:"Icons/SicomPOSCouponLookUp",SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea))
+	click FoundImageLocation()
+	wait 2
+	Log "End of Script:"&item 1 delimited by ".script" of my name &"."&param(0)
+end PLULookup
+
+(**  
+XPercentOff- Handler to apply a discount for an order
+@Version 1.0 8/13/2025
+@ChangeReason Creation
+**)
+to XPercentOff
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	//Go to Request section and log on Manager ID
+	if ImageFound(text:"REQUEST", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomMealSelectionArea))
+		//click on the Reuqest button
+		click FoundImageLocation()
+		//input the manager id using the cashier number pad
+		put DataFile().Logins.SicomPOS.ManagerID into managerID
+		log managerID
+		repeat with each item numID of managerID
+			log numID
+			assert that ImageFound(text: numID, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomNumPad), ignoreSpaces: Yes, ignoreNewLines: Yes)
+			click FoundImageLocation()
+			wait 1
+		end repeat
+		//click on Manager Log On button
+		assert that ImageFound(text:"MANAGER LOG ON", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea),  ignoreSpaces: Yes, ignoreNewLines: Yes)
+		click FoundImageLocation()
+		wait 2
+	end if
+	
+	//click on the Coupons & Discount section
+	assert that ImageFound(text:"COUPONS", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomMealSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	click FoundImageLocation()
+	//click on Local Discounts Button
+	assert that common.extendedFindText("LOCAL DISCOUNTS",Config().Waits.(midWait),Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	click FoundImageLocation()
+	//click on 10% Off button
+	assert that common.extendedFindText("10% OFF",Config().Waits.(midWait),Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes, validCharacters: "%")
+	click FoundImageLocation()
+	wait 2
+	Log "End of Script:"&item 1 delimited by ".script" of my name &"."&param(0)
+	
+end XPercentOff
