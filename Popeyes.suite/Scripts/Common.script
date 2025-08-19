@@ -162,7 +162,7 @@ connectToLocalSingleSystem - Handler to connect to the Local Single System SUT c
 **)
 to connectToLocalSingleSystem
 
-	Connect DataFile().SUTNames.LocalSingleSystem, visible: True
+	Connect DataFile().SUTNames.LocalSingleSystem
 	
 	//If Single-SUT is already connected, do not perform login steps. Else click on the Tester login and enter password
 	if ImageFound(imageName: "Icons/ChromeIcon", waitFor:2, searchRectangle:Config().SearchRectangles.(TopHalf))
@@ -360,6 +360,42 @@ to launchNCRVNC vncLink
 	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 end launchNCRVNC
+
+(**  
+refreshPOSData - Handler to enter lab number and refresh the POS data.
+@Version 1.0 8/13/2025
+@ChangeReason Creation
+**)
+to refreshPOSData
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Use Command Center to find the specific lab.
+	// Click in FIND
+	WaitFor Config().Waits.(maxWait), text:"Find", SearchRectangle:Config().SearchRectangles.(BottomHalf)
+	click FoundImageLocation()+Config().TextOffsets.(CommandCenterTextbox)
+	
+	// Type in Lab number
+	TypeText "999968"
+	TypeText returnKey
+	wait 1
+	
+	// Right click on the lab to view options
+	RightClick text:"RBI Miami - PLK ETR AK 68 Lab (542520)", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf)
+	
+	// Click the Perform option
+	assert that common.extendedFindText("Perform",Config().Waits.(minWait), Config().SearchRectangles.(TopHalf))
+	Click FoundImageLocation()
+	
+	// Click the Refresh Data button
+	assert that common.extendedFindText("Refresh Data",Config().Waits.(minWait), Config().SearchRectangles.(TopHalf))
+	Click FoundImageLocation()
+	
+	// Click Yes on the confirmation popup
+	assert that common.extendedFindText("Yes",Config().Waits.(minWait), Config().SearchRectangles.(BottomHalf))
+	Click FoundImageLocation()
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end refreshPOSData
 (**
 End Common Functions used for NCR POS
 **)
@@ -489,96 +525,10 @@ to launchMobaXTermForOracleReceipts
 	
 	// Type command for opening latest receipt
 	typetext DataFile().Logins.OracleReceipts.receiptCommand, returnKey
-	wait 1
+	wait 5
 	
 	// Validate Latest Receipt opened successfully
 	assert that imagefound (Text:"raw data", waitFor: Config().Waits.(minWait)) with warning "Oracle Receipt"
-	
-	// Expo
-	waitfor Config().Waits.(minWait), {text:"Restaurant"}
-	put foundimageinfo().imagerectangle +[0,0,500,500] into expoRect
-
-	// Validate Order ID on the Expo Receipt
-	assert that imageFound(text:"2042", waitFor:  Config().Waits.(minWait), SearchRectangle: expoRect) with warning "Expo Label Order ID"
-	
-	assert that common.extendedFindText(trim("Tndr Spcy 2 Pc"),Config().Waits.(minWait),expoRect) is true with warning "Meal Displayed on Expo Label"
-	
-	//Customer
-	typetext shiftKey, controlKey, "f"
-	wait 1
-	typetext "Popeyes Louisiana Kitchen"
-	wait 1
-	typetext returnKey
-	wait 1
-	typetext tabKey
-	
-	waitFor Config().Waits.(minWait), {text:"Address", validCharacters: "*"}
-	put foundimageinfo().imagerectangle's topleft-[120,0] into receiptStart
-
-	// Look for bottom of the receipt
-	waitFor Config().Waits.(minWait), {text:"Check Closed", dpi: 144}
-	put foundimageinfo().imagerectangle's bottomRight+[100,0] into receiptEnd
-
-	// Validate Customer receipts for Order ID and Meal Name
-	put [receiptStart, receiptEnd] into receiptRect
-
-	assert that imageFound(text: "2042", waitFor:  Config().Waits.(minWait), SearchRectangle: receiptRect, ignoreSpaces: Yes) with error "Customer Receipt Order ID"
-	
-	put "1/4 lb Pop Shrimp, 1/4 lb Popcorn Shrimp Buttermilk Ranch" into mealDisplayName
-	split mealDisplayName by ","
-	
-	// Validate Parent-Child PLUs on the Expo Receipt
-	put the first item of mealDisplayName into parentPLU
-	put the second item of mealDisplayName into childPLU
-	
-	// Validate Parent PLU is visible on Receipt
-	if parentPLU is not empty
-		assert that common.extendedFindText(trim(parentPLU),Config().Waits.(minWait),receiptRect) is true with error "Parent PLU Displayed on Customer Receipt"
-		put foundimageinfo().imagerectangle +[-5,10,500,500] into childRect
-	end if
-	
-	if childPLU is not empty
-		// Validate Child PLU is visible under Parent
-		assert that common.extendedFindText(trim(childPLU),Config().Waits.(minWait),childRect) is true with error "Child PLU Displayed on Customer Receipt"
-	end if
-	
-	typetext escapeKey
-	
-	// Sticky
-	
-	// Validate Sticky Label receipts for Order ID and Meal Name for Oracle POS
-	wait 5
-	click Config().TextOffsets.(ClickScreenOffset)
-	ScrollWheelUp 5
-	wait 1
-	typetext shiftKey, controlKey, "f"
-	wait 1
-	typetext "<raw data> "
-	//typetext "Popeyes Louisiana Kitchen"
-	wait 1
-	//typetext altKey, returnKey
-	
-	//typetext "Address"
-	typetext returnKey
-	wait 1
-	click Config().TextOffsets.(ClickScreenOffset)
-	ScrollWheelUp 10
-	
-	// Read order id to identify the sticky label
-	put EveryImageRectangle(text:global orderID) into orderList    
-	put the first item of orderList + [-500,0,500, 700] into stickyRect
-	
-	// Validate order ID and Meal Names on the sticky label
-	assert that imageFound(text:"2991", waitFor:  Config().Waits.(minWait), SearchRectangle: stickyRect) with error "Sticky Label Order ID"
-	
-	put "Shrmp Pop 1/4LB, Tndr Spcy 2 Pc" into mealDisplayName
-	split mealDisplayName by ","
-	
-	repeat for each item of mealDisplayName
-		assert that common.extendedFindText(trim(it),Config().Waits.(minWait),stickyRect) is true with error "Meal Displayed on Sticky Label"
-	end repeat
-	
-	typetext escapeKey
 	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	

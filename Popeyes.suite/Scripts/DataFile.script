@@ -16,7 +16,7 @@ Description:  DataFile contains return value for the config data used in POS tes
 **) 
 
 return { 
-	(* Login Information to be used inside the POS system, for Oracle, NCR and SiCOM*)
+(* Login Information to be used inside the POS system, for Oracle, NCR and SiCOM*)
 	Logins:{
 		NCRPOS:{
 			employeeCode:"100",
@@ -36,8 +36,8 @@ return {
 		},
 		CommandCenter:{
 			userName: "ikenbenchayev@rbi.com",
-			password: "Plkqa2025@@",
-			popupPassword: "Plkqa2025",
+			password: "Plkqa12345@@",
+			popupPassword: "Plkqa12345@@",
 		},
 		RemotePC:{
 			userName: "plkautopc@gmail.com",
@@ -87,6 +87,7 @@ return {
 			SidesValidation:"SidesValidation",
 			ProteinValidation:"ProteinValidation",
 			Coupons:"Coupons",
+			Discounts:"Discounts",
 		},
 		NCRKiosk: {
 			TestCaseName: "TestCaseName",
@@ -181,7 +182,7 @@ return {
 	
 	(* SUT Names to be used to in the code to connect to platforrms under test*)
 	SUTNames:{
-		LocalSingleSystem: "MyLocalTrainingPC",
+		LocalSingleSystem: {serverID: "127.0.0.1", portNum: 0, Type:"Single System", Width: 1920, Height: 1080, visible: Yes},
 		NCRPOS: "",
 		NCRKDS: "",
 		NCRKiosk: "NcrKiosk",
@@ -189,8 +190,8 @@ return {
 		NCRSandSidesDesserts: "NcrSandSidesDesserts",
 		NCRProtein: "NcrProtein",
 		NCRExpo: "NcrExpo",
-		OraclePOS: "OraclePOS",
-		OracleKDS: "OracleKDS",
+		OraclePOS: {serverID: "192.168.1.2", portNum: 5900, password: "Test123", Type:"VNC"},
+		OracleKDS: {serverID: "192.168.1.60", portNum: 3389, username: "Micros",password: "Micros1!", Type:"RDP", Width: 1920, Height: 1080, visible: Yes},
 		OracleKiosk: "OracleKiosk",
 		SicomPOS: "910259_FC-Sicom",
 		SicomKDS: "",
@@ -198,8 +199,8 @@ return {
 		SicomCustReceipt: "SicomCustReceipt",
 		SicomSandSidesDesserts: "SicomSandSidesDesserts",
 		SicomProtein: "SicomProtein",
-SicomExpo: "SicomExpo",
-SeleniumSUT: "SeleniumNUK",
-},
+		SicomExpo: "SicomExpo",
+		SeleniumSUT: "SeleniumNUK",
+	},
 
 }

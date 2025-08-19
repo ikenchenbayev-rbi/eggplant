@@ -125,7 +125,6 @@ to selectMeal
 		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
 		split selectMeal by ","
 		
-		log readtext(Config().SearchRectangles.(OracleItemSelectionArea))
 		// Select Meal and additional selections if any
 		repeat for each item of selectMeal
 			if common.extendedFindText(trim(it),Config().Waits.(minWait), Config().SearchRectangles.(OracleItemSelectionArea)) is true 
@@ -370,6 +369,7 @@ to exactPayment
 	
 	// Click the OK button in the Change Due popup
 	WaitFor Config().Waits.(maxWait), text:"Change Due", SearchRectangle:Config().SearchRectangles.(OracleChangeDuePopup), Contrast:ON
+	wait 1
 	click image:"Icons/OracleOKButton", waitFor:Config().Waits.(maxWait), SearchRectangle:Config().SearchRectangles.(OracleChangeDuePopup)
 	wait 1
 	
@@ -458,12 +458,15 @@ to validateReceipt
 		click Config().TextOffsets.(ClickScreenOffset)
 		// Type command for opening latest receipt
 		typetext DataFile().Logins.OracleReceipts.receiptCommand, returnKey
-		wait 1
+		wait 5
 		typetext controlKey, shiftKey, pageDown
 	else
 		Log "Opening Oracle Digital Receipt"
 		// Open Putty and Connect to the Oracle System
-		Common.launchPuttyForOracleReceipts
+		//Common.launchPuttyForOracleReceipts
+		
+		// Open MobaXTerm and Connect to the Oracle System
+		Common.launchMobaXTermForOracleReceipts
 		
 	end if
 	
@@ -501,7 +504,7 @@ to validateExpoReceipt
 	// Validate Expo receipt
 	waitfor Config().Waits.(minWait), {text:"Restaurant"}
 	put foundimageinfo().imagerectangle +[0,0,500,500] into expoRect
-
+	
 	// Validate Order ID on the Expo Receipt
 	assert that imageFound(text: global orderID, waitFor:  Config().Waits.(minWait), SearchRectangle: expoRect) with warning "Expo Label Order ID"
 	
@@ -509,11 +512,12 @@ to validateExpoReceipt
 	
 	// Validate meal names on the Expo Receipt
 	repeat for each item of mealDisplayName
-		if file (suiteinfo().imagesFolder&"/Icons/OracleExpo/"&trimall(it,"/ ")&".png") exists or if file (suiteinfo().imagesFolder&"/Icons/OracleExpo/"&trimall(it,"/ ")) exists
+	(*		if file (suiteinfo().imagesFolder&"/Icons/OracleExpo/"&trimall(it,"/ ")&".png") exists or if file (suiteinfo().imagesFolder&"/Icons/OracleExpo/"&trimall(it,"/ ")) exists
 			assert that imagefound(image: "/Icons/OracleExpo/"&trimall(it,"/ "),waitFor: Config().Waits.(minWait),searchRectangle: expoRect) with error "Meal Displayed on Expo Label"
 		else
 			assert that common.extendedFindText(trim(it),Config().Waits.(minWait),expoRect) is true with warning "Meal Displayed on Expo Label"
-		end if
+		end if*)
+		assert that common.extendedFindText(trim(it),Config().Waits.(minWait),expoRect) is true with warning "Meal Displayed on Expo Label"
 	end repeat
 	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
@@ -536,16 +540,26 @@ to validateCustomerReceipt
 	typetext controlKey, shiftKey, pageDown
 	
 	// Validate Customer Receipts
-	// Look for top of the receipt
+	(*	// Look for top of the receipt for Putty
 	repeat until ImageFound(text:"Popeyes Louisiana Kitchen", waitFor:2, dpi: 144)
 		click "Icons/OraclePuttyScroll"
 		wait 1
-	end repeat
+	end repeat*)
 	
-	put foundimageinfo().imagerectangle's topleft-[60,0] into receiptStart
+	// Look for top of the receipt for Moba
+	typetext shiftKey, controlKey, "f"
+	wait 1
+	typetext "Popeyes Louisiana Kitchen"
+	wait 1
+	typetext returnKey
+	wait 1
+	typetext tabKey
+	
+	waitFor Config().Waits.(minWait), {text:"Address", validCharacters: "*"}
+	put foundimageinfo().imagerectangle's topleft-[120,0] into receiptStart
 
 	// Look for bottom of the receipt
-	waitFor Config().Waits.(minWait), {Image:"Icons/OracleCheckClosed", dpi: 144}
+	waitFor Config().Waits.(minWait), {text:"Check Closed", dpi: 144}
 	put foundimageinfo().imagerectangle's bottomRight+[100,0] into receiptEnd
 
 	// Validate Customer receipts for Order ID and Meal Name
@@ -570,6 +584,9 @@ to validateCustomerReceipt
 		assert that common.extendedFindText(trim(childPLU),Config().Waits.(minWait),childRect) is true with error "Child PLU Displayed on Customer Receipt"
 	end if
 	
+	typetext escapeKey
+	wait 1
+	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 end validateCustomerReceipt
 
@@ -582,15 +599,16 @@ validateStickyReceipt - Handler to validate the Sticky receipt for Oracle
 to validateStickyReceipt
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
-	// Scroll to the bottom of the screen
+	put DataFile().ColumnMapping.(global posPlatformName).LabelMealDisplayName into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into mealDisplayName
+	
+	// Old Code for Putty
+	(*	// Scroll to the bottom of the screen
 	click Config().TextOffsets.(ClickScreenOffset)
 	typetext controlKey, shiftKey, pageDown
 	
 	click Config().TextOffsets.(ClickScreenOffset)
 	ScrollWheelUp 1
-	
-	put DataFile().ColumnMapping.(global posPlatformName).LabelMealDisplayName into excelColumnName
-	put Common.readDataFromExcel (excelColumnName) into mealDisplayName
 	
 	// Validate Sticky Label receipts for Order ID and Meal Name for Oracle POS
 	if (global posPlatformName) is "Oracle"
@@ -612,6 +630,24 @@ to validateStickyReceipt
 		end repeat
 	end if
 	
+	waitfor 10, {image:"Icons/", SearchRectangle: Config().SearchRectangles.(LeftHalf)}*)
+	
+	// Validate Sticky Label receipts for Order ID and Meal Name for Oracle POS
+	wait 5
+	typetext shiftKey, controlKey, "f"
+	wait 1
+	// Search for Raw Data text within the sticky receipt
+	typetext "<raw data>1 of"
+	wait 1
+	typetext returnKey
+	wait 1
+	
+	// Scroll Up and repeat to look for the top of the receipt
+	repeat until ImageFound(image:"Icons/OracleStickyTop_Moba", waitFor:2, SearchRectangle: Config().SearchRectangles.(LeftHalf))
+		click Config().TextOffsets.(ClickScreenOffset)
+		ScrollWheelUp 5
+	end repeat
+	
 	// Read order id to identify the sticky label
 	put EveryImageRectangle(text:global orderID) into orderList    
 	put the first item of orderList + [-500,0,500, 700] into stickyRect
@@ -624,6 +660,9 @@ to validateStickyReceipt
 	repeat for each item of mealDisplayName
 		assert that common.extendedFindText(trim(it),Config().Waits.(minWait),stickyRect) is true with error "Meal Displayed on Sticky Label"
 	end repeat
+	
+	typetext escapeKey
+	wait 1
 	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 end validateStickyReceipt

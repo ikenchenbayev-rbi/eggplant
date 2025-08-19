@@ -83,17 +83,15 @@ Common.setTestCaseName "6 Pc Boneless Wings Combo"
 "DAIWrappers/Kiosk".completeOrder
 
 // POS Sicom - to complete payment then order will be moved to KDS.
+"DAIWrappers/Kiosk".payKioskOrder
 
 //KDS
-Common.connectToLocalSingleSystem
-Common.launchChrome
-Common.openRemotePC
-Common.openSicomFC
-"DAIWrappers/KDS".launchSicomKDS
-"DAIWrappers/KDS".validateOrderOnSicomKDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
 
 //Validate receipts
-
+"DAIWrappers/POSSicom".validateSicomReceipt
 
 
 // Sicom Kiosk Test Case 2: 1/4 lb Popcorn Shrimp Combo
@@ -117,15 +115,13 @@ Common.setTestCaseName "1/4 lb Popcorn Shrimp Combo"
 "DAIWrappers/Kiosk".completeOrder
 
 //KDS
-Common.connectToLocalSingleSystem
-Common.launchChrome
-Common.openRemotePC
-Common.openSicomFC
-"DAIWrappers/KDS".launchSicomKDS
-"DAIWrappers/KDS".validateOrderOnSicomKDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
 
 //Validate receipts
-
+"DAIWrappers/POSSicom".validateSicomReceipt
 
 
 -------------------------------------------NCR Kiosk---------------------------------------------------------------

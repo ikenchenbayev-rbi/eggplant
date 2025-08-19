@@ -1,48 +1,48 @@
 {
 	"originalcapturelocation": [
-		157,
-		470,
-		135,
-		16
+		245,
+		287,
+		40,
+		36
 	],
-	"lastmodifieddate": 1754876236.4720001,
-	"createddate": 1754876236.4720001,
-	"name": "Icons/OracleCheckClosed",
-	"lastfounddate": 1755527453.5349998,
-	"ocrcapturestring": "Check' Closed",
+	"lastmodifieddate": 1755534334.0900002,
+	"createddate": 1755534334.0900002,
+	"name": "Icons/OracleStickyTop_Moba",
+	"lastfounddate": 1755538388.348,
+	"ocrcapturestring": "12 <raw",
 	"lastfoundlocation": [
-		157,
-		512,
-		135,
-		16
+		245,
+		137,
+		40,
+		36
 	],
 	"testlocationdata": [
 		{
-				"connectionportnum": 61014,
+				"connectionportnum": 58357,
 				"properties": {
 					"CropRectangle": "[0,0,0,0]",
 					"Rotate": 0,
 					"Scale": "    1",
-					"HotSpot": "[67,8]",
-					"Tolerance": "_71",
+					"HotSpot": "[20,18]",
+					"Tolerance": "_54",
 					"Discrepancy": "_0",
 					"SearchType": "Smoothed for Text"
 				},
 				"sutinfo": {
 					"Type": "Single System"
 				},
-				"name": "Icons/OracleCheckClosed.png",
+				"name": "Icons/OracleStickyTop_Moba.png",
 				"connectionname": "MyLocalTrainingPC",
 				"type": 1,
 				"connectionserverid": "127.0.0.1",
 				"capturerect": [
-					157,
-					470,
-					135,
-					16
+					245,
+					287,
+					40,
+					36
 				],
 				"connectiontype": "Single System",
-				"capturedocrtext": "Check' Closed"
+				"capturedocrtext": "12 <raw"
 			}
 	]
 }

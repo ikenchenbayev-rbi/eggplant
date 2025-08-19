@@ -380,7 +380,7 @@ Common.launchNCRPOS
 // NCR Test Case 14: X% Off
 Common.setPlatformName "POS"
 Common.setPOSPlatformName "NCR"
-Common.setTestCaseName "X% Off"
+Common.setTestCaseName "X% Off Discount"
 Common.launchNCRPOS
 "DAIWrappers/POSNCR".loginToNCRPOS
 "DAIWrappers/POSNCR".selectDiningOption

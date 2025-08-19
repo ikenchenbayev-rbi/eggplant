@@ -20,6 +20,7 @@ Common.launchOraclePOS
 "DAIWrappers/KDS".disconnectFromKDS
 
 //Validate Receipts
+// Oracle Test Case 1: Popcorn Shrimp & Tender ALC
 "DAIWrappers/POSOracle".validateReceipt
 
 

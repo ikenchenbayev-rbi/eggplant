@@ -815,3 +815,46 @@ to XPercentOff
 	Log "End of Script:"&item 1 delimited by ".script" of my name &"."&param(0)
 	
 end XPercentOff
+
+
+(**  
+selectKioskOrder - Handler to select the Kiosk order and finish payment in POS Sicom.
+@Version 1.0 8/15/2025
+@ChangeReason Creation
+**)
+to selectKioskOrder orderName
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Click the Total button
+	WaitFor Config().Waits.(maxWait), text:"TOTAL", SearchRectangle:Config().SearchRectangles.(SicomNumPad), ignoreSpaces: Yes, ignoreNewLines: Yes
+	click FoundImageLocation()
+	wait 1
+	
+	// Click the To Kiosk Ordering button
+	Assert that imagefound (text:"TO KIOSK ORDERING", WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	Click FoundImageLocation()
+	
+	// Click the Open Kiosk Orders option
+	Assert that imagefound (text:"OPEN KIOSK ORDERS", WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	
+	// Validate that the Enter Order Number popup is displayed
+	Assert that imagefound (text:"Enter Order Number", WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	Wait 1
+	
+	// Enter the order ID on the keypad
+	repeat for each character in global orderID
+		click text:it, SearchRectangle: Config().SearchRectangles.(SicomMainCourseSelectionArea), waitFor: 1
+		wait 1
+	end repeat
+	
+	// Click Enter
+	Assert that imagefound (text:"Enter", WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	click FoundImageLocation()
+	
+	// Click the Total button
+	WaitFor Config().Waits.(maxWait), text:"TOTAL", SearchRectangle:Config().SearchRectangles.(SicomNumPad), ignoreSpaces: Yes, ignoreNewLines: Yes
+	click FoundImageLocation()
+	wait 1
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end selectKioskOrder

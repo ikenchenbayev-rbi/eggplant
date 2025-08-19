@@ -628,7 +628,7 @@ to sendDummyPOSOrder
 	wait 1
 	Click imageName:"Icons/NCRQty5", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea)
 	
-	Click text:"COLE SLAW", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes
+	Click text:"BEANS RICE", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes
 	wait 1
 	
 	// Proceed to Tender. Save order ID in a different Order and Complete Order
@@ -749,7 +749,7 @@ to applyDiscount
 		WaitFor Config().Waits.(maxWait), text:"DISCOUNTS/COMPS", SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes
 		click FoundImageLocation()
 		
-		// Select the discount tye
+		// Select the discount type
 		WaitFor Config().Waits.(maxWait), text:discounts, SearchRectangle:Config().SearchRectangles.(NCRItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes
 		click FoundImageLocation()
 		

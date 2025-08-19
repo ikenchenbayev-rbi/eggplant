@@ -618,6 +618,7 @@ saveOrderID - Handler to read the order ID from the Kiosk screen and return the 
 to saveOrderID
 	Log "Reading Order ID"
 	put readText(Config().SearchRectangles.(KioskOrderID), DPI: 144) into global orderID
+	if character 1 of global orderID begins with "0" then delete character 1 of global orderID
 	log "Order ID is: "&global orderID
 	return global orderID
 end saveOrderID
@@ -653,6 +654,19 @@ to payKioskOrder
 		
 		// Complete payment
 		"DAIWrappers/POSNCR".exactPayment
+	end if
+	
+	// To launch Sicom POS
+	if (global posPlatformName) is "SicomKiosk"
+		// Launches and logs into Oracle POS
+		Common.launchSicomPOS
+		"DAIWrappers/POSSicom".logOnSicomPOS
+		
+		// Select Kiosk Order
+		"DAIWrappers/POSSicom".selectKioskOrder "Test"
+		
+		// Complete payment
+		"DAIWrappers/POSSicom".exactPayment
 	end if
 	
 end payKioskOrder

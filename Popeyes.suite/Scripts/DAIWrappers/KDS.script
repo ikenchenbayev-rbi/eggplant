@@ -43,7 +43,7 @@ to connectToKDS
 	
 	// Code for Oracle KDS
 	if (global posPlatformName) is "Oracle" or (global posPlatformName) is "OracleKiosk" or (global posPlatformName) is "OracleApp" 
-		Connect DataFile().SUTNames.OracleKDS, visible: Yes
+		Connect DataFile().SUTNames.OracleKDS
 		
 		// Wait for SUT To be connected
 		repeat 2 minutes
