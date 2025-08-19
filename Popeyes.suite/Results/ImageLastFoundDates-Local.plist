@@ -1,47 +1,14 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>Icons/ChromeIcon.png</key>
-    <string>2025-07-30 19:47 +0000</string>
-    <key>Icons/ChromeRefreshIcon.png</key>
-    <string>2025-08-13 10:23 +0000</string>
-    <key>Icons/EdgeBrowser.png</key>
-    <string>2025-08-06 15:45 +0000</string>
     <key>Icons/SicomPOSCouponLookUp.png</key>
-    <string>2025-08-13 12:36 +0000</string>
+    <string>2025-08-19 05:49 +0000</string>
     <key>Icons/SicomQty3.png</key>
-    <string>2025-08-13 12:39 +0000</string>
+    <string>2025-08-19 05:52 +0000</string>
     <key>Icons/SicomTaskbarKDS.png</key>
-    <string>2025-08-13 12:40 +0000</string>
+    <string>2025-08-19 05:53 +0000</string>
     <key>Icons/SicomTaskbarPOS.png</key>
-    <string>2025-08-13 12:38 +0000</string>
-    <key>Icons/SicomTightVNC.png</key>
-    <string>2025-07-30 19:51 +0000</string>
+    <string>2025-08-19 05:54 +0000</string>
 </dict>
 </plist>
-=======
-{
-    "Icons/ChromeRefreshIcon.png" = "2025-08-08 20:46 +0000";
-    "Icons/EdgeBrowser.png" = "2025-08-08 20:48 +0000";
-    "Icons/OracleCheckClosed.png" = "2025-08-11 01:41 +0000";
-    "Icons/OracleIcon.png" = "2025-08-11 01:39 +0000";
-    "Icons/OracleLoginButton.png" = "2025-08-11 01:39 +0000";
-    "Icons/OracleOKButton.png" = "2025-08-11 01:40 +0000";
-    "Icons/OracleStickyStart.png" = "2025-08-11 01:41 +0000";
-    "Icons/OracleStickyStart_Top.png" = "2025-08-11 01:41 +0000";
-    "Icons/OracleTotalButton.png" = "2025-08-11 01:40 +0000";
-    "Icons/SicomQty3.png" = "2025-08-08 22:45 +0000";
-    "Icons/SicomTaskbarKDS.png" = "2025-08-08 22:46 +0000";
-    "Icons/SicomTaskbarPOS.png" = "2025-08-08 22:50 +0000";
-    "Icons/VNC.png" = "2025-08-11 14:36 +0000";
-    "Icons/authenticator.png" = "2025-08-11 14:36 +0000";
-    "[Character_Collections]/ExpoFont/lower_c.png" = "2025-08-11 01:35 +0000";
-    "[Character_Collections]/ExpoFont/lower_d.png" = "2025-08-11 01:35 +0000";
-    "[Character_Collections]/ExpoFont/lower_l.png" = "2025-08-11 01:35 +0000";
-    "[Character_Collections]/ExpoFont/lower_o.png" = "2025-08-11 01:35 +0000";
-    "[Character_Collections]/ExpoFont/lower_s.png" = "2025-08-11 01:35 +0000";
-    "[Character_Collections]/ExpoFont/upper_C.png" = "2025-08-11 01:35 +0000";
-}
->>>>>>> 489167eec92d45817033c83bbe43ad733dd436f3

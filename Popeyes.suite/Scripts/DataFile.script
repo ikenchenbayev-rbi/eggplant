@@ -16,7 +16,7 @@ Description:  DataFile contains return value for the config data used in POS tes
 **) 
 
 return { 
-	(* Login Information to be used inside the POS system, for Oracle, NCR and SiCOM*)
+(* Login Information to be used inside the POS system, for Oracle, NCR and SiCOM*)
 	Logins:{
 		NCRPOS:{
 			employeeCode:"100",
@@ -174,7 +174,16 @@ return {
 			ReceiptDisplayName: "ReceiptDisplayName",
 			LabelMealDisplayName: "LabelMealDisplayName",
 		},
-
+		SicomApp: {
+			TestCaseName: "TestCaseName",
+			ProfileName: "ProfileName",
+			LabName: "LabName",
+			OrderType: "OrderType",
+			KDSMealDisplayName: "KDSMealDisplayName",
+			ExpoLabelDisplayName: "ExpoLabelDisplayName",
+			ReceiptDisplayName: "ReceiptDisplayName",
+			LabelMealDisplayName: "LabelMealDisplayName",
+		},
 
 	},
 	
@@ -197,8 +206,8 @@ return {
 		SicomCustReceipt: "SicomCustReceipt",
 		SicomSandSidesDesserts: "SicomSandSidesDesserts",
 		SicomProtein: "SicomProtein",
-SicomExpo: "SicomExpo",
-SeleniumSUT: "SeleniumNUK",
-},
+		SicomExpo: "SicomExpo",
+		SeleniumSUT: "SeleniumNUK",
+	},
 
 }

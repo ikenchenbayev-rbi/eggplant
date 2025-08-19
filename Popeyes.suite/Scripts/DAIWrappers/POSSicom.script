@@ -789,7 +789,7 @@ to XPercentOff
 		click FoundImageLocation()
 		//input the manager id using the cashier number pad
 		put DataFile().Logins.SicomPOS.ManagerID into managerID
-		log managerID
+
 		repeat with each item numID of managerID
 			log numID
 			assert that ImageFound(text: numID, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomNumPad), ignoreSpaces: Yes, ignoreNewLines: Yes)

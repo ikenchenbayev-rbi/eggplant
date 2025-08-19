@@ -427,7 +427,7 @@ Common.setTestCaseName "Shrimp and 2 Tenders Combo"
 Common.launchSicomPOS
 Common.setPlatformName "POS"
 Common.setPOSPlatformName "Sicom"
-Common.setTestCaseName "Coupon Look Up"
+Common.setTestCaseName "PLU Lookup"
 //POS
 "DAIWrappers/POSSicom".selectDiningOption
 "DAIWrappers/POSSicom".selectMealAndOption
@@ -453,7 +453,7 @@ Common.setTestCaseName "Coupon Look Up"
 Common.launchSicomPOS
 Common.setPlatformName "POS"
 Common.setPOSPlatformName "Sicom"
-Common.setTestCaseName "X Off"
+Common.setTestCaseName "X% Off Discount"
 //POS
 "DAIWrappers/POSSicom".selectDiningOption
 "DAIWrappers/POSSicom".selectMealAndOption
