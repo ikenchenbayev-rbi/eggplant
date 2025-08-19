@@ -1,7 +1,7 @@
-﻿-------------------------------------------Oracle App Pickup---------------------------------------------------------------
-// Oracle App Pickup Test Case 1:
+﻿-------------------------------------------Sicom App Pickup---------------------------------------------------------------
+// Sicom App Pickup Test Case 1:
 Common.setPlatformName "App Pickup"
-Common.setPOSPlatformName "OracleApp"
+Common.setPOSPlatformName "SicomApp"
 Common.setTestCaseName "spicysand_pickup"
 "DAIWrappers/AppDeliveryAndPickup".launchSeleniumSUT
 "DAIWrappers/AppDeliveryAndPickup".triggerSeleniumScript
@@ -12,12 +12,12 @@ Common.setTestCaseName "spicysand_pickup"
 "DAIWrappers/KDS".disconnectFromKDS
 
 //Validate Receipts
-"DAIWrappers/POSOracle".validateReceipt
+"DAIWrappers/POSSicom".validateReceipt
 
 (*=================================*)
-// Oracle App Pickup Test Case 2:
+// Sicom App Pickup Test Case 2:
 Common.setPlatformName "App Pickup"
-Common.setPOSPlatformName "OracleApp"
+Common.setPOSPlatformName "SicomApp"
 Common.setTestCaseName "sideitem_pickup"
 "DAIWrappers/AppDeliveryAndPickup".launchSeleniumSUT
 "DAIWrappers/AppDeliveryAndPickup".triggerSeleniumScript
@@ -28,12 +28,12 @@ Common.setTestCaseName "sideitem_pickup"
 "DAIWrappers/KDS".disconnectFromKDS
 
 //Validate Receipts
-"DAIWrappers/POSOracle".validateReceipt
+"DAIWrappers/POSSicom".validateReceipt
 
 (*=================================*)
-// Oracle App Pickup Test Case 3:
+// Sicom App Pickup Test Case 3:
 Common.setPlatformName "App Pickup"
-Common.setPOSPlatformName "OracleApp"
+Common.setPOSPlatformName "SicomApp"
 Common.setTestCaseName "popcornshrimp_tenders_pickup"
 "DAIWrappers/AppDeliveryAndPickup".launchSeleniumSUT
 "DAIWrappers/AppDeliveryAndPickup".triggerSeleniumScript
@@ -44,12 +44,12 @@ Common.setTestCaseName "popcornshrimp_tenders_pickup"
 "DAIWrappers/KDS".disconnectFromKDS
 
 //Validate Receipts
-"DAIWrappers/POSOracle".validateReceipt
+"DAIWrappers/POSSicom".validateReceipt
 
--------------------------------------------Oracle App Delivery---------------------------------------------------------------
-// Oracle App Delivery Test Case 1:
+-------------------------------------------Sicom App Delivery---------------------------------------------------------------
+// Sicom App Delivery Test Case 1:
 Common.setPlatformName "App Delivery"
-Common.setPOSPlatformName "OracleApp"
+Common.setPOSPlatformName "SicomApp"
 Common.setTestCaseName "spicysand_delivery"
 "DAIWrappers/AppDeliveryAndPickup".launchSeleniumSUT
 "DAIWrappers/AppDeliveryAndPickup".triggerSeleniumScript
@@ -60,12 +60,12 @@ Common.setTestCaseName "spicysand_delivery"
 "DAIWrappers/KDS".disconnectFromKDS
 
 //Validate Receipts
-"DAIWrappers/POSOracle".validateReceipt
+"DAIWrappers/POSSicom".validateReceipt
 
 (*=================================*)
-// Oracle App Delivery Test Case 2:
+// Sicom App Delivery Test Case 2:
 Common.setPlatformName "App Pickup"
-Common.setPOSPlatformName "OracleApp"
+Common.setPOSPlatformName "SicomApp"
 Common.setTestCaseName "sideitem_delivery"
 "DAIWrappers/AppDeliveryAndPickup".launchSeleniumSUT
 "DAIWrappers/AppDeliveryAndPickup".triggerSeleniumScript
@@ -76,12 +76,12 @@ Common.setTestCaseName "sideitem_delivery"
 "DAIWrappers/KDS".disconnectFromKDS
 
 //Validate Receipts
-"DAIWrappers/POSOracle".validateReceipt
+"DAIWrappers/POSSicom".validateReceipt
 
 (*=================================*)
-// Oracle App Delivery Test Case 3:
+// Sicom App Delivery Test Case 3:
 Common.setPlatformName "App Pickup"
-Common.setPOSPlatformName "OracleApp"
+Common.setPOSPlatformName "SicomApp"
 Common.setTestCaseName "popcornshrimp_tenders_delivery"
 "DAIWrappers/AppDeliveryAndPickup".launchSeleniumSUT
 "DAIWrappers/AppDeliveryAndPickup".triggerSeleniumScript
@@ -92,6 +92,6 @@ Common.setTestCaseName "popcornshrimp_tenders_delivery"
 "DAIWrappers/KDS".disconnectFromKDS
 
 //Validate Receipts
-"DAIWrappers/POSOracle".validateReceipt
+"DAIWrappers/POSSicom".validateReceipt
 
 
