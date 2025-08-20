@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		5,
+		534,
+		122,
+		36
+	],
+	"lastmodifieddate": 1751439865.8400002,
+	"createddate": 1751439865.8400002,
+	"name": "Icons/OracleKioskStickyStart_Top",
+	"lastfounddate": 1751505596.652,
+	"ocrcapturestring": "9980 Kiosk'l",
+	"lastfoundlocation": [
+		5,
+		135,
+		122,
+		36
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 54275,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[61,18]",
+					"Tolerance": "_71",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"Type": "Single System"
+				},
+				"name": "Icons/OracleKioskStickyStart_Top.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					5,
+					534,
+					122,
+					36
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "9980 Kiosk'l"
+			}
+	]
+}

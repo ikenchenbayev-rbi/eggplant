@@ -1,0 +1,46 @@
+{
+	"lastmodifieddate": 1750921548.0910001,
+	"lastfoundlocation": [
+		1253,
+		338,
+		70,
+		69
+	],
+	"originalcapturelocation": [
+		1253,
+		338,
+		70,
+		69
+	],
+	"createddate": 1750921548.0910001,
+	"lastfounddate": 1750921585.5409999,
+	"testlocationdata": [
+		{
+				"connectionportnum": 57259,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[35,34]",
+					"Tolerance": "_45",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/Drinks/OrangeFanta.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"capturerect": [
+					1253,
+					338,
+					70,
+					69
+				],
+				"connectiontype": "Single System",
+				"connectionserverid": "127.0.0.1"
+			}
+	],
+	"name": "Icons/Drinks/OrangeFanta2"
+}

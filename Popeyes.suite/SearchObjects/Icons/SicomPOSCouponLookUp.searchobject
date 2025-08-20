@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		950,
+		264,
+		71,
+		60
+	],
+	"lastmodifieddate": 1754980237.198,
+	"createddate": 1754980237.198,
+	"name": "Icons/SicomPOSCouponLookUp",
+	"lastfounddate": 1755666617.0770001,
+	"ocrcapturestring": "COUPON LOOK UP",
+	"lastfoundlocation": [
+		949,
+		264,
+		71,
+		60
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 65329,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[35,30]",
+					"Tolerance": "_73",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/SicomPOSCouponLookUp.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					950,
+					264,
+					71,
+					60
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "COUPON LOOK UP"
+			}
+	]
+}

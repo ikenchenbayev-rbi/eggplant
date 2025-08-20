@@ -5,16 +5,26 @@
 		29,
 		21
 	],
-	"lastmodifieddate": 1747169957.0380001,
+	"lastmodifieddate": 1750029363.487,
 	"createddate": 1747169957.0380001,
 	"name": "Icons/SicomTightVNC",
-	"lastfounddate": 1747240339.7839999,
+<<<<<<< HEAD
+	"lastfounddate": 1750039907.0219998,
 	"ocrcapturestring": "Vnc",
 	"lastfoundlocation": [
-		1748,
-		89,
-		29,
-		21
+		142,
+		406,
+		17,
+		9
+=======
+	"lastfounddate": 1750138193.5900002,
+	"ocrcapturestring": "Vnc",
+	"lastfoundlocation": [
+		518,
+		998,
+		15,
+		11
+>>>>>>> b5c9222c8ac9a275fbb000a6f4880861fd2fa786
 	],
 	"testlocationdata": [
 		{
@@ -43,6 +53,84 @@
 				],
 				"connectiontype": "Single System",
 				"capturedocrtext": "Vnc"
+			},
+		{
+				"connectionportnum": 54977,
+				"properties": {
+					"CropRectangle": "[6,6,23,15]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[8,4]",
+					"Tolerance": "_73",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/SicomTightVNC.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"capturerect": [
+					1748,
+					89,
+					17,
+					9
+				],
+				"connectiontype": "Single System",
+				"connectionserverid": "127.0.0.1"
+			},
+		{
+				"connectionportnum": 54977,
+				"properties": {
+					"CropRectangle": "[6,6,23,15]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[8,4]",
+					"Tolerance": 78,
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/SicomTightVNC.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"capturerect": [
+					1748,
+					89,
+					17,
+					9
+				],
+				"connectiontype": "Single System",
+				"connectionserverid": "127.0.0.1"
+			},
+		{
+				"connectionportnum": 54977,
+				"properties": {
+					"CropRectangle": "[6,6,23,15]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[8,4]",
+					"Tolerance": 83,
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/SicomTightVNC.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"capturerect": [
+					1748,
+					89,
+					17,
+					9
+				],
+				"connectiontype": "Single System",
+				"connectionserverid": "127.0.0.1"
 			}
 	]
 }

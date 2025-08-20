@@ -1,8 +1,8 @@
 {
-	"lastmodifieddate": 1747245159.6069999,
+	"lastmodifieddate": 1754275116.279,
 	"lastfoundlocation": [
-		203,
-		994,
+		517,
+		993,
 		16,
 		12
 	],
@@ -13,7 +13,11 @@
 		12
 	],
 	"createddate": 1747245159.6069999,
-	"lastfounddate": 1747245339.296,
+<<<<<<< HEAD
+	"lastfounddate": 1755088818.97,
+=======
+	"lastfounddate": 1754693193.4000001,
+>>>>>>> 489167eec92d45817033c83bbe43ad733dd436f3
 	"testlocationdata": [
 		{
 				"connectionportnum": 54820,
@@ -25,6 +29,32 @@
 					"Tolerance": "_45",
 					"Discrepancy": "_0",
 					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/SicomTaskbarKDS.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"capturerect": [
+					203,
+					994,
+					16,
+					12
+				],
+				"connectiontype": "Single System",
+				"connectionserverid": "127.0.0.1"
+			},
+		{
+				"connectionportnum": 63630,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[8,6]",
+					"Tolerance": "_57",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
 				},
 				"sutinfo": {
 					"type": "Unknown VNC"

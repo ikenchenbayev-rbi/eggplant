@@ -1,0 +1,97 @@
+﻿-------------------------------------------Sicom App Pickup---------------------------------------------------------------
+// Sicom App Pickup Test Case 1:
+Common.setPlatformName "App Pickup"
+Common.setPOSPlatformName "SicomApp"
+Common.setTestCaseName "spicysand_pickup"
+"DAIWrappers/AppDeliveryAndPickup".launchSeleniumSUT
+"DAIWrappers/AppDeliveryAndPickup".triggerSeleniumScript
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSSicom".validateReceipt
+
+(*=================================*)
+// Sicom App Pickup Test Case 2:
+Common.setPlatformName "App Pickup"
+Common.setPOSPlatformName "SicomApp"
+Common.setTestCaseName "sideitem_pickup"
+"DAIWrappers/AppDeliveryAndPickup".launchSeleniumSUT
+"DAIWrappers/AppDeliveryAndPickup".triggerSeleniumScript
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSSicom".validateReceipt
+
+(*=================================*)
+// Sicom App Pickup Test Case 3:
+Common.setPlatformName "App Pickup"
+Common.setPOSPlatformName "SicomApp"
+Common.setTestCaseName "popcornshrimp_tenders_pickup"
+"DAIWrappers/AppDeliveryAndPickup".launchSeleniumSUT
+"DAIWrappers/AppDeliveryAndPickup".triggerSeleniumScript
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSSicom".validateReceipt
+
+-------------------------------------------Sicom App Delivery---------------------------------------------------------------
+// Sicom App Delivery Test Case 1:
+Common.setPlatformName "App Delivery"
+Common.setPOSPlatformName "SicomApp"
+Common.setTestCaseName "spicysand_delivery"
+"DAIWrappers/AppDeliveryAndPickup".launchSeleniumSUT
+"DAIWrappers/AppDeliveryAndPickup".triggerSeleniumScript
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSSicom".validateReceipt
+
+(*=================================*)
+// Sicom App Delivery Test Case 2:
+Common.setPlatformName "App Pickup"
+Common.setPOSPlatformName "SicomApp"
+Common.setTestCaseName "sideitem_delivery"
+"DAIWrappers/AppDeliveryAndPickup".launchSeleniumSUT
+"DAIWrappers/AppDeliveryAndPickup".triggerSeleniumScript
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSSicom".validateReceipt
+
+(*=================================*)
+// Sicom App Delivery Test Case 3:
+Common.setPlatformName "App Pickup"
+Common.setPOSPlatformName "SicomApp"
+Common.setTestCaseName "popcornshrimp_tenders_delivery"
+"DAIWrappers/AppDeliveryAndPickup".launchSeleniumSUT
+"DAIWrappers/AppDeliveryAndPickup".triggerSeleniumScript
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSSicom".validateReceipt
+
+

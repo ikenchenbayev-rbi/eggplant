@@ -2,7 +2,7 @@
 ScriptName: Common
 Version 1.0
 Author: Sajeendra Das
-CreatedOn: 4/22/25
+CreatedOn: 4/22/25cd 
 PeerReviewedBy:
 PeerReviewedOn:
 EditedBy: 
@@ -70,12 +70,13 @@ to readDataFromExcel excelColumn
 	// read in spreadsheet to memory
 	put global posPlatformName&".xlsx" into fileName
 	
-	set Spreadsheet to Workbook(ResourcePath(fileName))
+	// Older version of Reading Excel as as File. This code is replaced with using Excel as a Database. Leaving the code in here incase the code needs to be reverted in the future
+	(*	set Spreadsheet to Workbook(ResourcePath(fileName))
 	// read in tab to memory
 	set entryData to Spreadsheet.Worksheet(1)
-	
+
 	put 2 into count
-	
+
 	// When we get to the end of the spreadsheet, then exit the repeat
 	repeat until eof_flag is "true"
 		if entryData.Cell("A"&(count)) is empty
@@ -83,15 +84,16 @@ to readDataFromExcel excelColumn
 		else
 			// If the global test case name matches excel test case name, read corresponding row and column value
 			put entryData.Cell("B"&(count)) into excelTestCaseName
-			
 			if excelTestCaseName is equal to global testCaseName ignoring case
 				put entryData.Cell(excelColumn&(count)) into dataValue
 				exit repeat
 			end if
 			add 1 to count
 		end if
-		
-	end repeat
+	end repeat*)
+	
+	set myExcelDB to {type:"excel", file:ResourcePath(fileName)} 
+	put the (excelColumn) of the record of myExcelDB where TestCaseName is global testCaseName into dataValue
 	
 	log "Returning Data value"
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
@@ -116,8 +118,13 @@ to extendedFindText textToFind, waitValue, SR
 		return true
 	end if
 	
-	// else add valid words and valid characters
-	if imageFound(text: textToFind, waitFor: 1, SearchRectangle: SR, validCharacters: textToFind, validWords: textToFind, ignoreSpaces: Yes, ignoreNewLines: Yes)
+	// else add valid characters
+	if imageFound(text: textToFind, waitFor: 1, SearchRectangle: SR, validCharacters: textToFind,multiLine: Yes, ignoreSpaces: Yes, ignoreNewLines: Yes)
+		return true
+	end if
+	
+	// else add valid words 
+	if imageFound(text: textToFind, waitFor: 1, SearchRectangle: SR, validCharacters: textToFind, validWords: textToFind,multiLine: Yes, ignoreSpaces: Yes, ignoreNewLines: Yes)
 		return true
 	end if
 	
@@ -126,8 +133,18 @@ to extendedFindText textToFind, waitValue, SR
 		return true
 	end if
 	
+	// else add DPI parameter
+	if imageFound(text: textToFind, waitFor: 1, SearchRectangle: SR, validCharacters: textToFind, validWords: textToFind, ignoreSpaces: Yes, ignoreNewLines: Yes, DPI: 250)
+		return true
+	end if
+	
+	// else add Text Difference of 1 parameter
+	if imageFound(text: textToFind, waitFor: 1, SearchRectangle: SR, validCharacters: textToFind, validWords: textToFind, ignoreSpaces: Yes, ignoreNewLines: Yes, DPI: 250, textDifference: 1)
+		return true
+	end if
+	
 	// else add Contrast parameter
-	if imageFound(text: textToFind, waitFor: 1, SearchRectangle: SR, validCharacters: textToFind, validWords: textToFind, ignoreSpaces: Yes, ignoreNewLines: Yes, DPI: 144, contrast: on)
+	if imageFound(text: textToFind, waitFor: 1, SearchRectangle: SR, validCharacters: textToFind, validWords: textToFind, ignoreSpaces: Yes, ignoreNewLines: Yes, DPI: 250, textDifference: 1, contrast: on)
 		return true
 	end if
 	
@@ -138,6 +155,25 @@ to extendedFindText textToFind, waitValue, SR
 	
 end extendedFindText
 
+(**
+connectToLocalSingleSystem - Handler to connect to the Local Single System SUT connection, which is needed to perform connections to other SUTs
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to connectToLocalSingleSystem
+
+	Connect DataFile().SUTNames.LocalSingleSystem
+	
+	//If Single-SUT is already connected, do not perform login steps. Else click on the Tester login and enter password
+	if ImageFound(imageName: "Icons/ChromeIcon", waitFor:2, searchRectangle:Config().SearchRectangles.(TopHalf))
+		log "Single System SUT already connected"
+	else if ImageFound(text:"Tester", waitFor:Config().Waits.(midWait), SearchRectangle: Config().SearchRectangles.(UserList))
+		click FoundImageLocation()
+		Click text:"assword", waitFor:Config().Waits.(minWait), SearchRectangle:[717,502,1178,788]
+		TypeText DataFile().Logins.Windows.password
+		TypeText returnKey
+	end if
+end connectToLocalSingleSystem
 (**
 End Common Functions used for all Platforms
 **)
@@ -173,11 +209,11 @@ to launchNCRPOS
 		Connect {serverID: "127.0.0.1", portNum:5500, Visible: "Yes"} 
 
 		// Click to wake up the system, incase it is showing the screen saver
-		click [1900,500]
+		click Config().TextOffsets.(ClickScreenOffset)
 	else
 		// Connect to the Local PC as Single-SUT to launch Command Center application of NCR
 		log "Performing steps to launch Command Center and NCR POS"
-		Connect DataFile().SUTNames.NCRLocal
+		Connect DataFile().SUTNames.LocalSingleSystem
 		
 		// If Command Center window is already opened from previous session, close it
 		if ImageFound(text:"Command Center", waitFor:2, searchRectangle: Config().SearchRectangles.(TopHalf)) and if ImageFound(text:"FC One", waitFor:2, SearchRectangle:Config().SearchRectangles.(LeftHalf))
@@ -185,15 +221,8 @@ to launchNCRPOS
 			// Use Handler to open VNC connection
 			launchNCRVNC "FC One"
 		else 
-			//If Single-SUT is already connected, do not perform login steps. Else click on the Tester login and enter password
-			if ImageFound(imageName: "Icons/ChromeIcon", waitFor:2, searchRectangle:Config().SearchRectangles.(TopHalf))
-				log "Single System SUT already connected. Opening Command Center"
-			else if ImageFound(text:"Tester", waitFor:Config().Waits.(midWait), SearchRectangle: Config().SearchRectangles.(UserList))
-				click FoundImageLocation()
-				Click text:"assword", waitFor:Config().Waits.(minWait), SearchRectangle:[717,502,1178,788]
-				TypeText DataFile().Logins.Windows.password
-				TypeText returnKey
-			end if
+			// Perform steps to login to single system SUT on local
+			connectToLocalSingleSystem
 			
 			// Call Internal handler to launch Command Center for NCR
 			launchCommandCenter
@@ -216,8 +245,8 @@ to launchNCRPOS
 	Connect {serverID: "127.0.0.1", portNum:5500, Visible: "Yes"} 
 
 	// Click to wake up the system, incase it is showing the screen saver
-	click [1900,500]
-
+	click Config().TextOffsets.(ClickScreenOffset)
+	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 end launchNCRPOS
@@ -285,7 +314,7 @@ to getGoogleAuthCode
 end getGoogleAuthCode
 
 (**  
-getGoogleAuthCode - Handler to disonnect from the NCR POS SUT
+disconnectFromNCRPOS - Handler to disonnect from the NCR POS SUT
 @Version 1.0 4/22/2025
 @ChangeReason Creation
 **)
@@ -307,7 +336,7 @@ to launchNCRVNC vncLink
 	Click {Image:"Icons/VNC", WaitFor:Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf)}
 
 	if ImageFound(text:"Do you want", waitFor:Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(VNCPopup))
-		Click text:"assword", waitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(VNCPopup)
+		Click the last item of everyimagelocation(text:"assword", waitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(VNCPopup))
 		
 		TypeText DataFile().Logins.CommandCenter.popupPassword
 		TypeText returnKey
@@ -316,7 +345,7 @@ to launchNCRVNC vncLink
 	// Wait for the NCR KDS SUT to be connected from Command Center and bring it in focus
 	repeat for 2 minutes
 		put AllConnectionInfo() into connectionList
-		log connectionList
+		//log connectionList
 		put "" into connectionStatus
 		repeat for each item of connectionList
 			if it's Name is "127.0.0.1" and  it's Status is "Connected"
@@ -331,6 +360,42 @@ to launchNCRVNC vncLink
 	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 end launchNCRVNC
+
+(**  
+refreshPOSData - Handler to enter lab number and refresh the POS data.
+@Version 1.0 8/13/2025
+@ChangeReason Creation
+**)
+to refreshPOSData
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Use Command Center to find the specific lab.
+	// Click in FIND
+	WaitFor Config().Waits.(maxWait), text:"Find", SearchRectangle:Config().SearchRectangles.(BottomHalf)
+	click FoundImageLocation()+Config().TextOffsets.(CommandCenterTextbox)
+	
+	// Type in Lab number
+	TypeText "999968"
+	TypeText returnKey
+	wait 1
+	
+	// Right click on the lab to view options
+	RightClick text:"RBI Miami - PLK ETR AK 68 Lab (542520)", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf)
+	
+	// Click the Perform option
+	assert that common.extendedFindText("Perform",Config().Waits.(minWait), Config().SearchRectangles.(TopHalf))
+	Click FoundImageLocation()
+	
+	// Click the Refresh Data button
+	assert that common.extendedFindText("Refresh Data",Config().Waits.(minWait), Config().SearchRectangles.(TopHalf))
+	Click FoundImageLocation()
+	
+	// Click Yes on the confirmation popup
+	assert that common.extendedFindText("Yes",Config().Waits.(minWait), Config().SearchRectangles.(BottomHalf))
+	Click FoundImageLocation()
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end refreshPOSData
 (**
 End Common Functions used for NCR POS
 **)
@@ -365,13 +430,109 @@ to launchOraclePOS
 	end repeat
 	
 	// Click to wake up the system, incase it is showing the screen saver
-	click [1900,500]
-
+	click [1900,800]
+	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 end launchOraclePOS
 
+(**  
+launchPuttyForOracleReceipts - Internal Handler to launch Putty for connecting to Oracle Receipts
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to launchPuttyForOracleReceipts
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0),
+	
+	// Open Putty application
+	Typetext windowsKey,"r"
+	TypeText "Putty", ReturnKey -- Maxmize Doesn't always work
+	
+	// Wait for Putty window to open and load the configuration
+	waitFor Config().Waits.(minWait), {text:"PuTTY Configuration"}
+	put FoundImageInfo().imagerectangle+[0,0,300,500] into puttyRect
+	click text: "192.168", SearchRectangle: puttyRect, DPI: "144"
+	click the last item of EveryImageLocation(text:"Load", SearchRectangle: puttyRect, waitFor:Config().Waits.(minWait) )
+	click text: "Open", waitFor: Config().Waits.(minWait),  SearchRectangle: puttyRect, DPI: 144
+	wait 1
+	
+	// Maximize window
+	TypeText windowskey, upArrow -- Maximize Any Window
+	
+	// Wait for Command Prompt and perform steps to set up the tunnel
+	waitFor Config().Waits.(minWait), {text:"Login as"}
+	typetext DataFile().Logins.OracleReceipts.userName, returnKey
+	wait 1
+	
+	waitFor Config().Waits.(minWait), {text:"password"}
+	typetext DataFile().Logins.OracleReceipts.password, returnKey
+	
+	// Validate that SSH connection to Oracle POS was opened successfully
+	assert that ImageFound(text:"FC2-POS02", DPI: 144,waitFor: Config().Waits.(minWait)) with error "SSH Tunnel Open"
+	
+	
+	// Navigate to Folder for Receipts
+	typetext DataFile().Logins.OracleReceipts.directoryCommand, returnKey
+	wait 1
+	
+	// Type command for opening latest receipt
+	typetext DataFile().Logins.OracleReceipts.receiptCommand, returnKey
+	wait 1
+	
+	// Validate Latest Receipt opened successfully
+	assert that imagefound (Text:"raw data", waitFor: Config().Waits.(minWait)) with warning "Oracle Receipt"
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end launchPuttyForOracleReceipts
 
+
+(**  
+launchMobaXTermForOracleReceipts - Internal Handler to launch Moba XTerm for connecting to Oracle Receipts
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to launchMobaXTermForOracleReceipts
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0),
+	
+	// Open Putty application
+	Typetext windowsKey,"r"
+	TypeText "MobaXTerm", ReturnKey -- Maxmize Doesn't always work
+	
+	// Wait for Moba XTerm window to open and load the configuration
+	waitFor Config().Waits.(minWait), {text:"Quick Connect"}
+	doubleclick text: "192.168", SearchRectangle: Config().SearchRectangles.(LeftHalf)
+	wait 1
+	
+	// Maximize window
+	TypeText windowskey, upArrow -- Maximize Any Window
+	
+	// Wait for Command Prompt and perform steps to set up the tunnel
+	waitFor Config().Waits.(minWait), {text:"Login as"}
+	typetext DataFile().Logins.OracleReceipts.userName, returnKey
+	wait 1
+	
+	waitFor Config().Waits.(minWait), {text:"password"}
+	typetext DataFile().Logins.OracleReceipts.password, returnKey
+	
+	// Validate that SSH connection to Oracle POS was opened successfully
+	assert that ImageFound(text:"FC2-POS", validwords: "FC2-POS", waitFor: Config().Waits.(minWait)) with error "SSH Tunnel Open"
+	
+	
+	// Navigate to Folder for Receipts
+	typetext DataFile().Logins.OracleReceipts.directoryCommand, returnKey
+	wait 1
+	
+	// Type command for opening latest receipt
+	typetext DataFile().Logins.OracleReceipts.receiptCommand, returnKey
+	wait 5
+	
+	// Validate Latest Receipt opened successfully
+	assert that imagefound (Text:"raw data", waitFor: Config().Waits.(minWait)) with warning "Oracle Receipt"
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end launchMobaXTermForOracleReceipts
 (**
 End Common Functions used for Oracle POS
 **)
@@ -392,7 +553,8 @@ to launchSicomPOS
 	
 	// Connect to the Local PC as Single-SUT to launch Remote PC to connect to Sicom
 	log "Performing steps to launch Remote PC and Sicom POS"
-	Connect DataFile().SUTNames.SicomLocal, visible: True
+	connectToLocalSingleSystem
+	
 	
 	// If POS window or KDS is already opened, do nothing. Else perform putty steps to open windows
 	if imagefound (Text:"Request", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf)) or if imagefound (Text:"Support Terminal", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf))
@@ -406,13 +568,16 @@ to launchSicomPOS
 		
 		// Open the Sicom remotePC Connection for FC
 		openSicomFC
+		launchSicomKDS
+		switchSicomWindowTo "POS"
 	end if
-	
-	
-	
+	//log on to the system
+	"DAIWrappers/POSSicom".logOnSicomPOS
+	//cliking the required route 3 for POS system
+	"DAIWrappers/POSSicom".clickRoute
 	// Click to wake up the system, incase it is showing the screen saver
-	click [1900,500]
-
+	click Config().TextOffsets.(ClickScreenOffset)
+	
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 end launchSicomPOS
@@ -434,23 +599,32 @@ to openRemotePC
 	// Wait for the page to finish loading
 	waitFor Config().Waits.(minWait), {Image:"Icons/ChromeRefreshIcon", SearchRectangle: Config().SearchRectangles.(TopHalf)}
 
-	// Click the Login Button
-	waitFor Config().Waits.(minWait), {Text:"Login", SearchRectangle: Config().SearchRectangles.(RightHalf)}
-	click FoundImageLocation()
-	waitfor Config().Waits.(minWait), {Text:"Login to RemotePC", SearchRectangle: Config().SearchRectangles.(TopHalf)}
+	// Click the Login Button or the My Account button
+	if ImageFound(text:"Login", waitFor:Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(RightHalf))
+		click FoundImageLocation()
+		waitfor Config().Waits.(minWait), {Text:"Login to RemotePC", SearchRectangle: Config().SearchRectangles.(TopHalf)}
+	else if ImageFound(text:"My Account", waitFor:Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(RightHalf))
+		click FoundImageLocation()
+	end if
 	
-	// Enter Credentials for RemotePC
-	Click (ImageLocation(text:"Email", SearchRectangle:Config().SearchRectangles.(RemotePCLoginArea)) +  Config().TextOffsets.(RemotePCLoginTextbox))
-	typetext controlKey, "a"
-	TypeText DataFile().Logins.SicomRemotePC.username
-	
-	Click (ImageLocation(text:"Password", SearchRectangle:Config().SearchRectangles.(RemotePCLoginArea)) +  Config().TextOffsets.(RemotePCLoginTextbox))
-	typetext controlKey, "a"
-	TypeText DataFile().Logins.SicomRemotePC.password
-	
-	// Click Login Again
-	waitFor Config().Waits.(minWait), {Text:"Login", SearchRectangle: Config().SearchRectangles.(RemotePCLoginArea)}
-	click FoundImageLocation()
+	if imagefound(text:"Email", SearchRectangle:Config().SearchRectangles.(RemotePCLoginArea))
+		// Enter Credentials for RemotePC
+		Click the center of  FoundImageinfo().imagerectangle +  Config().TextOffsets.(RemotePCLoginTextbox)
+		
+		typetext controlKey, "a"
+		TypeText DataFile().Logins.RemotePC.username
+		
+		Click (ImageLocation(text:"Password", SearchRectangle:Config().SearchRectangles.(RemotePCLoginArea)) +  Config().TextOffsets.(RemotePCLoginTextbox))
+		typetext controlKey, "a"
+		TypeText DataFile().Logins.RemotePC.password
+		
+		// click Off area for any popups to disappear
+		click [1900,500]
+
+		// Click Login Again
+		waitFor Config().Waits.(minWait), {Text:"Login", SearchRectangle: Config().SearchRectangles.(RemotePCLoginArea)}
+		click FoundImageLocation()
+	end if
 	
 	// Wait for RemotePC list to show up
 	waitFor Config().Waits.(minWait), {Text:"Computer Name"}
@@ -470,27 +644,10 @@ to openSicomFC
 	log "Performing steps to launch Sicom FC through remotePC"
 	put DataFile().SUTNames.SicomPOS into sicomFCName
 	
-	// Look for the name of the Sicom FC in the list of Remote PC connections
-	waitFor Config().Waits.(minWait), {Text:sicomFCName}
-	put FoundImageinfo().imagerectangle +[0,-15, 1000,15] into fcRect
-	
-	// Look for the connect button in the FC row
-	waitFor Config().Waits.(minWait), {Text:"Connect", SearchRectangle: fcRect}
-	click FoundImageLocation()
-	
-	// Wait for the Personal Key screen and enter the Personal Key
-	waitFor Config().Waits.(minWait), {Text:"Personal Key"}
-	click FoundImagelocation() + Config().TextOffsets.(RemotePCLoginTextbox)
-	put FoundImageinfo().imagerectangle +[0,0, 250,150] into pkRect 
-
-	TypeText DataFile().Logins.SicomRemotePC.PersonalKey
-	
-	// Click Connect
-	waitFor Config().Waits.(minWait), {Text:"Connect", SearchRectangle: pkRect}
-	click FoundImageLocation()
+	connectToRemotePCMachine sicomFCName
 	
 	// If POS window or KDS is already opened, do nothing. Else perform putty steps to open windows
-	if imagefound (Text:"Request", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf)) or if imagefound (Text:"Support Terminal", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf))
+	if imagefound (Text:"REQUEST", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf)) or if imagefound (Text:"Support Terminal", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf))
 		LogSuccess "Sicom POS already launched"
 	else
 		// Write Code to open Putty and Launch Sicom POS, if Required in the future
@@ -655,6 +812,40 @@ to switchSicomWindowTo window
 	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 end switchSicomWindowTo
+
+(**  
+connectToRemotePCMachine - Handler to Connect to a Remote PC machine from the list of systems
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+@Parameters: machineName - Machine Name to connect to on remote PC screen
+**)
+
+to connectToRemotePCMachine machineName
+
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Look for the name of the Sicom FC in the list of Remote PC connections
+	waitFor Config().Waits.(minWait), {Text:machineName}
+	put FoundImageinfo().imagerectangle +[0,-15, 1000,15] into fcRect
+	
+	// Look for the connect button in the FC row
+	waitFor Config().Waits.(minWait), {Text:"Connect", SearchRectangle: fcRect}
+	click FoundImageLocation()
+	
+	// Wait for the Personal Key screen and enter the Personal Key
+	if imagefound(Text:"Personal Key", waitFor:Config().Waits.(minWait))
+		click FoundImagelocation() + Config().TextOffsets.(RemotePCLoginTextbox)
+		put FoundImageinfo().imagerectangle +[0,0, 250,150] into pkRect 
+
+		TypeText DataFile().Logins.RemotePC.PersonalKey
+		
+		// Click Connect
+		waitFor Config().Waits.(minWait), {Text:"Connect", SearchRectangle: pkRect}
+		click FoundImageLocation()
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end connectToRemotePCMachine
 (**
 End Common Functions used for Sicom POS
 **)

@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		157,
+		470,
+		135,
+		16
+	],
+	"lastmodifieddate": 1754876236.4720001,
+	"createddate": 1754876236.4720001,
+	"name": "Icons/OracleCheckClosed",
+	"lastfounddate": 1755527453.5349998,
+	"ocrcapturestring": "Check' Closed",
+	"lastfoundlocation": [
+		157,
+		512,
+		135,
+		16
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 61014,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[67,8]",
+					"Tolerance": "_71",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"Type": "Single System"
+				},
+				"name": "Icons/OracleCheckClosed.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					157,
+					470,
+					135,
+					16
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "Check' Closed"
+			}
+	]
+}

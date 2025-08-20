@@ -5,10 +5,10 @@
 		68,
 		32
 	],
-	"lastmodifieddate": 1745938439.9330001,
+	"lastmodifieddate": 1754060587.036,
 	"createddate": 1745938439.9330001,
 	"name": "Icons/Drinks/DietCoke",
-	"lastfounddate": 1746118753.6700001,
+	"lastfounddate": 1754532157.915,
 	"ocrcapturestring": "□Ke",
 	"lastfoundlocation": [
 		927,
@@ -31,7 +31,7 @@
 				"sutinfo": {
 					"type": "Unknown VNC"
 				},
-				"name": "Icons/Drinks/DietCoke.png",
+				"name": "Icons/Drinks/DietCoke/DietCoke.png",
 				"connectionname": "127.0.0.1",
 				"type": 1,
 				"capturerect": [

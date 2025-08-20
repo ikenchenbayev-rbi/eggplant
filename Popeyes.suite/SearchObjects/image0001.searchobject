@@ -1,0 +1,40 @@
+{
+	"lastmodifieddate": 1750814950.033,
+	"originalcapturelocation": [
+		353,
+		603,
+		399,
+		141
+	],
+	"createddate": 1750814738.563,
+	"testlocationdata": [
+		{
+				"connectionportnum": 3389,
+				"deleted": true,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[199,70]",
+					"Tolerance": "_45",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown RDP"
+				},
+				"name": "image0001.png",
+				"connectionname": "SicomKiosk",
+				"type": 1,
+				"capturerect": [
+					353,
+					603,
+					399,
+					141
+				],
+				"connectiontype": "RDP",
+				"connectionserverid": "192.168.7.21"
+			}
+	],
+	"name": "image0001"
+}

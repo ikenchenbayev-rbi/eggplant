@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		897,
+		621,
+		124,
+		83
+	],
+	"lastmodifieddate": 1748489843.5440001,
+	"createddate": 1748487286.0310001,
+	"name": "Icons/OracleOKButton",
+	"lastfounddate": 1748489488.1059999,
+	"ocrcapturestring": "Ok",
+	"lastfoundlocation": [
+		902,
+		533,
+		114,
+		73
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 5900,
+				"deleted": true,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[62,41]",
+					"Tolerance": "_45",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/OracleOKButton.png",
+				"connectionname": "OraclePOS",
+				"type": 1,
+				"capturerect": [
+					897,
+					621,
+					124,
+					83
+				],
+				"connectionserverid": "192.168.1.2",
+				"capturedocrtext": "Ok"
+			}
+	]
+}

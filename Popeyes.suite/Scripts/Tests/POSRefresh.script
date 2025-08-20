@@ -1,0 +1,3 @@
+﻿// NCR Manual POS Refresh
+Common.launchCommandCenter
+Common.refreshPOSData

@@ -1,1 +1,674 @@
-﻿
+﻿(** 
+ScriptName: Kiosk
+Version 1.0
+Author: Sajeendra Das
+CreatedOn: 4/22/25
+PeerReviewedBy:
+PeerReviewedOn:
+EditedBy: 
+EditedOn: 
+Description:  Handlers specific to the POS Operations on the Kiosk platform.
+**)
+
+(**
+"This software is copyright Keysight Technologies, Inc. and licensed under the terms of Keysight’s End User License Agreement. Terms of Keysight’s EULA may be found here: www.keysight.com/find/sweula By using this Software, you agree to the terms of the Keysight EULA."
+**) 
+
+(**  
+launchKiosk - Handler to launch the Kiosk SUT.
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to launchKiosk 
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Connect to the Local PC as Single-SUT to launch Remote PC to connect to Kiosk
+	log "Performing steps to launch Remote PC and Kiosk"
+	Common.connectToLocalSingleSystem
+	
+	put DataFile().SUTNames.(global posPlatformName) into kioskName
+	
+	// If Kiosk window is already opened, do nothing. Else perform putty steps to open RemotePC and access Kiosk window
+	if imagefound (Text:"Order Now", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(BottomHalf))
+		LogSuccess "Kiosk already launched"
+	else if imagefound (Text:"Computer Name", waitFor: Config().Waits.(minWait))
+		Log "Remote PC is open. Click to Open Kiosk"
+		
+		// Open the remotePC Connection for Kiosk
+		Common.connectToRemotePCMachine kioskName
+	else
+		// Open Chrome
+		Common.launchChrome
+		
+		// Open Remote PC URL and login
+		Common.openRemotePC
+		
+		// Open the remotePC Connection for Kiosk
+		Common.connectToRemotePCMachine kioskName
+	end if
+	
+	assert that imagefound (Text:"Order Now", waitFor: Config().Waits.(maxWait), SearchRectangle: Config().SearchRectangles.(BottomHalf)) with error "Kiosk main screen"
+	
+	// Click to wake up the system, incase it is showing the screen saver
+	click Config().TextOffsets.(ClickScreenOffset)
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end launchKiosk
+
+(**  
+launchKioskSUT - Handler to launch the Oracle/Sicom/NCR Kiosk SUT.
+@Version 1.0 6/16/2025
+@ChangeReason Creation
+**)
+to launchKioskSUT
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Connect to Oracle Kiosk SUT
+	if (global posPlatformName) is "OracleKiosk"
+		
+		log "Performing steps to launch Oracle Kiosk SUT"
+		Connect DataFile().SUTNames.OracleKiosk
+		
+		// Wait for SUT To be connected
+		repeat 2 minutes
+			if not connected of ConnectionInfo() then
+				Log "SUT is not connected yet. Trying again in 10 seconds"
+				wait 10
+			else
+				log "SUT Connected!"
+				exit repeat
+			end if
+		end repeat
+	end if
+	
+	// Connect to Sicom Kiosk SUT
+	if (global posPlatformName) is "SicomKiosk"
+		
+		log "Performing steps to launch Sicom Kiosk SUT"
+		Connect DataFile().SUTNames.SicomKiosk
+		
+		// Wait for SUT To be connected
+		repeat 2 minutes
+			if not connected of ConnectionInfo() then
+				Log "SUT is not connected yet. Trying again in 10 seconds"
+				wait 10
+			else
+				log "SUT Connected!"
+				exit repeat
+			end if
+		end repeat
+	end if
+	
+	// Connect to NCR Kiosk SUT
+	if (global posPlatformName) is "NCRKiosk"
+		
+		log "Performing steps to launch NCR Kiosk SUT"
+		Connect DataFile().SUTNames.NcrKiosk
+		
+		// Wait for SUT To be connected
+		repeat 2 minutes
+			if not connected of ConnectionInfo() then
+				Log "SUT is not connected yet. Trying again in 10 seconds"
+				wait 10
+			else
+				log "SUT Connected!"
+				exit repeat
+			end if
+		end repeat
+	end if
+	
+	// Validate the Order Now button is visible on the main screen
+	assert that imagefound (Text:"Order Now", waitFor: Config().Waits.(maxWait), SearchRectangle: Config().SearchRectangles.(OracleKioskMainWindow)) with error "Kiosk main screen"
+	
+	// Click to wake up the system, incase it is showing the screen saver
+	click [1040,1880]
+
+	(* Commented Code was being used before. Connections have changed, but leaving the code here incase the change reverts	
+	// Connect to NCR Kiosk SUT through RemotePC
+	if (global posPlatformName) is "NCRKiosk"
+		// Connect to the Local PC as Single-SUT to launch Remote PC to connect to Kiosk
+		log "Performing steps to launch Remote PC and Kiosk"
+		Common.connectToLocalSingleSystem
+		
+		put DataFile().SUTNames.(global posPlatformName) into kioskName
+		
+		// If Kiosk window is already opened, do nothing. Else perform putty steps to open RemotePC and access Kiosk window
+		if imagefound (Text:"Order Now", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(BottomHalf))
+			LogSuccess "Kiosk already launched"
+		else if imagefound (Text:"Computer Name", waitFor: Config().Waits.(minWait))
+			Log "Remote PC is open. Click to Open Kiosk"
+			
+			// Open the remotePC Connection for Kiosk
+			Common.connectToRemotePCMachine kioskName
+		else
+			// Open Chrome
+			Common.launchChrome
+			
+			// Open Remote PC URL and login
+			Common.openRemotePC
+			
+			// Open the remotePC Connection for Kiosk
+			Common.connectToRemotePCMachine kioskName
+		end if
+		*)
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end launchKioskSUT
+
+
+(**  
+startKioskOrder - Handler to start the Order on Kiosk
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to startKioskOrder 
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Click on Order Now
+	waitfor Config().Waits.(minWait), {Text:"Order Now", SearchRectangle: Config().SearchRectangles.(OracleKioskMainWindow)}
+	click FoundImageLocation()
+	
+	// Click on Language
+	waitfor Config().Waits.(maxWait), {Text:"English"}
+	click FoundImageLocation()
+	
+	assert that imagefound (Text:"To eat in or to go", waitFor: Config().Waits.(minWait)) with error "Kiosk main screen"
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end startKioskOrder
+
+
+(**  
+selectDiningOption - Handler to select the Dining Option on Kiosk, Dine In, Take Out etc.
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to selectDiningOption
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Read the DataFile to get the Column Number which has the Dining Option stored
+	put DataFile().ColumnMapping.(global posPlatformName).DiningOption into excelColumnName
+	
+	// Read the Excel to get the Data Value for the Dining Option
+	put Common.readDataFromExcel (excelColumnName) into diningOption
+	
+	if diningOption is not empty
+		// Select the Dining Option on the screen
+		Click text:diningOption, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleKioskMainWindow)
+		
+		// Click Continue on the next screen
+		if ImageFound(text:"Continue as Guest", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleKioskMainWindow))
+			click FoundImageLocation()
+		end if
+		
+		// Validate that the Main Course Selection screen has opened up
+		assert that ImageFound(text:"Home", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleKioskMainCourseSelectionArea)) with error "Dining Option Selection"
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end selectDiningOption
+
+//================================
+
+(**  
+selectMainCourse - Handler to select the Main Course, Chicken, Seafood etc
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to selectMainCourse
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	//Select Main Course 
+	// Read the DataFile to get the Column Number which has the Dining Option stored
+	put DataFile().ColumnMapping.(global posPlatformName).MainCourse into excelColumnName
+	
+	// Read the Excel to get the Data Value for the Main Course
+	put Common.readDataFromExcel (excelColumnName) into mainCourse
+	
+	if mainCourse is not empty
+		split mainCourse by ","
+		
+		// Select Main Course and additional selections if any
+		repeat for each item of mainCourse
+			if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleKioskMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+				click FoundImageLocation() 
+				wait 1
+			else if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleKioskItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+				click FoundImageLocation()
+				wait 1
+			end if
+		end repeat
+	end if
+	// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
+	
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end selectMainCourse
+
+(**  
+selectMealAndSize - Handler to select the Meal like, BFLY SHRIMP, PopCorn Shrimp etc. And meal option like Combo, Regular etc.
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to selectMealAndSize
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	//Select Meal  
+	// Read the DataFile to get the Column Number which has the Meal, Meal Option and Display Names stored
+	put DataFile().ColumnMapping.(global posPlatformName).SelectMeal into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into selectMeal
+	
+	put DataFile().ColumnMapping.(global posPlatformName).SelectMealSize into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into selectMealSize
+	
+	// Select Meal
+	if selectMeal is not empty
+		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
+		split selectMeal by ","
+		
+		// Select Meal and additional selections if any
+		repeat for each item of selectMeal
+			if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleKioskItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+				click FoundImageLocation() 
+				wait 3
+			end if
+		end repeat
+	end if
+	
+	
+	// Select Meal Size
+	if selectMealSize is not empty
+		// Click Meal Option on screen
+		Click text:selectMealSize, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleKioskOptionsSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes
+		wait 1
+	end if
+	
+	// Click Next
+	WaitFor Config().Waits.(maxWait), text:"Next", SearchRectangle:Config().SearchRectangles.(BottomHalf), Contrast:ON
+	click FoundImageLocation()
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end selectMealAndSize
+
+(**  
+selectFlavors - Handler to select the Flavors or Sauces like BBQ Sauce, Ranch etc
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to selectFlavors
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Read the DataFile to get the Column Number which has the Flavor Options stored
+	put DataFile().ColumnMapping.(global posPlatformName).Flavors into excelColumnName
+	
+	// Read the Excel to get the Data Value for the Flavors
+	put Common.readDataFromExcel (excelColumnName) into flavors
+	
+	if flavors is not empty
+		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
+		split flavors by ","
+		
+		// Select Flavors
+		repeat for each item of flavors
+			// Select Flavor
+			if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleKioskMainWindow), ignoreSpaces: Yes, ignoreNewLines: Yes, caseSensitive: Yes)
+				click FoundImageLocation() 
+				wait 1
+			end if
+		end repeat
+		
+		// Click Next
+		WaitFor Config().Waits.(maxWait), text:"Next", SearchRectangle:Config().SearchRectangles.(BottomHalf), Contrast:ON
+		click FoundImageLocation()
+		
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end selectFlavors
+
+(**  
+selectSides - Handler to select the Sides like Mash Gravyy, Rice etc
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to selectSides
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Read the DataFile to get the Column Number which has the Sides Options stored
+	put DataFile().ColumnMapping.(global posPlatformName).Sides into excelColumnName
+	
+	// Read the Excel to get the Data Value for the Sides
+	put Common.readDataFromExcel (excelColumnName) into sides
+	
+	if sides is not empty
+		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
+		split sides by ","
+		
+		// Select Sides
+		repeat for each item of sides
+			
+			// Select Side
+			if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleKioskMainWindow), ignoreSpaces: Yes, ignoreNewLines: Yes)
+				click FoundImageLocation() 
+				wait 1
+			end if
+		end repeat
+		
+		// Click Next
+		WaitFor Config().Waits.(maxWait), text:"Next", SearchRectangle:Config().SearchRectangles.(BottomHalf), Contrast:ON
+		click FoundImageLocation()
+		
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end selectSides
+
+
+(**  
+selectDrink - Handler to select the Drink like CocaCola, DrPepper etc
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to selectDrink
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Read the DataFile to get the Column Number which has the Drink Options stored
+	put DataFile().ColumnMapping.(global posPlatformName).Drink into excelColumnName
+	
+	// Read the Excel to get the Data Value for the Drink
+	put Common.readDataFromExcel (excelColumnName) into drink
+	
+	if drink is not empty
+		
+		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
+		split drink by ","
+		
+		
+		// Select Drink by clicking the image of the drink
+		repeat for each item of drink
+			// Select Drink
+			if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleKioskMainWindow), ignoreSpaces: Yes, ignoreNewLines: Yes)
+				click FoundImageLocation() 
+				wait 1
+			end if
+			
+		end repeat
+		
+		// Click Next if available
+		if imageFound(text:"Next", waitFor: Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(BottomHalf), Contrast:ON)
+			click FoundImageLocation()
+		end if
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end selectDrink
+
+
+(**  
+selectBiscuit - Handler to select the Biscuit option
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to selectBiscuit
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Read the DataFile to get the Column Number which has the Drink Options stored
+	put DataFile().ColumnMapping.(global posPlatformName).Biscuit into excelColumnName
+	
+	// Read the Excel to get the Data Value for the Biscuit
+	put Common.readDataFromExcel (excelColumnName) into biscuit
+	
+	if biscuit is not empty
+		
+		// Data is maintained comma-separated if multiple options are needed to be clicked. Split the string by "," and click options one by one
+		split biscuit by ","
+		
+		
+		// Select Drink by clicking the image of the drink
+		repeat for each item of biscuit
+			// Select Biscuit option
+			if ImageFound(text:trim(it), waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleKioskMainWindow), ignoreSpaces: Yes, ignoreNewLines: Yes)
+				click FoundImageLocation() 
+				wait 1
+			end if
+			
+		end repeat
+		
+		// Click Next if available
+		if imageFound(text:"Next", waitFor: Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(BottomHalf), Contrast:ON)
+			click FoundImageLocation()
+		end if
+		
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+end selectBiscuit
+
+
+(**  
+addToCart - Handler to Add the Items to Cart
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to addToCart
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	put DataFile().ColumnMapping.(global posPlatformName).MealDisplayName into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into mealDisplayName
+	
+	// Click Add to Cart button
+	If Imagefound (text:"Add to Cart", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(BottomHalf),  ignoreSpaces: Yes, ignoreNewLines: Yes, Contrast:ON)
+		click FoundImageLocation()
+		wait 0.5
+	End If
+	
+	(*	// Validate Item is added to cart
+	assert that common.extendedFindText(mealDisplayName,Config().Waits.(minWait), Config().SearchRectangles.(BottomHalf)) is true with error "Meal Added to Order"*)
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end addToCart
+
+
+(**  
+viewCart - Handler to View the Cart
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to viewCart
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	put DataFile().ColumnMapping.(global posPlatformName).MealDisplayName into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into mealDisplayName
+	
+	// Click View Cart button
+	WaitFor Config().Waits.(minWait), Image:"Icons/KioskViewCart", SearchRectangle:Config().SearchRectangles.(BottomHalf)
+	click FoundImageLocation()
+	wait 0.5
+	
+	// If Anything else popup shows, click No Thanks
+	if ImageFound(text:"No, Thanks", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleKioskMainWindow),  ignoreSpaces: Yes, ignoreNewLines: Yes)
+		click FoundImageLocation() 
+		wait 0.5
+	end if
+	
+	// Validate Item is added to cart
+	assert that common.extendedFindText(mealDisplayName,Config().Waits.(minWait), Config().SearchRectangles.(TopHalf)) is true with error "View Cart"
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end viewCart
+
+(**  
+proceedToTender - Handler to click the Pay Now button to proceed to tender
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to proceedToTender
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Click Pay Now
+	WaitFor Config().Waits.(minWait), image:"Icons/KioskPayNow", SearchRectangle:Config().SearchRectangles.(OracleKioskMainWindow)
+	click FoundImageLocation()
+	wait 0.5
+	
+	// If Anything else popup shows, click No Thanks
+	if ImageFound(text:"No, Thanks", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleKioskMainWindow),  ignoreSpaces: Yes, ignoreNewLines: Yes,)
+		click FoundImageLocation() 
+		wait 0.5
+	end if
+	
+	// Validate Order name entry screen has shown
+	assert that ImageFound(text:"Enter Your Name", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleKioskMainWindow), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Order Name Screen"
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end proceedToTender
+
+(**  
+enterNameOnOrder - Handler to click the soft keypad to enter the name on order
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+@Parameters OrderName - Name to be selected for the order
+**)
+to enterNameOnOrder orderName
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	
+	// Click the characters on the soft keypad to enter name
+	repeat for each character in orderName
+		click text:it, SearchRectangle: Config().SearchRectangles.(OracleKioskNameSoftKeyboard), DPI: 144, waitFor: 1
+		wait 1
+	end repeat
+	
+	WaitFor Config().Waits.(maxWait), Image:"Icons/KioskNextButton", SearchRectangle:Config().SearchRectangles.(BottomHalf)
+	click FoundImageLocation()
+	
+	// Validate Payment screen has shown
+	assert that ImageFound(text:"Payment", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleKioskMainWindow), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Payment Screen"
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end enterNameOnOrder
+
+(**  
+payAtCounter - Handler to click the Pay At Counter button
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to payAtCounter
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Click Exact button on the Order First
+	WaitFor Config().Waits.(minWait), text:"Pay At Counter", SearchRectangle:Config().SearchRectangles.(OracleKioskMainWindow), ignoreSpaces: Yes, ignoreNewLines: Yes
+	click FoundImageLocation()
+	wait 1
+	
+	// Validate User is taken to the receipt option screen
+	assert that ImageFound(text:"Select an option and", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(OracleKioskMainWindow)) with error "Order Option Validation"
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end payAtCounter
+
+
+(**  
+completeOrder - Handler to click the print and receipt buttons to complete the order
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to completeOrder
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Click Print Button for getting the Order ID
+	WaitFor Config().Waits.(maxWait), text:"Print", SearchRectangle:Config().SearchRectangles.(OracleKioskMainWindow), ignoreSpaces: Yes, ignoreNewLines: Yes, Contrast:ON
+	click FoundImageLocation()
+	wait 3
+	
+	// Wait for Order ID to be generated
+	WaitFor Config().Waits.(maxWait), text:"Order Number", SearchRectangle:Config().SearchRectangles.(OracleKioskMainWindow), ignoreSpaces: Yes, ignoreNewLines: Yes
+	wait 2
+	
+	// Read Order ID
+	saveOrderID
+	
+	// Click on See Receipt
+	WaitFor Config().Waits.(maxWait), text:"See Receipt", SearchRectangle:Config().SearchRectangles.(OracleKioskMainWindow), ignoreSpaces: Yes, ignoreNewLines: Yes
+	click FoundImageLocation()
+	wait 1
+	
+	// Close Receipt
+	WaitFor Config().Waits.(maxWait), Image:"Icons/KioskCloseReceipt", SearchRectangle:Config().SearchRectangles.(OracleKioskMainWindow), ignoreSpaces: Yes, ignoreNewLines: Yes
+	click FoundImageLocation()
+	wait 1
+	
+	// Validate User is taken to the Main Order screen
+	assert that ImageFound(text:"Order Now", waitFor:Config().Waits.(maxWait),SearchRectangle:Config().SearchRectangles.(OracleKioskMainWindow)) with error "Order Main Window"
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end completeOrder
+
+(**  
+saveOrderID - Handler to read the order ID from the Kiosk screen and return the value, if needed for DAI
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to saveOrderID
+	Log "Reading Order ID"
+	put readText(Config().SearchRectangles.(KioskOrderID), DPI: 400, validCharacters: "0123456789") into global orderID
+	if character 1 of global orderID begins with "0" then delete character 1 of global orderID
+	log "Order ID is: "&global orderID
+	return global orderID
+end saveOrderID
+
+(**  
+payKioskOrder - Handler to complete the payment for Kiosk order through POS.
+@Version 1.0 7/24/2025
+@ChangeReason Creation
+**)
+to payKioskOrder
+	
+	// To launch Oracle POS
+	if (global posPlatformName) is "OracleKiosk"
+		// Launches and logs into Oracle POS
+		Common.launchOraclePOS
+		"DAIWrappers/POSOracle".loginToOraclePOS
+		
+		// Select Kiosk Order
+		"DAIWrappers/POSOracle".selectKioskOrder "Test"
+		
+		// Complete payment
+		"DAIWrappers/POSOracle".exactPayment
+	end if
+	
+	// To launch NCR POS
+	if (global posPlatformName) is "NCRKiosk"
+		// Launches and logs into Oracle POS
+		Common.launchNCRPOS
+		"DAIWrappers/POSNCR".loginToNCRPOS
+		
+		// Select Kiosk Order
+		"DAIWrappers/POSNCR".selectKioskOrder "Test"
+		
+		// Complete payment
+		"DAIWrappers/POSNCR".exactPayment
+	end if
+	
+	// To launch Sicom POS
+	if (global posPlatformName) is "SicomKiosk"
+		// Launches and logs into Oracle POS
+		Common.launchSicomPOS
+		"DAIWrappers/POSSicom".logOnSicomPOS
+		
+		// Select Kiosk Order
+		"DAIWrappers/POSSicom".selectKioskOrder "Test"
+		
+		// Complete payment
+		"DAIWrappers/POSSicom".exactPayment
+	end if
+	
+end payKioskOrder
+//==============================

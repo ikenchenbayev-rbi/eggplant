@@ -1,0 +1,46 @@
+{
+	"lastmodifieddate": 1750254502.2189999,
+	"lastfoundlocation": [
+		737,
+		416,
+		73,
+		73
+	],
+	"originalcapturelocation": [
+		734,
+		414,
+		73,
+		73
+	],
+	"createddate": 1747905009.934,
+	"lastfounddate": 1750920961.2150002,
+	"testlocationdata": [
+		{
+				"connectionportnum": 55655,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[31,34]",
+					"Tolerance": "_45",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/Drinks/DrPepper/SicomDrPepper.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"capturerect": [
+					734,
+					414,
+					73,
+					73
+				],
+				"connectiontype": "Single System",
+				"connectionserverid": "127.0.0.1"
+			}
+	],
+	"name": "Icons/Drinks/SicomDrPepper"
+}

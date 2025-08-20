@@ -1,0 +1,47 @@
+{
+	"originalcapturelocation": [
+		962,
+		125,
+		30,
+		23
+	],
+	"lastmodifieddate": 1753723195.4780002,
+	"createddate": 1753723195.4780002,
+	"name": "Icons/NCRQty4",
+	"lastfounddate": 1755634282.8710001,
+	"ocrcapturestring": "4",
+	"lastfoundlocation": [
+		962,
+		125,
+		30,
+		23
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 5500,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[15,11]",
+					"Tolerance": "_45",
+					"Discrepancy": "_0",
+					"SearchType": "Tolerant of Background"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/NCRQty4.png",
+				"connectionname": "127.0.0.1",
+				"type": 1,
+				"capturerect": [
+					962,
+					125,
+					30,
+					23
+				],
+				"connectionserverid": "127.0.0.1",
+				"capturedocrtext": "4"
+			}
+	]
+}

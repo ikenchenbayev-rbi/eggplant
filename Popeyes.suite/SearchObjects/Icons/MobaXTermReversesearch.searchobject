@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		972,
+		562,
+		97,
+		17
+	],
+	"lastmodifieddate": 1754423659.7740002,
+	"createddate": 1754423659.7740002,
+	"name": "Icons/MobaXTermReversesearch",
+	"lastfounddate": 1754423957.2189999,
+	"ocrcapturestring": "J Reverse search",
+	"lastfoundlocation": [
+		972,
+		562,
+		97,
+		17
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 63910,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[11,8]",
+					"Tolerance": "_73",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"Type": "Single System"
+				},
+				"name": "Icons/MobaXTermReversesearch.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					972,
+					562,
+					97,
+					17
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "J Reverse search"
+			}
+	]
+}

@@ -1,0 +1,48 @@
+{
+	"originalcapturelocation": [
+		1037,
+		945,
+		84,
+		20
+	],
+	"lastmodifieddate": 1747862837.6370001,
+	"createddate": 1747862837.6370001,
+	"name": "Icons/KioskViewCart",
+	"lastfounddate": 1747935788.6670001,
+	"ocrcapturestring": "View Cart",
+	"lastfoundlocation": [
+		1037,
+		945,
+		84,
+		20
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 55811,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[42,10]",
+					"Tolerance": "_73",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"type": "Unknown VNC"
+				},
+				"name": "Icons/KioskViewCart.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					1037,
+					945,
+					84,
+					20
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "View Cart"
+			}
+	]
+}

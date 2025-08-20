@@ -1,25 +1,478 @@
-﻿// Oracle Test Case 1: Butterfly Shrimp & Tender Combo
+﻿(*=================================*)
+// Oracle Test Case 1: Popcorn Shrimp & Tender ALC
 Common.setPlatformName "POS"
 Common.setPOSPlatformName "Oracle"
-Common.setTestCaseName "Butterfly Shrimp & Tender Combo"
+Common.setTestCaseName "Popcorn Shrimp & Tender ALC"
 Common.launchOraclePOS
-"DAIWrappers/POSNCR".loginToOraclePOS
-
-"DAIWrappers/POSNCR".selectDiningOption
-"DAIWrappers/POSNCR".selectMainCourse
-"DAIWrappers/POSNCR".selectMealAndOption
-"DAIWrappers/POSNCR".selectFlavors
-"DAIWrappers/POSNCR".selectSides 
-"DAIWrappers/POSNCR".selectDrink
-"DAIWrappers/POSNCR".proceedToTender
-"DAIWrappers/POSNCR".exactPayment
-Common.disconnectFromNCRPOS
+"DAIWrappers/POSOracle".loginToOraclePOS
+"DAIWrappers/POSOracle".selectMainCourse
+"DAIWrappers/POSOracle".selectMeal
+"DAIWrappers/POSOracle".selectFlavors
+"DAIWrappers/POSOracle".selectOrderType
+"DAIWrappers/POSOracle".selectSides 
+"DAIWrappers/POSOracle".selectDrink
+"DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".exactPayment
 
 //KDS
-"DAIWrappers/KDS".connectToNCRKDS
-"DAIWrappers/KDS".bumpOrderIDOnNCRKDS
-"DAIWrappers/KDS".disconnectFromNCRKDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+// Oracle Test Case 1: Popcorn Shrimp & Tender ALC
+"DAIWrappers/POSOracle".validateReceipt
+
 
 (*=================================*)
+// Oracle Test Case 2: Popcorn Shrimp & Tender Dinner
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Oracle"
+Common.setTestCaseName "Popcorn Shrimp & Tender Dinner"
+Common.launchOraclePOS
+"DAIWrappers/POSOracle".loginToOraclePOS
+"DAIWrappers/POSOracle".selectMainCourse
+"DAIWrappers/POSOracle".selectMeal
+"DAIWrappers/POSOracle".selectFlavors
+"DAIWrappers/POSOracle".selectOrderType
+"DAIWrappers/POSOracle".selectSides 
+"DAIWrappers/POSOracle".selectDrink
+"DAIWrappers/POSOracle".validatePremiumUpcharges
+"DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
+
+(*=================================*)
+// Oracle Test Case 3: Popcorn Shrimp & Tender Combo
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Oracle"
+Common.setTestCaseName "Popcorn Shrimp & Tender Combo"
+Common.launchOraclePOS
+"DAIWrappers/POSOracle".loginToOraclePOS
+"DAIWrappers/POSOracle".selectMainCourse
+"DAIWrappers/POSOracle".selectMeal
+"DAIWrappers/POSOracle".selectFlavors
+"DAIWrappers/POSOracle".selectOrderType
+"DAIWrappers/POSOracle".selectSides 
+"DAIWrappers/POSOracle".selectDrink
+"DAIWrappers/POSOracle".validatePremiumUpcharges
+"DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
+
+(*=================================*)
+// Oracle Test Case 4: Popcorn Shrimp & Tender Lg Combo
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Oracle"
+Common.setTestCaseName "Popcorn Shrimp & Tender Lg Combo"
+Common.launchOraclePOS
+"DAIWrappers/POSOracle".loginToOraclePOS
+"DAIWrappers/POSOracle".selectMainCourse
+"DAIWrappers/POSOracle".selectMeal
+"DAIWrappers/POSOracle".selectFlavors
+"DAIWrappers/POSOracle".selectOrderType
+"DAIWrappers/POSOracle".selectSides 
+"DAIWrappers/POSOracle".selectDrink
+"DAIWrappers/POSOracle".validatePremiumUpcharges
+"DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
+
+
+(*=================================*)
+// Oracle Test Case 6: Classic Chicken Sandwich ALC
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Oracle"
+Common.setTestCaseName "Classic Chicken Sandwich ALC"
+Common.launchOraclePOS
+"DAIWrappers/POSOracle".loginToOraclePOS
+"DAIWrappers/POSOracle".selectMainCourse
+"DAIWrappers/POSOracle".selectMeal
+"DAIWrappers/POSOracle".selectFlavors
+"DAIWrappers/POSOracle".selectOrderType
+"DAIWrappers/POSOracle".selectSides 
+"DAIWrappers/POSOracle".selectDrink
+"DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
+
+(*=================================*)
+// Oracle Test Case 7: Classic Chicken Sandwich Dinner
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Oracle"
+Common.setTestCaseName "Classic Chicken Sandwich Dinner"
+Common.launchOraclePOS
+"DAIWrappers/POSOracle".loginToOraclePOS
+"DAIWrappers/POSOracle".selectMainCourse
+"DAIWrappers/POSOracle".selectMeal
+"DAIWrappers/POSOracle".selectFlavors
+"DAIWrappers/POSOracle".selectOrderType
+"DAIWrappers/POSOracle".selectSides 
+"DAIWrappers/POSOracle".selectDrink
+"DAIWrappers/POSOracle".validatePremiumUpcharges
+"DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
+
+(*=================================*)
+// Oracle Test Case 5: Classic Chicken Sandwich Combo
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Oracle"
+Common.setTestCaseName "Classic Chicken Sandwich Combo"
+Common.launchOraclePOS
+"DAIWrappers/POSOracle".loginToOraclePOS
+"DAIWrappers/POSOracle".selectMainCourse
+"DAIWrappers/POSOracle".selectMeal
+"DAIWrappers/POSOracle".selectFlavors
+"DAIWrappers/POSOracle".selectOrderType
+"DAIWrappers/POSOracle".selectSides 
+"DAIWrappers/POSOracle".selectDrink
+"DAIWrappers/POSOracle".validatePremiumUpcharges
+"DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
+
+(*=================================*)
+// Oracle Test Case 8: Classic Chicken Sandwich Lg Combo
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Oracle"
+Common.setTestCaseName "Classic Chicken Sandwich Lg Combo"
+Common.launchOraclePOS
+"DAIWrappers/POSOracle".loginToOraclePOS
+"DAIWrappers/POSOracle".selectMainCourse
+"DAIWrappers/POSOracle".selectMeal
+"DAIWrappers/POSOracle".selectFlavors
+"DAIWrappers/POSOracle".selectOrderType
+"DAIWrappers/POSOracle".selectSides 
+"DAIWrappers/POSOracle".selectDrink
+"DAIWrappers/POSOracle".validatePremiumUpcharges
+"DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
+
+(*=================================*)
+// Oracle Test Case 9: 12 PC Wings Combo
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Oracle"
+Common.setTestCaseName "12 PC Wings Combo"
+Common.launchOraclePOS
+"DAIWrappers/POSOracle".loginToOraclePOS
+"DAIWrappers/POSOracle".selectMainCourse
+"DAIWrappers/POSOracle".selectMeal
+"DAIWrappers/POSOracle".selectFlavors
+"DAIWrappers/POSOracle".selectOrderType
+"DAIWrappers/POSOracle".selectSides 
+"DAIWrappers/POSOracle".selectDrink
+"DAIWrappers/POSOracle".validatePremiumUpcharges
+"DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
+
+(*=================================*)
+// Oracle Test Case 10: 12 PC Wings ALC
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Oracle"
+Common.setTestCaseName "12 PC Wings ALC"
+Common.launchOraclePOS
+"DAIWrappers/POSOracle".loginToOraclePOS
+"DAIWrappers/POSOracle".selectMainCourse
+"DAIWrappers/POSOracle".selectMeal
+"DAIWrappers/POSOracle".selectFlavors
+"DAIWrappers/POSOracle".selectOrderType
+"DAIWrappers/POSOracle".selectSides 
+"DAIWrappers/POSOracle".selectDrink
+"DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
+
+(*=================================*)
+// Oracle Test Case 11: 12 PC Wings Dinner
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Oracle"
+Common.setTestCaseName "12 PC Wings Dinner"
+Common.launchOraclePOS
+"DAIWrappers/POSOracle".loginToOraclePOS
+"DAIWrappers/POSOracle".selectMainCourse
+"DAIWrappers/POSOracle".selectMeal
+"DAIWrappers/POSOracle".selectFlavors
+"DAIWrappers/POSOracle".selectOrderType
+"DAIWrappers/POSOracle".selectSides 
+"DAIWrappers/POSOracle".selectDrink
+"DAIWrappers/POSOracle".validatePremiumUpcharges
+"DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
+
+(*=================================*)
+// Oracle Test Case 12: 12 PC Wings Lg Combo
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Oracle"
+Common.setTestCaseName "12 PC Wings Lg Combo"
+Common.launchOraclePOS
+"DAIWrappers/POSOracle".loginToOraclePOS
+"DAIWrappers/POSOracle".selectMainCourse
+"DAIWrappers/POSOracle".selectMeal
+"DAIWrappers/POSOracle".selectFlavors
+"DAIWrappers/POSOracle".selectOrderType
+"DAIWrappers/POSOracle".selectSides 
+"DAIWrappers/POSOracle".selectDrink
+"DAIWrappers/POSOracle".validatePremiumUpcharges
+"DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
+
+(*=================================*)
+// Oracle Test Case 13: 4 PC BIC Combo
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Oracle"
+Common.setTestCaseName "4 PC BIC Combo"
+Common.launchOraclePOS
+"DAIWrappers/POSOracle".loginToOraclePOS
+"DAIWrappers/POSOracle".selectMainCourse
+"DAIWrappers/POSOracle".selectMeal
+"DAIWrappers/POSOracle".selectFlavors
+"DAIWrappers/POSOracle".selectOrderType
+"DAIWrappers/POSOracle".selectSides 
+"DAIWrappers/POSOracle".selectDrink
+"DAIWrappers/POSOracle".validatePremiumUpcharges
+"DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
+
+(*=================================*)
+// Oracle Test Case 14: 4 PC BIC ALC
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Oracle"
+Common.setTestCaseName "4 PC BIC ALC"
+Common.launchOraclePOS
+"DAIWrappers/POSOracle".loginToOraclePOS
+"DAIWrappers/POSOracle".selectMainCourse
+"DAIWrappers/POSOracle".selectMeal
+"DAIWrappers/POSOracle".selectFlavors
+"DAIWrappers/POSOracle".selectOrderType
+"DAIWrappers/POSOracle".selectSides 
+"DAIWrappers/POSOracle".selectDrink
+"DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
+
+(*=================================*)
+// Oracle Test Case 15: 4 PC BIC Dinner
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Oracle"
+Common.setTestCaseName "4 PC BIC Dinner"
+Common.launchOraclePOS
+"DAIWrappers/POSOracle".loginToOraclePOS
+"DAIWrappers/POSOracle".selectMainCourse
+"DAIWrappers/POSOracle".selectMeal
+"DAIWrappers/POSOracle".selectFlavors
+"DAIWrappers/POSOracle".selectOrderType
+"DAIWrappers/POSOracle".selectSides 
+"DAIWrappers/POSOracle".selectDrink
+"DAIWrappers/POSOracle".validatePremiumUpcharges
+"DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
+
+(*=================================*)
+// Oracle Test Case 16: 4 PC BIC Lg Combo
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Oracle"
+Common.setTestCaseName "4 PC BIC Lg Combo"
+Common.launchOraclePOS
+"DAIWrappers/POSOracle".loginToOraclePOS
+"DAIWrappers/POSOracle".selectMainCourse
+"DAIWrappers/POSOracle".selectMeal
+"DAIWrappers/POSOracle".selectFlavors
+"DAIWrappers/POSOracle".selectOrderType
+"DAIWrappers/POSOracle".selectSides 
+"DAIWrappers/POSOracle".selectDrink
+"DAIWrappers/POSOracle".validatePremiumUpcharges
+"DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
+
+(*=================================*)
+// Oracle Test Case 17: Kids Tender Meal Combo
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Oracle"
+Common.setTestCaseName "Kids Tender Meal Combo"
+Common.launchOraclePOS
+"DAIWrappers/POSOracle".loginToOraclePOS
+"DAIWrappers/POSOracle".selectMainCourse
+"DAIWrappers/POSOracle".selectMeal
+"DAIWrappers/POSOracle".selectFlavors
+"DAIWrappers/POSOracle".selectOrderType
+"DAIWrappers/POSOracle".selectSides 
+"DAIWrappers/POSOracle".selectDrink
+"DAIWrappers/POSOracle".validatePremiumUpcharges
+"DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
+
+(*=================================*)
+// Oracle Test Case 18: X% Off Discount
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Oracle"
+Common.setTestCaseName "X% Off Discount"
+Common.launchOraclePOS
+"DAIWrappers/POSOracle".loginToOraclePOS
+"DAIWrappers/POSOracle".selectMainCourse
+"DAIWrappers/POSOracle".selectMeal
+"DAIWrappers/POSOracle".selectFlavors
+"DAIWrappers/POSOracle".selectOrderType
+"DAIWrappers/POSOracle".selectSides 
+"DAIWrappers/POSOracle".selectDrink
+"DAIWrappers/POSOracle".validatePremiumUpcharges
+"DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".applyDiscount
+"DAIWrappers/POSOracle".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
+
+
+(*=================================*)
+// Oracle Test Case 19: PLU Lookup
+Common.setPlatformName "POS"
+Common.setPOSPlatformName "Oracle"
+Common.setTestCaseName "PLU Lookup"
+Common.launchOraclePOS
+"DAIWrappers/POSOracle".loginToOraclePOS
+"DAIWrappers/POSOracle".selectMainCourse
+"DAIWrappers/POSOracle".selectMeal
+"DAIWrappers/POSOracle".selectFlavors
+"DAIWrappers/POSOracle".selectOrderType
+"DAIWrappers/POSOracle".selectSides 
+"DAIWrappers/POSOracle".selectDrink
+"DAIWrappers/POSOracle".validatePremiumUpcharges
+"DAIWrappers/POSOracle".applyCoupon
+"DAIWrappers/POSOracle".proceedToTender
+"DAIWrappers/POSOracle".exactPayment
+
+//KDS
+"DAIWrappers/KDS".connectToKDS
+"DAIWrappers/KDS".bumpOrderIDOnKDS
+"DAIWrappers/KDS".disconnectFromKDS
+
+//Validate Receipts
+"DAIWrappers/POSOracle".validateReceipt
 
 
