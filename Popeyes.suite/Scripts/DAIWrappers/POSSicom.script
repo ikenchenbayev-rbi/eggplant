@@ -339,7 +339,7 @@ to proceedToTender
 	enterCustomerName
 	
 	// Validate Tenders screen has opened
-	assert that ImageFound(text:"EXACT CHANGE", waitFor:2,SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Tenders Screen"
+	assert that ImageFound(text:"TOTAL", waitFor:2,SearchRectangle:Config().SearchRectangles.(SicomOrdersArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Tenders Screen"
 	
 	//Call handler to read and save the Order ID in a global parameter
 	saveOrderID
@@ -356,9 +356,19 @@ to exactPayment
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
 	
 	// Click Exact button on the Order First
-	WaitFor Config().Waits.(maxWait), text:"EXACT CHANGE", SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes
-	click FoundImageLocation()
-	wait 1
+	if ImageFound(text:"EXACT CHANGE", SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+		WaitFor Config().Waits.(maxWait), text:"EXACT CHANGE", SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes
+		click FoundImageLocation()
+		wait 1
+	else
+		// Click Total button on the Orders Section First
+		WaitFor Config().Waits.(maxWait), text:"TOTAL", SearchRectangle:Config().SearchRectangles.(SicomOrdersAreaOptions), ignoreSpaces: Yes, ignoreNewLines: Yes
+		click FoundImageLocation()
+		wait 1
+		// Validate Tenders screen has opened
+		assert that ImageFound(text:"EXACT CHANGE", waitFor:2,SearchRectangle:Config().SearchRectangles.(SicomItemSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes, ) with error "Tenders Screen"
+		click FoundImageLocation()
+	end if
 	
 	// Validate User is taken back to the New Order screen
 	assert that ImageFound(text:"0.00", waitFor:Config().Waits.(maxWait),SearchRectangle:Config().SearchRectangles.(BottomHalf),  ignoreSpaces: Yes, ignoreNewLines: Yes) with error "Sicom POS Login Validation"
