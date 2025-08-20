@@ -1,22 +1,14 @@
-{
-    "Icons/ChromeRefreshIcon.png" = "2025-08-08 20:46 +0000";
-    "Icons/EdgeBrowser.png" = "2025-08-08 20:48 +0000";
-    "Icons/OracleCheckClosed.png" = "2025-08-11 01:41 +0000";
-    "Icons/OracleIcon.png" = "2025-08-11 01:39 +0000";
-    "Icons/OracleLoginButton.png" = "2025-08-11 01:39 +0000";
-    "Icons/OracleOKButton.png" = "2025-08-11 01:40 +0000";
-    "Icons/OracleStickyStart.png" = "2025-08-11 01:41 +0000";
-    "Icons/OracleStickyStart_Top.png" = "2025-08-11 01:41 +0000";
-    "Icons/OracleTotalButton.png" = "2025-08-11 01:40 +0000";
-    "Icons/SicomQty3.png" = "2025-08-08 22:45 +0000";
-    "Icons/SicomTaskbarKDS.png" = "2025-08-08 22:46 +0000";
-    "Icons/SicomTaskbarPOS.png" = "2025-08-08 22:50 +0000";
-    "Icons/VNC.png" = "2025-08-11 14:36 +0000";
-    "Icons/authenticator.png" = "2025-08-11 14:36 +0000";
-    "[Character_Collections]/ExpoFont/lower_c.png" = "2025-08-11 01:35 +0000";
-    "[Character_Collections]/ExpoFont/lower_d.png" = "2025-08-11 01:35 +0000";
-    "[Character_Collections]/ExpoFont/lower_l.png" = "2025-08-11 01:35 +0000";
-    "[Character_Collections]/ExpoFont/lower_o.png" = "2025-08-11 01:35 +0000";
-    "[Character_Collections]/ExpoFont/lower_s.png" = "2025-08-11 01:35 +0000";
-    "[Character_Collections]/ExpoFont/upper_C.png" = "2025-08-11 01:35 +0000";
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Icons/SicomPOSCouponLookUp.png</key>
+    <string>2025-08-20 05:10 +0000</string>
+    <key>Icons/SicomQty3.png</key>
+    <string>2025-08-20 07:20 +0000</string>
+    <key>Icons/SicomTaskbarKDS.png</key>
+    <string>2025-08-20 07:21 +0000</string>
+    <key>Icons/SicomTaskbarPOS.png</key>
+    <string>2025-08-20 07:23 +0000</string>
+</dict>
+</plist>

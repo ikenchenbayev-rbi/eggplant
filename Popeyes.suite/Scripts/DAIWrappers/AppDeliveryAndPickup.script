@@ -1,0 +1,92 @@
+﻿(** 
+ScriptName: AppDeliveryAndPickup
+Version 1.0
+Author: Sajeendra Das
+CreatedOn: 5/09/25
+PeerReviewedBy:
+PeerReviewedOn:
+EditedBy: 
+EditedOn: 
+Description:  Handlers specific to the App Delivery and Pickup testing onthe Selenium test platform
+**)
+
+(**
+"This software is copyright Keysight Technologies, Inc. and licensed under the terms of Keysight’s End User License Agreement. Terms of Keysight’s EULA may be found here: www.keysight.com/find/sweula By using this Software, you agree to the terms of the Keysight EULA."
+**) 
+
+
+(**  
+launchSeleniumSUT - Handler to launch the Selenium SUT to trigger the tests
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to launchSeleniumSUT 
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Connect to the Selenium SUT
+	log "Performing steps to launch Selenium SUT"
+	Connect DataFile().SUTNames.SeleniumSUT, visible: True
+	
+	// Wait for SUT To be connected
+	repeat 2 minutes
+		if not connected of ConnectionInfo() then
+			Log "SUT is not connected yet. Trying again in 10 seconds"
+			wait 10
+		else
+			log "SUT Connected!"
+			exit repeat
+		end if
+	end repeat
+	
+	// Click to wake up the system, incase it is showing the screen saver
+	click [1900,1000]
+
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end launchSeleniumSUT
+
+(**  
+triggerSeleniumScript - Handler to launch the Terminal Window and trigger the Selenium test
+@Version 1.0 4/22/2025
+@ChangeReason Creation
+**)
+to triggerSeleniumScript 
+	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+	
+	// Launch a new Terminal Window
+	typetext controlKey, altKey, "t"
+	wait 1
+	TypeText windowsKey, upArrow -- Maximize Any Window
+	
+	// Validate Terminal Window has opened
+	assert that ImageFound(text:"web-automation", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(TopHalf)) with error "Selenium Terminal Window"
+	wait 1
+	
+	// Navigate to the Folder with the test cases
+	typetext DataFile().Logins.App.directoryCommand, returnKey
+	wait 1
+	
+	// Execute script. Get ProfileName, LabName and Order Type from Input excel
+	put DataFile().ColumnMapping.(global posPlatformName).ProfileName into excelColumnNumber
+	put Common.readDataFromExcel (excelColumnNumber) into profileName
+	log profileName
+	put DataFile().ColumnMapping.(global posPlatformName).LabName into excelColumnNumber
+	put Common.readDataFromExcel (excelColumnNumber) into labName
+	log labName
+	put DataFile().ColumnMapping.(global posPlatformName).OrderType into excelColumnName
+	put Common.readDataFromExcel (excelColumnName) into orderType
+	log orderType
+	log DataFile().Logins.App.executionCommand&profileName&&labName&&orderType
+	typetext DataFile().Logins.App.executionCommand&profileName&&labName&&orderType, returnKey
+	wait 1
+	
+	// Wait for the Selenium Script to run to completion
+	WaitFor Config().Waits.(seleniumWait), text:"Build Success"
+	
+	// Close Terminal Window
+	typetext controlKey, shiftKey, "w"
+	if ImageFound(text:"Close Terminal", waitFor:Config().Waits.(minWait))
+		click FoundImageLocation()
+	end if
+	
+	Log "End of Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
+end triggerSeleniumScript
