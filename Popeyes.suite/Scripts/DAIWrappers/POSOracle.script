@@ -719,6 +719,7 @@ end applyDiscount
 selectKioskOrder - Handler to select the Kiosk order and finish payment in the POS Oracle.
 @Version 1.0 6/19/2025
 @ChangeReason Creation
+@Parameters: orderName - Order Name used in the Kiosk order
 **)
 to selectKioskOrder orderName
 	Log "Running Script:"&&item 1 delimited by ".script" of my name &"."& param(0)
