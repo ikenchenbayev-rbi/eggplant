@@ -100,6 +100,13 @@ return {
 			Drink: "Drink",
 			Biscuit: "Biscuit",
 			MealDisplayName: "MealDisplayName",
+			KDSMealDisplayName: "KDSMealDisplayName",
+			ExpoLabelDisplayName: "ExpoLabelDisplayName",
+			ReceiptDisplayName: "ReceiptDisplayName",
+			SandSidesDessertsDisplayName: "SandSidesDessertsDisplayName",
+			ProteinDisplayName: "ProteinDisplayName",
+			SidesValidation:"SidesValidation",
+			ProteinValidation:"ProteinValidation",
 		},
 		
 		OracleKiosk: {
@@ -176,7 +183,16 @@ return {
 			ReceiptDisplayName: "ReceiptDisplayName",
 			LabelMealDisplayName: "LabelMealDisplayName",
 		},
-
+		SicomApp: {
+			TestCaseName: "TestCaseName",
+			ProfileName: "ProfileName",
+			LabName: "LabName",
+			OrderType: "OrderType",
+			KDSMealDisplayName: "KDSMealDisplayName",
+			ExpoLabelDisplayName: "ExpoLabelDisplayName",
+			ReceiptDisplayName: "ReceiptDisplayName",
+			LabelMealDisplayName: "LabelMealDisplayName",
+		},
 
 	},
 	

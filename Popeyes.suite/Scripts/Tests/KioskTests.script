@@ -114,11 +114,13 @@ Common.setTestCaseName "1/4 lb Popcorn Shrimp Combo"
 "DAIWrappers/Kiosk".payAtCounter
 "DAIWrappers/Kiosk".completeOrder
 
+// POS Sicom - to complete payment then order will be moved to KDS.
+"DAIWrappers/Kiosk".payKioskOrder
+
 //KDS
 "DAIWrappers/KDS".connectToKDS
 "DAIWrappers/KDS".bumpOrderIDOnKDS
 "DAIWrappers/KDS".disconnectFromKDS
-
 
 //Validate receipts
 "DAIWrappers/POSSicom".validateSicomReceipt
@@ -187,4 +189,7 @@ Common.setTestCaseName "1/4 lb Popcorn Shrimp Combo"
 
 //Validate receipts
 "DAIWrappers/POSNCR".validateNCRReceipt
+
+
+
 

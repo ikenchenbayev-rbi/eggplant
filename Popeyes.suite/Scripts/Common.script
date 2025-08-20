@@ -560,8 +560,6 @@ to launchSicomPOS
 	if imagefound (Text:"Request", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf)) or if imagefound (Text:"Support Terminal", waitFor: Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(TopHalf))
 		LogSuccess "Sicom POS already launched"
 	else
-		
-		
 		// Open Chrome
 		launchChrome
 		
@@ -601,23 +599,32 @@ to openRemotePC
 	// Wait for the page to finish loading
 	waitFor Config().Waits.(minWait), {Image:"Icons/ChromeRefreshIcon", SearchRectangle: Config().SearchRectangles.(TopHalf)}
 
-	// Click the Login Button
-	waitFor Config().Waits.(minWait), {Text:"Login", SearchRectangle: Config().SearchRectangles.(RightHalf)}
-	click FoundImageLocation()
-	waitfor Config().Waits.(minWait), {Text:"Login to RemotePC", SearchRectangle: Config().SearchRectangles.(TopHalf)}
+	// Click the Login Button or the My Account button
+	if ImageFound(text:"Login", waitFor:Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(RightHalf))
+		click FoundImageLocation()
+		waitfor Config().Waits.(minWait), {Text:"Login to RemotePC", SearchRectangle: Config().SearchRectangles.(TopHalf)}
+	else if ImageFound(text:"My Account", waitFor:Config().Waits.(minWait), SearchRectangle: Config().SearchRectangles.(RightHalf))
+		click FoundImageLocation()
+	end if
 	
-	// Enter Credentials for RemotePC
-	Click (ImageLocation(text:"Email", SearchRectangle:Config().SearchRectangles.(RemotePCLoginArea)) +  Config().TextOffsets.(RemotePCLoginTextbox))
-	typetext controlKey, "a"
-	TypeText DataFile().Logins.RemotePC.username
-	
-	Click (ImageLocation(text:"Password", SearchRectangle:Config().SearchRectangles.(RemotePCLoginArea)) +  Config().TextOffsets.(RemotePCLoginTextbox))
-	typetext controlKey, "a"
-	TypeText DataFile().Logins.RemotePC.password
-	
-	// Click Login Again
-	waitFor Config().Waits.(minWait), {Text:"Login", SearchRectangle: Config().SearchRectangles.(RemotePCLoginArea)}
-	click FoundImageLocation()
+	if imagefound(text:"Email", SearchRectangle:Config().SearchRectangles.(RemotePCLoginArea))
+		// Enter Credentials for RemotePC
+		Click the center of  FoundImageinfo().imagerectangle +  Config().TextOffsets.(RemotePCLoginTextbox)
+		
+		typetext controlKey, "a"
+		TypeText DataFile().Logins.RemotePC.username
+		
+		Click (ImageLocation(text:"Password", SearchRectangle:Config().SearchRectangles.(RemotePCLoginArea)) +  Config().TextOffsets.(RemotePCLoginTextbox))
+		typetext controlKey, "a"
+		TypeText DataFile().Logins.RemotePC.password
+		
+		// click Off area for any popups to disappear
+		click [1900,500]
+
+		// Click Login Again
+		waitFor Config().Waits.(minWait), {Text:"Login", SearchRectangle: Config().SearchRectangles.(RemotePCLoginArea)}
+		click FoundImageLocation()
+	end if
 	
 	// Wait for RemotePC list to show up
 	waitFor Config().Waits.(minWait), {Text:"Computer Name"}

@@ -1,0 +1,49 @@
+{
+	"originalcapturelocation": [
+		812,
+		736,
+		41,
+		13
+	],
+	"lastmodifieddate": 1755663506.368,
+	"createddate": 1755663306.875,
+	"name": "Icons/SicomEnterButton",
+	"lastfounddate": 1755663332.721,
+	"ocrcapturestring": "Enter",
+	"lastfoundlocation": [
+		812,
+		735,
+		41,
+		13
+	],
+	"testlocationdata": [
+		{
+				"connectionportnum": 58733,
+				"deleted": true,
+				"properties": {
+					"CropRectangle": "[0,0,0,0]",
+					"Rotate": 0,
+					"Scale": "    1",
+					"HotSpot": "[22,7]",
+					"Tolerance": "_70",
+					"Discrepancy": "_0",
+					"SearchType": "Smoothed for Text"
+				},
+				"sutinfo": {
+					"Type": "Single System"
+				},
+				"name": "Icons/SicomEnterButton.png",
+				"connectionname": "MyLocalTrainingPC",
+				"type": 1,
+				"connectionserverid": "127.0.0.1",
+				"capturerect": [
+					812,
+					736,
+					41,
+					13
+				],
+				"connectiontype": "Single System",
+				"capturedocrtext": "Enter"
+			}
+	]
+}

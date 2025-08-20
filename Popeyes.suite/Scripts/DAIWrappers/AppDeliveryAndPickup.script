@@ -32,7 +32,7 @@ to launchSeleniumSUT
 		if not connected of ConnectionInfo() then
 			Log "SUT is not connected yet. Trying again in 10 seconds"
 			wait 10
-			else
+		else
 			log "SUT Connected!"
 			exit repeat
 		end if
@@ -68,13 +68,14 @@ to triggerSeleniumScript
 	// Execute script. Get ProfileName, LabName and Order Type from Input excel
 	put DataFile().ColumnMapping.(global posPlatformName).ProfileName into excelColumnNumber
 	put Common.readDataFromExcel (excelColumnNumber) into profileName
-	
+
 	put DataFile().ColumnMapping.(global posPlatformName).LabName into excelColumnNumber
 	put Common.readDataFromExcel (excelColumnNumber) into labName
-	
+
 	put DataFile().ColumnMapping.(global posPlatformName).OrderType into excelColumnName
 	put Common.readDataFromExcel (excelColumnName) into orderType
-	
+
+	log DataFile().Logins.App.executionCommand&profileName&&labName&&orderType
 	typetext DataFile().Logins.App.executionCommand&profileName&&labName&&orderType, returnKey
 	wait 1
 	

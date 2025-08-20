@@ -49,7 +49,7 @@ return {
 		NCROrderID: [48,200,121,232],
 		OracleSoftKeypadLogin: [931,82,1589,847],
 		NCRPLUSoftKeypad:[660,369,1897,1060],
-		
+
 		SicomPOSInterfaceArea: [294,159,1623,909], --full interface of SICOM POS (not fullscreen)--
 		SicomMealSelectionArea: [321,193,1598,251], --area of the meal section (SANDWICHES, CHICKEN tect), not fulllscreen--
 		SicomMainCourseSelectionArea: [709,230,1623,826], --area of menu selection, not fullscreen--
@@ -59,6 +59,7 @@ return {
 		SicomOrderID: [521,255,575,280], --area of order ID--
 		SicomNumPad: [322,672,632,899], --area of number pad
 		SicomManagerInfo: [319,261,726,282], --area to determine whether the system has been logged on--
+		SicomEnterKioskOrderNumPad:[739,462,988,706], --area for the Enter Order Number popup for Kiosk order payment
 		
 		OracleMainCourseSelectionArea: [4,1,1918,90],
 		OracleItemSelectionArea: [322,91,1920,996],
@@ -75,7 +76,7 @@ return {
 		KioskOptionsSelectionArea: [696,355,1225,970],
 		KioskMainCourseSelectionArea: [696,95,847,1025],
 		KioskNameSoftKeyboard: [743,362,1185,543],
-		KioskOrderID:[390,594,693,716],
+		KioskOrderID:[385,594,700,716],
 		OracleKioskMainWindow: [0,0,1080,1920], 
 		OracleKioskItemSelectionArea: [301,0,1080,1838],
 		OracleKioskOptionsSelectionArea: [0,572,1080,1671],
@@ -96,6 +97,6 @@ return {
 		RemotePCLoginTextbox: [0,20],
 		ClickScreenOffset: [1900,500],
 		ClickMobileScreenOffset: [200,400],
-	
+
 	},
 }

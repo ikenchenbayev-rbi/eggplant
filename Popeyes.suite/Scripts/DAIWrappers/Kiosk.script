@@ -590,6 +590,7 @@ to completeOrder
 	
 	// Wait for Order ID to be generated
 	WaitFor Config().Waits.(maxWait), text:"Order Number", SearchRectangle:Config().SearchRectangles.(OracleKioskMainWindow), ignoreSpaces: Yes, ignoreNewLines: Yes
+	wait 2
 	
 	// Read Order ID
 	saveOrderID
@@ -617,7 +618,7 @@ saveOrderID - Handler to read the order ID from the Kiosk screen and return the 
 **)
 to saveOrderID
 	Log "Reading Order ID"
-	put readText(Config().SearchRectangles.(KioskOrderID), DPI: 144) into global orderID
+	put readText(Config().SearchRectangles.(KioskOrderID), DPI: 400, validCharacters: "0123456789") into global orderID
 	if character 1 of global orderID begins with "0" then delete character 1 of global orderID
 	log "Order ID is: "&global orderID
 	return global orderID

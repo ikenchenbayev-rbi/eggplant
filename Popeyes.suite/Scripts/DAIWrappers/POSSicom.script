@@ -27,7 +27,7 @@ to clickRoute
 		//click on the Request button
 		click FoundImageLocation()
 		//validate that Route 3 button is available
-		assert that ImageFound(text:"3", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomRequestPOSArea), Contrast: OFF)
+		assert that ImageFound(text:"3", waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomRequestPOSArea), Contrast:ON)
 		click FoundImageLocation()
 	else
 		logWarning "Request button is not available"
@@ -680,7 +680,7 @@ to sendDummyPOSOrder
 	
 	// Add 3 Qty Tenders ALC
 	// Click 3 for Qty selection
-	assert that ImageFound(imageName:"Icons/SicomQty3", waitFor:Config().Waits.(minWait))
+	assert that ImageFound(imageName:"Icons/SicomQty3", waitFor:Config().Waits.(minWait)) or ImageFound(text:"3", waitFor:Config().Waits.(minWait))
 	click FoundImageLocation() 
 	wait 1
 	
@@ -702,7 +702,7 @@ to sendDummyPOSOrder
 	wait 1
 	// Add 3 Qty Mash & Gravy side
 	// Click 3 for Qty selection
-	assert that ImageFound(imageName:"Icons/SicomQty3", waitFor:Config().Waits.(minWait))
+	assert that ImageFound(imageName:"Icons/SicomQty3", waitFor:Config().Waits.(minWait)) or ImageFound(text:"3", waitFor:Config().Waits.(minWait))
 	click FoundImageLocation() 
 	wait 1
 	
@@ -789,7 +789,7 @@ to XPercentOff
 		click FoundImageLocation()
 		//input the manager id using the cashier number pad
 		put DataFile().Logins.SicomPOS.ManagerID into managerID
-		log managerID
+		
 		repeat with each item numID of managerID
 			log numID
 			assert that ImageFound(text: numID, waitFor:Config().Waits.(minWait),SearchRectangle:Config().SearchRectangles.(SicomNumPad), ignoreSpaces: Yes, ignoreNewLines: Yes)
@@ -837,18 +837,24 @@ to selectKioskOrder orderName
 	// Click the Open Kiosk Orders option
 	Assert that imagefound (text:"OPEN KIOSK ORDERS", WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
 	
+	// Click the Open Kiosk Orders button until the popup appears
+	Repeat until ImageFound(text:"Enter Order Number", WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+		Click FoundImageLocation()
+		Wait 0.5
+	End Repeat
+	
 	// Validate that the Enter Order Number popup is displayed
 	Assert that imagefound (text:"Enter Order Number", WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
 	Wait 1
 	
 	// Enter the order ID on the keypad
 	repeat for each character in global orderID
-		click text:it, SearchRectangle: Config().SearchRectangles.(SicomMainCourseSelectionArea), waitFor: 1
-		wait 1
+		click text:it, SearchRectangle: Config().SearchRectangles.(SicomEnterKioskOrderNumPad), waitFor:1, validCharacters:"0123456789", DPI:144
+		MoveTo text:"Enter Order Number"
 	end repeat
 	
 	// Click Enter
-	Assert that imagefound (text:"Enter", WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(SicomMainCourseSelectionArea), ignoreSpaces: Yes, ignoreNewLines: Yes)
+	Assert that imagefound (text:"Enter", WaitFor:Config().Waits.(minWait), SearchRectangle:Config().SearchRectangles.(BottomHalf), ignoreSpaces: Yes, ignoreNewLines: Yes, DPI:144, Contrast:ON)
 	click FoundImageLocation()
 	
 	// Click the Total button

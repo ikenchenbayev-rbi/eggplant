@@ -1,48 +1,49 @@
 {
 	"originalcapturelocation": [
-		950,
-		264,
-		71,
-		60
+		740,
+		716,
+		187,
+		55
 	],
-	"lastmodifieddate": 1754980237.198,
-	"createddate": 1754980237.198,
-	"name": "Icons/SicomPOSCouponLookUp",
-	"lastfounddate": 1755582575.7690001,
-	"ocrcapturestring": "COUPON LOOK UP",
+	"lastmodifieddate": 1755677248.961,
+	"createddate": 1755664285.355,
+	"name": "Icons/SicomEnterButton2",
+	"lastfounddate": 1755665685.9530001,
+	"ocrcapturestring": "Enter",
 	"lastfoundlocation": [
-		949,
-		264,
-		71,
-		60
+		740,
+		715,
+		187,
+		55
 	],
 	"testlocationdata": [
 		{
-				"connectionportnum": 65329,
+				"connectionportnum": 58733,
+				"deleted": true,
 				"properties": {
 					"CropRectangle": "[0,0,0,0]",
 					"Rotate": 0,
 					"Scale": "    1",
-					"HotSpot": "[35,30]",
+					"HotSpot": "[93,27]",
 					"Tolerance": "_73",
 					"Discrepancy": "_0",
 					"SearchType": "Smoothed for Text"
 				},
 				"sutinfo": {
-					"type": "Unknown VNC"
+					"Type": "Single System"
 				},
-				"name": "Icons/SicomPOSCouponLookUp.png",
+				"name": "Icons/SicomEnterButton.png",
 				"connectionname": "MyLocalTrainingPC",
 				"type": 1,
 				"connectionserverid": "127.0.0.1",
 				"capturerect": [
-					950,
-					264,
-					71,
-					60
+					740,
+					716,
+					187,
+					55
 				],
 				"connectiontype": "Single System",
-				"capturedocrtext": "COUPON LOOK UP"
+				"capturedocrtext": "Enter"
 			}
 	]
 }
